@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">SmartMirrorApp</string>
     <string name="action_settings">Settings</string>
-    <string name="description">Description</string>
+    <string name="title">Title</string>
     <string name="category">Category</string>
     <string name="name">Name:</string>
     <string name="number">Number:</string>
     <string name="email">Email:</string>
+    <string name="contact_details">Contact Details: </string>
+    <string name="confirm">Confirm</string>
+    <string name="locations">Locations: </string>
+    <string name="building_1">Building 1</string>
+    <string name="building_2">Building 2</string>
+    <string name="building_3">Building 3</string>
+    <string name="building_4">Building 4</string>
+    <string name="building_5">Building 5</string>
+    <string name="building_6">Block 55</string>
+    <string name="building_7">Block 57</string>
+    <string name="building_8">Block 59</string>
+
 </resources>
