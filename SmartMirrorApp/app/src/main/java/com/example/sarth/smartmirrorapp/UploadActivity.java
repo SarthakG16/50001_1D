@@ -1,8 +1,16 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,15 +19,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
 
+    private ImageView poster_image;
+    private Button upload_poster;
+    private Uri posterUri;
     private Spinner spinner_categories;
     private CheckBox location_1;
     private CheckBox location_2;
@@ -40,12 +53,17 @@ public class UploadActivity extends AppCompatActivity{
     private String title;
 
     private final static String TAG = "Logcat";
+    private final static int PICK_FILE_REQUEST = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         //Instantiating all the widgets
+
+        poster_image = findViewById(R.id.poster_image);
+        upload_poster = findViewById(R.id.upload_poster);
+
         spinner_categories = findViewById(R.id.spinner_categories);
 
         titleInput =findViewById(R.id.upload_title);
@@ -66,6 +84,22 @@ public class UploadActivity extends AppCompatActivity{
         contact_number = findViewById(R.id.upload_contact_number);
         contact_email = findViewById(R.id.upload_contact_email);
         upload_button= findViewById(R.id.upload_confirm_button);
+
+
+        //Select poster
+        upload_poster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(UploadActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+                    selectPoster();
+                }
+                else{
+                    String[] permission = new String[] {Manifest.permission.READ_EXTERNAL_STORAGE};
+                    ActivityCompat.requestPermissions(UploadActivity.this, permission , 9);
+                }
+            }
+        });
+
 
         //Spinner for categories begin
         String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
@@ -94,6 +128,12 @@ public class UploadActivity extends AppCompatActivity{
 
                 if(!title_correct) { //If no title is specified
                     Toast.makeText(UploadActivity.this, "Please Specify a Title.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //if not poster is selected
+                if(posterUri == null){
+                    Toast.makeText(UploadActivity.this, "Please upload your poster.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -142,9 +182,46 @@ public class UploadActivity extends AppCompatActivity{
             }
         });
 
-
-
     }
+
+    //TODO: Upload data to database
+
+
+    //make sure that permission is granted
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        if (requestCode == 9 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            selectPoster();
+        }
+        else{
+            Toast.makeText(UploadActivity.this, "Please provide permission", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void selectPoster(){
+        Intent intent = new Intent();
+        intent.setType("application/pdf");
+        //TODO: more Types
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        Log.i(TAG,"Moving to upload poster");
+        startActivityForResult(intent, PICK_FILE_REQUEST);
+    }
+
+    //check if user has selected a file or not
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null){
+            posterUri = data.getData();
+
+        }
+        else{
+            Toast.makeText(UploadActivity.this, "Please upload your poster.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //TODO: Generate ImageView for poster
+
 
     private boolean validate(TextInputLayout check) {
         String emailInput = check.getEditText().getText().toString().trim();
