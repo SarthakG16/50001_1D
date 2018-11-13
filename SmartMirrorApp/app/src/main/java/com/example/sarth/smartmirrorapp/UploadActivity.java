@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +25,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.github.barteksc.pdfviewer.PDFView;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +57,7 @@ public class UploadActivity extends AppCompatActivity{
     private String category;
     private String locations_checked ="";
     private String title;
-
+    private PDFView pdfView;
     private final static String TAG = "Logcat";
     private final static int PICK_FILE_REQUEST = 1;
 
@@ -61,8 +67,10 @@ public class UploadActivity extends AppCompatActivity{
         setContentView(R.layout.activity_upload);
         //Instantiating all the widgets
 
-        poster_image = findViewById(R.id.poster_image);
+
         upload_poster = findViewById(R.id.upload_poster);
+        Log.i(TAG,"Reached");
+        pdfView = findViewById(R.id.poster_image);
 
         spinner_categories = findViewById(R.id.spinner_categories);
 
@@ -143,15 +151,15 @@ public class UploadActivity extends AppCompatActivity{
                 }
 
                 if(!name_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadActivity.this,"Please enter your name.",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(!number_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your number",Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadActivity.this,"Please enter your number.",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(!email_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your email",Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
                     return;
                 }
                 for (CheckBox c : locatons_lst) {
@@ -213,14 +221,25 @@ public class UploadActivity extends AppCompatActivity{
         //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null){
             posterUri = data.getData();
+            if(posterUri == null) {
+                Log.i(TAG,"Uri for poster returned null");
+            }
+            pdfView.fromUri(posterUri).load();
 
-        }
-        else{
-            Toast.makeText(UploadActivity.this, "Please upload your poster.", Toast.LENGTH_LONG).show();
+ /*           InputStream posterInputStream = null;
+            try {
+                posterInputStream = getContentResolver().openInputStream(posterUri);
+                Log.i(TAG,posterInputStream.toString());
+                Bitmap plantPoster = BitmapFactory.decodeStream(posterInputStream);
+                poster_image.setImageBitmap(plantPoster);
+            } catch (FileNotFoundException e) {
+                Log.i(TAG,"OH NO");
+                e.printStackTrace();
+            }*/
         }
     }
 
-    //TODO: Generate ImageView for poster
+
 
 
     private boolean validate(TextInputLayout check) {

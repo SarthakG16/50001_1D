@@ -25,6 +25,6 @@ public class FilterActivity extends AppCompatActivity {
 
         List<String> categories =  new ArrayList<>(Arrays.asList(filters));
 
-        //filter_adapter = new ArrayAdapter(this,R.layout.list_i);
+        ////filter_adapter = new ArrayAdapter(this,R.layout.list_i);
     }
 }
