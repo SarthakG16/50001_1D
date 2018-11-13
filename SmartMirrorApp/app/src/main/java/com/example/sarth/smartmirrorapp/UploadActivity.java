@@ -21,7 +21,6 @@ import java.util.List;
 public class UploadActivity extends AppCompatActivity{
 
     private Spinner spinner_categories;
-    private EditText titleInput;
     private CheckBox location_1;
     private CheckBox location_2;
     private CheckBox location_3;
@@ -30,6 +29,7 @@ public class UploadActivity extends AppCompatActivity{
     private CheckBox location_6;
     private CheckBox location_7;
     private CheckBox location_8;
+    private TextInputLayout titleInput;
     private TextInputLayout contact_name;
     private TextInputLayout contact_number;
     private TextInputLayout contact_email;
@@ -47,7 +47,9 @@ public class UploadActivity extends AppCompatActivity{
         setContentView(R.layout.activity_upload);
         //Instantiating all the widgets
         spinner_categories = findViewById(R.id.spinner_categories);
+
         titleInput =findViewById(R.id.upload_title);
+
         location_1 = findViewById(R.id.upload_building_1);
         location_2 = findViewById(R.id.upload_building_2);
         location_3 = findViewById(R.id.upload_building_3);
@@ -86,10 +88,11 @@ public class UploadActivity extends AppCompatActivity{
                 boolean name_correct = validate(contact_name);
                 boolean number_correct =validate(contact_number);
                 boolean email_correct = validate(contact_email);
+                boolean title_correct = validate(titleInput);
 
                 category = spinner_categories.getSelectedItem().toString();
-                title = titleInput.getText().toString();
-                if(title.equals("")) { //If no title is specified
+
+                if(!title_correct) { //If no title is specified
                     Toast.makeText(UploadActivity.this, "Please Specify a Title.", Toast.LENGTH_LONG).show();
                     return;
                 }
