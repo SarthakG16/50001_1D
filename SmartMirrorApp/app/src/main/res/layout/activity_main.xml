@@ -34,10 +34,18 @@
 
     <Button
         android:id="@+id/button_upload"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upload"
         app:layout_anchor="@+id/include"
         app:layout_anchorGravity="bottom|center" />
+
+    <Button
+        android:id="@+id/button_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|right" />
 
 </android.support.design.widget.CoordinatorLayout>

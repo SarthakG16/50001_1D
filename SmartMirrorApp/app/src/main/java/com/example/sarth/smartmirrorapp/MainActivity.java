@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
 
     private Button button_upload;
+    private Button button_filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
