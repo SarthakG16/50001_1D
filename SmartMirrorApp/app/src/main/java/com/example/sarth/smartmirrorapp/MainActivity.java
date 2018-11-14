@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         button_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainToUpload = new Intent(MainActivity.this,FilterActivity.class);
+                Intent mainToUpload = new Intent(MainActivity.this,UploadActivity.class);
                 Log.i(TAG,"Moving to upload page");
                 startActivity(mainToUpload);
             }
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         button_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainToFilter = new Intent(MainActivity.this,UploadActivity.class);
+                Intent mainToFilter = new Intent(MainActivity.this,FilterActivity.class);
                 Log.i(TAG,"Moving to filter page");
                 startActivity(mainToFilter);
             }

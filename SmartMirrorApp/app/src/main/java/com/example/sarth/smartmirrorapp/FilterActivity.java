@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +53,7 @@ public class FilterActivity extends AppCompatActivity {
         filter_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                return;
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -64,7 +66,7 @@ public class FilterActivity extends AppCompatActivity {
 
         //for spinner
         //make filters
-        String[] filters_make = {"Select your Filter","Expiry Date","Location","Title"};
+        String[] filters_make = {"Select Filter","Expiry Date","Location","Title"};
         List<String> filters =  new ArrayList<>(Arrays.asList(filters_make));
         //adapter and onitemselectlistener for spinner
         ArrayAdapter<String> filter_filter_adapter = new ArrayAdapter<>(FilterActivity.this,android.R.layout.simple_spinner_item,filters);
@@ -75,10 +77,13 @@ public class FilterActivity extends AppCompatActivity {
         filter_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(FilterActivity.this,"does nothing",Toast.LENGTH_LONG).show();
                 //toggle to different posters shown
+                return;
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                return;
             }
         });
 
