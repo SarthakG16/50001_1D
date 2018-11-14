@@ -37,7 +37,6 @@ import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
 
-    private ImageView poster_image;
     private Button upload_poster;
     private Uri posterUri;
     private Spinner spinner_categories;
@@ -89,7 +88,7 @@ public class UploadActivity extends AppCompatActivity{
         location_8 = findViewById(R.id.upload_building_8);
 
         final CheckBox[] locations_arr = {location_1,location_2,location_3,location_4,location_5,location_6,location_7,location_8};
-        final List<CheckBox> locatons_lst = new ArrayList<>(Arrays.asList(locations_arr));
+        final List<CheckBox> locations_lst = new ArrayList<>(Arrays.asList(locations_arr));
 
         contact_name = findViewById(R.id.upload_contact_name);
         contact_number = findViewById(R.id.upload_contact_number);
@@ -184,7 +183,7 @@ public class UploadActivity extends AppCompatActivity{
                     Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
                     return;
                 }
-                for (CheckBox c : locatons_lst) {
+                for (CheckBox c : locations_lst) {
                     if (c.isChecked()) {
                         terminate = false;
                         break;
@@ -196,7 +195,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
-                for (CheckBox c : locatons_lst) {
+                for (CheckBox c : locations_lst) {
                     if (c.isChecked()) {
                         if(locations_checked.equals("")) {
                             locations_checked += c.getText();
@@ -231,7 +230,6 @@ public class UploadActivity extends AppCompatActivity{
     private void selectPoster(){
         Intent intent = new Intent();
         intent.setType("application/pdf");
-        //TODO: more Types
         intent.setAction(Intent.ACTION_GET_CONTENT);
         Log.i(TAG,"Moving to upload poster");
         startActivityForResult(intent, PICK_FILE_REQUEST);

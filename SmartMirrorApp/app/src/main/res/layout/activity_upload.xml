@@ -63,15 +63,6 @@
         android:scaleType="fitCenter"
         android:src="@drawable/poster_holder" />-->
 
-    <ImageView
-        android:id="@+id/enlarged_poster"
-        android:layout_width="324dp"
-        android:layout_height="450dp"
-        android:layout_below="@+id/upload_title"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitCenter"
-        android:visibility="invisible" />
-
     <Button
         android:id="@+id/upload_poster"
         android:layout_width="match_parent"
