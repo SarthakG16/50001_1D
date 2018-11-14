@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent mainToUpload = new Intent(MainActivity.this,UploadActivity.class);
-                Log.i(TAG,"Intent created");
+                Log.i(TAG,"Moving to upload page");
                 startActivity(mainToUpload);
             }
         });
