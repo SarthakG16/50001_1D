@@ -37,7 +37,7 @@ public class FilterActivity extends AppCompatActivity {
         String def = "title";
         String filter = intent.getStringExtra(KEY);
 
-        if (filter.equals("title") {}
+        //if (filter.equals("title") {}
 
         //search posters
         //make list of posters
