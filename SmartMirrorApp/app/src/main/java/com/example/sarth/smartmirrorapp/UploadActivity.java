@@ -2,6 +2,7 @@ package com.example.sarth.smartmirrorapp;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -53,6 +54,7 @@ public class UploadActivity extends AppCompatActivity{
     private TextInputLayout contact_number;
     private TextInputLayout contact_email;
     private Button upload_button;
+    private Button poster_preview;
 
     private String category;
     private String locations_checked ="";
@@ -70,8 +72,9 @@ public class UploadActivity extends AppCompatActivity{
 
         upload_poster = findViewById(R.id.upload_poster);
         Log.i(TAG,"Reached");
-        pdfView = findViewById(R.id.poster_image);
-
+        //PDF related widgets
+        pdfView = findViewById(R.id.pdfView);
+        poster_preview = findViewById(R.id.poster_preview);
         spinner_categories = findViewById(R.id.spinner_categories);
 
         titleInput =findViewById(R.id.upload_title);
@@ -93,6 +96,18 @@ public class UploadActivity extends AppCompatActivity{
         contact_email = findViewById(R.id.upload_contact_email);
         upload_button= findViewById(R.id.upload_confirm_button);
 
+        //Spinner for categories begin
+        String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
+
+        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
+
+        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item,
+                categories);
+        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_categories.setAdapter(adapter_categories);
+
+        category = spinner_categories.getSelectedItem().toString();
+
 
         //Select poster
         upload_poster.setOnClickListener(new View.OnClickListener() {
@@ -108,20 +123,27 @@ public class UploadActivity extends AppCompatActivity{
             }
         });
 
+        //Poster Preview
+        poster_preview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"Button Clicked");
+                if (posterUri == null) {
+                    return;
+                }
+                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(UploadActivity.this);
+                View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
+                PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
+                poster_expanded.fromUri(posterUri).load();
+                mBuilder.setView(poster_layout);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
 
-        //Spinner for categories begin
-        String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
 
-        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
 
-        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item,
-                categories);
-        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_categories.setAdapter(adapter_categories);
-
-        category = spinner_categories.getSelectedItem().toString();
-        //Spinner for categories begin
-
+        //Upload Confirm Button
         upload_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
