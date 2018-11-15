@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
@@ -208,6 +209,7 @@ public class UploadActivity extends AppCompatActivity{
                 }
 
                 Toast.makeText(UploadActivity.this, locations_checked, Toast.LENGTH_LONG).show();
+
             }
         });
 
