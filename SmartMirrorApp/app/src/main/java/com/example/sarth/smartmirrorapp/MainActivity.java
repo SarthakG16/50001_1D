@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
 
     private Button button_upload;
+    private Button button_filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent mainToUpload = new Intent(MainActivity.this,UploadActivity.class);
                 Log.i(TAG,"Moving to upload page");
                 startActivity(mainToUpload);
+            }
+        });
+
+        button_filter = findViewById(R.id.button_filter);
+        button_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainToFilter = new Intent(MainActivity.this,FilterActivity.class);
+                Log.i(TAG,"Moving to filter page");
+                startActivity(mainToFilter);
             }
         });
 

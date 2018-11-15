@@ -3,6 +3,7 @@ package com.example.sarth.smartmirrorapp;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,19 +22,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Calendar;
+
 import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
@@ -49,16 +52,27 @@ public class UploadActivity extends AppCompatActivity{
     private CheckBox location_6;
     private CheckBox location_7;
     private CheckBox location_8;
+
     private TextInputLayout titleInput;
     private TextInputLayout contact_name;
     private TextInputLayout contact_number;
     private TextInputLayout contact_email;
+
+    private TextView date_start;
+    private TextView date_stop;
+
+
+    //BUTTONS
     private Button upload_button;
     private Button poster_preview;
+    private ImageButton button_date_start;
+    private ImageButton button_date_stop;
 
     private String category;
     private String locations_checked ="";
     private String title;
+    private String start_date;
+    private String stop_date;
     private PDFView pdfView;
     private final static String TAG = "Logcat";
     private final static int PICK_FILE_REQUEST = 1;
@@ -96,6 +110,13 @@ public class UploadActivity extends AppCompatActivity{
         contact_email = findViewById(R.id.upload_contact_email);
         upload_button= findViewById(R.id.upload_confirm_button);
 
+        //Calendar Buttons  + TextView
+        button_date_stop = findViewById(R.id.calendar_button_stop);
+        button_date_start = findViewById(R.id.calendar_button_start);
+
+        date_start = findViewById(R.id.upload_date_start);
+        date_stop = findViewById(R.id.upload_date_stop);
+
         //Spinner for categories begin
         String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
 
@@ -109,6 +130,9 @@ public class UploadActivity extends AppCompatActivity{
         category = spinner_categories.getSelectedItem().toString();
 
 
+
+
+        //TODO: BUTTONS
         //Select poster
         upload_poster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +165,50 @@ public class UploadActivity extends AppCompatActivity{
             }
         });
 
+        //Calendars
+        button_date_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year = c.get(Calendar.YEAR);
+                DatePickerDialog dpd_start = new DatePickerDialog(UploadActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DATE, dayOfMonth);
+                        start_date = DateFormat.getDateInstance().format(c.getTime());
+                        date_start.setText(start_date);
+                    }
+                },year,month,day);
+                dpd_start.show();
+            }
+        });
+
+        button_date_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH);
+                int year = c.get(Calendar.YEAR);
+                DatePickerDialog dpd_stop = new DatePickerDialog(UploadActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.YEAR, year);
+                        c.set(Calendar.MONTH, month);
+                        c.set(Calendar.DATE, dayOfMonth);
+                        stop_date = DateFormat.getDateInstance().format(c.getTime());
+                        date_stop.setText(stop_date);
+                    }
+                },year,month,day);
+                dpd_stop.show();
+            }
+        });
 
 
         //Upload Confirm Button
@@ -184,6 +252,18 @@ public class UploadActivity extends AppCompatActivity{
                     Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
                     return;
                 }
+                Log.i(TAG,date_start.getText().toString());
+                //If no date is entered.
+
+                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 for (CheckBox c : locations_lst) {
                     if (c.isChecked()) {
                         terminate = false;

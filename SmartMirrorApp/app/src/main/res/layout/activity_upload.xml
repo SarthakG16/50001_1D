@@ -53,16 +53,6 @@
         />
 </FrameLayout>
 
-<!--    <ImageView
-        android:id="@+id/poster_image"
-        android:layout_width="72dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/upload_title"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/poster_holder" />-->
-
     <Button
         android:id="@+id/upload_poster"
         android:layout_width="match_parent"
@@ -145,8 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:textSize="15sp" />
+            android:inputType="textEmailAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -159,12 +148,52 @@
         android:text="@string/confirm" />
 
     <TextView
+        android:id="@+id/upload_date_start"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/upload_contact_email"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:paddingTop="15dp"
+        android:text="@string/upload_date_start" />
+
+    <ImageButton
+        android:id="@+id/calendar_button_start"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/upload_contact_email"
+        android:layout_toEndOf="@+id/poster_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/calendar_button"
+        android:layout_toRightOf="@+id/poster_layout" />
+    <TextView
+        android:id="@+id/upload_date_stop"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/upload_date_start"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:paddingTop="15dp"
+        android:text="@string/upload_date_stop" />
+    <ImageButton
+        android:id="@+id/calendar_button_stop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/upload_date_start"
+        android:layout_toEndOf="@+id/poster_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/calendar_button"
+        android:layout_toRightOf="@+id/poster_layout" />
+
+
+    <TextView
         android:id="@+id/upload_locations"
         android:layout_marginLeft="7dp"
+        android:paddingTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/locations"
-        android:layout_below="@+id/upload_contact_email"
+        android:layout_below="@+id/upload_date_stop"
         android:layout_marginStart="7dp" />
 
 
@@ -248,6 +277,9 @@
             android:text="@string/building_8" />
 
     </GridLayout>
+
+
+
 
 </RelativeLayout>
 </ScrollView>
