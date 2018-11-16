@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button button_upload;
     private Button button_filter;
+    private Button button_request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent mainToFilter = new Intent(MainActivity.this,FilterActivity.class);
                 Log.i(TAG,"Moving to filter page");
                 startActivity(mainToFilter);
+            }
+        });
+
+        button_request = findViewById(R.id.button_request);
+        button_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainToRequest = new Intent(MainActivity.this, RequestsActivity.class);
+                Log.i(TAG,"Moving to Filter");
+                startActivity(mainToRequest);
             }
         });
 

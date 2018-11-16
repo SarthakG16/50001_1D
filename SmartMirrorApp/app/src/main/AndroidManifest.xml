@@ -31,7 +31,10 @@
             android:parentActivityName = ".MainActivity"
             android:label="Filter">
         </activity>
-        
+        <activity android:name=".RequestsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Requests"/>
+
     </application>
 
 </manifest>

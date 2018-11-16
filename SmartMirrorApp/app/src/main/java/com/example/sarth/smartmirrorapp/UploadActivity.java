@@ -83,7 +83,7 @@ public class UploadActivity extends AppCompatActivity{
     private String name;
     private String number;
     private String email;
-    private String data;
+    private String serialized_data;
 
     private PDFView pdfView;
     private final static String TAG = "Logcat";
@@ -356,7 +356,7 @@ public class UploadActivity extends AppCompatActivity{
                 name = contact_name.getEditText().getText().toString().trim();
                 number = contact_number.getEditText().getText().toString().trim();
                 email = contact_email.getEditText().getText().toString().trim();
-                data = "";
+                serialized_data = "";
 
                 try {
                     ContentResolver cr = getContentResolver();
@@ -366,7 +366,7 @@ public class UploadActivity extends AppCompatActivity{
                     byte[] result = baos.toByteArray();
                     is.close();
                     baos.close();
-                    data = Base64.encodeToString(result);
+                    serialized_data = Base64.encodeToString(result);
 
                 } catch (FileNotFoundException e) {
                     Log.i(TAG,"FileNotFound");
@@ -376,9 +376,9 @@ public class UploadActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
 
-                Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,data);
-
-                HashMap<String, String> params = new HashMap<>();
+                Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,serialized_data);
+                Poster.requests.add(poster);
+               /* HashMap<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("category", category);
                 params.put("contact_name", name);
@@ -404,7 +404,7 @@ public class UploadActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-                clear = true;
+                clear = true;*/
 
             }
         });

@@ -3,6 +3,9 @@ package com.example.sarth.smartmirrorapp;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Poster implements Serializable{
@@ -14,14 +17,14 @@ public class Poster implements Serializable{
     public String postDate;
     public String expiryDate;
     public String locations;
-    public String data;
+    public String serialized_data;
+    public byte[] data;
+    public static HashMap<String,Poster> archive = new HashMap<>();
+    public static List<Poster> requests = new ArrayList<>();
 
-    public Poster(String title) {
-        this.title = title;
-    }
 
     public Poster(String title, String category, String name,
-                  String number, String email, String postDate, String expiryDate, String locations,String data) {
+                  String number, String email, String postDate, String expiryDate, String locations,String serialized_data) {
         this.title = title;
         this.category = category;
         this.name = name;
@@ -30,7 +33,9 @@ public class Poster implements Serializable{
         this.postDate = postDate;
         this.expiryDate = expiryDate;
         this.locations = locations;
-        this.data = data;
+        this.serialized_data = serialized_data;
+        this.data = Base64.decode(serialized_data);
+
     }
 
     public Poster(Map<String, String> params) {
@@ -42,11 +47,6 @@ public class Poster implements Serializable{
         this.postDate = params.get("date_posted");
         this.expiryDate = params.get("date_expiry");
         this.locations = params.get("locations");
-        this.data = params.get("notes_to_admin");
-    }
-
-    public void setDataFromBytes(byte[] dataFromBytes) {
-        this.data = Base64.encodeToString(dataFromBytes);
     }
 
     public String toString() {
@@ -58,6 +58,6 @@ public class Poster implements Serializable{
                 this.title, this.category,
                 this.name, this.email, this.number,
                 this.postDate, this.expiryDate,
-                this.locations, this.data);
+                this.locations, this.serialized_data);
     }
 }
