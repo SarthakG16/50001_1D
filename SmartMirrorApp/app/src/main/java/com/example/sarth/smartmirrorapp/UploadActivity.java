@@ -41,6 +41,7 @@ import org.apache.commons.io.IOUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 public class UploadActivity extends AppCompatActivity{
 
@@ -325,14 +326,21 @@ public class UploadActivity extends AppCompatActivity{
                 Poster poster = new Poster(title,category,name,number,email,start_date,stop_date,locations_checked,data);
 
                 HashMap<String, String> params = new HashMap<>();
-                params.put("username", "admin1");
-                params.put("password", "hahaha");
-                params.put("requested_privelage", "administrator");
+                params.put("title", title);
+                params.put("category", category);
+                params.put("contact_name", name);
+                params.put("contact_number", number);
+                params.put("contact_email", email);
+                params.put("date_posted", start_date);
+                params.put("date_expiry", stop_date);
+                params.put("locations", locations_checked);
+                params.put("serialized_image_data", data);
                 //TODO put the parameters in
-                Request req = new Request("POST","auth/login", params, new RequestCallback() {
+                Request req = new Request("POST","posters", params, new RequestCallback() {
                     @Override
                     public void execute(String response) {
                         Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,response);
                     }
                 });
                 req.execute();
