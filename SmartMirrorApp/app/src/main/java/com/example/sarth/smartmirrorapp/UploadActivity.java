@@ -1,10 +1,8 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,7 +26,8 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.io.ByteArrayInputStream;
+import org.apache.commons.io.IOUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,11 +36,8 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import org.apache.commons.io.IOUtils;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeSet;
 
 public class UploadActivity extends AppCompatActivity{
 
