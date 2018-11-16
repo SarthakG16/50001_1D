@@ -33,22 +33,11 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
 import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
@@ -122,7 +111,7 @@ public class UploadActivity extends AppCompatActivity{
         contact_email = findViewById(R.id.upload_contact_email);
         upload_button= findViewById(R.id.upload_confirm_button);
 
-        //Calendar Buttons  + TextView                                        v
+        //Calendar Buttons  + TextView
         button_date_stop = findViewById(R.id.calendar_button_stop);
         button_date_start = findViewById(R.id.calendar_button_start);
 
@@ -247,7 +236,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
-/*                if (category.equals("Select your Category")) {
+                if (category.equals("Select your Category")) {
                     Toast.makeText(UploadActivity.this, "Please Choose a Category.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -263,10 +252,10 @@ public class UploadActivity extends AppCompatActivity{
                 if(!email_correct){
                     Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
                     return;
-                }*/
+                }
                 //If no date is entered.
 
-/*                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
+                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
                     Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -285,9 +274,9 @@ public class UploadActivity extends AppCompatActivity{
                 if(terminate) { // If no checkboxes are clicked
                     Toast.makeText(UploadActivity.this, "Please choose at least one location.", Toast.LENGTH_LONG).show();
                     return;
-                }*/
+                }
 
-/*                for (CheckBox c : locations_lst) {
+                for (CheckBox c : locations_lst) {
                     if (c.isChecked()) {
                         if(locations_checked.equals("")) {
                             locations_checked += c.getText();
@@ -297,41 +286,10 @@ public class UploadActivity extends AppCompatActivity{
                             }
                         }
                     }
-                }*/
-                Poster poster = new Poster(posterUri);
-                Log.i(TAG,posterUri.toString());
-                Object object = new Object();
-
-
-
-                try {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-                    ObjectOutputStream objectStream = new ObjectOutputStream(stream);
-                    Log.i(TAG, String.valueOf(poster instanceof Serializable));
-                    objectStream.writeObject(poster);
-                    objectStream.close();
-                    byte[] result = stream.toByteArray();
-                    Log.i(TAG,"Done serializing");
-
-                    ByteArrayInputStream inputStream = new ByteArrayInputStream(result);
-                    ObjectInputStream in = new ObjectInputStream(inputStream);
-                    Poster newposter = (Poster) in.readObject();
-                    Log.i(TAG,"YAY");
-                    Log.i(TAG, String.valueOf(newposter.getPoster_uri() == null));
-
-                } catch (IOException e) {;
-                    Log.i(TAG,"IO exception");
-                    e.printStackTrace();
-                }catch (ClassNotFoundException e) {
-                    Log.i(TAG,"Class Not Found");
-                    e.printStackTrace();
                 }
 
-
-
-
                 Toast.makeText(UploadActivity.this, locations_checked, Toast.LENGTH_LONG).show();
+
             }
         });
 
