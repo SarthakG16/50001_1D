@@ -344,9 +344,11 @@ public class UploadActivity extends AppCompatActivity{
                 params.put("locations", locations_checked);
                 params.put("serialized_image_data", data);
                 //TODO put the parameters in
-                Request req = new Request("POST","posters/", params, new RequestCallback() {
+
+                Request req = new Request("POST","posters/", params, new Request.Callback() {
+
                     @Override
-                    public void execute(String response) {
+                    public void onResponse(String response) {
                         Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
                     }

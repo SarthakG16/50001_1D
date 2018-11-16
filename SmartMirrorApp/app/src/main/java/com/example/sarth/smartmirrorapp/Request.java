@@ -11,23 +11,36 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.List;
 
 import com.google.gson.Gson;
 
 class Request extends AsyncTask<Void, Void, String> {
 
+    interface Callback { public void onResponse(String response); }
+    interface PostersCallback { public void onResponse(List<Poster> posters); }
+
     String serverURL;
     String method;
     String command;
     Map<String, String> params;
-    RequestCallback callback;
+    Callback callback;
+    PostersCallback postersCallback;
 
-    public Request(String method, String command, Map<String, String> params, RequestCallback callback) {
+    public Request(String method, String command, Map<String, String> params, Callback callback) {
         this.serverURL = "http://fishy.asuscomm.com:5000/";
         this.method = method;
         this.command = command;
         this.params = params;
         this.callback = callback;
+    }
+
+    public Request(String method, String command, Map<String, String> params, PostersCallback callback) {
+        this.serverURL = "http://fishy.asuscomm.com:5000/";
+        this.method = method;
+        this.command = command;
+        this.params = params;
+        this.postersCallback = callback;
     }
 
     private Exception exception;
@@ -91,6 +104,14 @@ class Request extends AsyncTask<Void, Void, String> {
             response = "NOTHING WAS RETURNED";
         }
         Log.i("REQINFO", response);
-        callback.execute(response);
+        if (callback != null) {
+            callback.onResponse(response);
+        }
+        if (postersCallback != null) {
+            Gson g = new Gson();
+            Posters posters = g.fromJson(response, Posters.class);
+            postersCallback.onResponse(posters.posters);
+        }
+
     }
 }
