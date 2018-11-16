@@ -4,13 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -33,18 +35,23 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 public class UploadActivity extends AppCompatActivity{
 
@@ -80,6 +87,11 @@ public class UploadActivity extends AppCompatActivity{
     private String title;
     private String start_date;
     private String stop_date;
+    private String name;
+    private String number;
+    private String email;
+    private String data;
+
     private PDFView pdfView;
     private final static String TAG = "Logcat";
     private final static int PICK_FILE_REQUEST = 1;
@@ -117,7 +129,7 @@ public class UploadActivity extends AppCompatActivity{
         contact_email = findViewById(R.id.upload_contact_email);
         upload_button= findViewById(R.id.upload_confirm_button);
 
-        //Calendar Buttons  + TextView                                        v
+        //Calendar Buttons  + TextView
         button_date_stop = findViewById(R.id.calendar_button_stop);
         button_date_start = findViewById(R.id.calendar_button_start);
 
@@ -163,6 +175,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
                 AlertDialog.Builder mBuilder =  new AlertDialog.Builder(UploadActivity.this);
+                mBuilder.setTitle("Your Poster");
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
                 poster_expanded.fromUri(posterUri).load();
@@ -229,6 +242,7 @@ public class UploadActivity extends AppCompatActivity{
                 boolean email_correct = validate(contact_email);
                 boolean title_correct = validate(titleInput);
 
+
                 category = spinner_categories.getSelectedItem().toString();
 
                 if(!title_correct) { //If no title is specified
@@ -259,7 +273,6 @@ public class UploadActivity extends AppCompatActivity{
                     Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
                     return;
                 }
-                Log.i(TAG,date_start.getText().toString());
                 //If no date is entered.
 
                 if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
@@ -295,7 +308,61 @@ public class UploadActivity extends AppCompatActivity{
                     }
                 }
 
-                Toast.makeText(UploadActivity.this, locations_checked, Toast.LENGTH_LONG).show();
+                title = titleInput.getEditText().getText().toString().trim();
+                name = contact_name.getEditText().getText().toString().trim();
+                number = contact_number.getEditText().getText().toString().trim();
+                email = contact_email.getEditText().getText().toString().trim();
+                start_date = date_start.getText().toString();
+                stop_date = date_stop.getText().toString();
+                data = "";
+
+                try {
+                    ContentResolver cr = getContentResolver();
+                    InputStream is = cr.openInputStream(posterUri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    IOUtils.copy(is, baos);
+                    byte[] result = baos.toByteArray();
+                    is.close();
+                    baos.close();
+                    data = Base64.encodeToString(result);
+                    Log.i(TAG,data);
+                    pdfView.fromBytes(result).load();
+                    Log.i(TAG,"Displaying now");
+
+                } catch (FileNotFoundException e) {
+                    Log.i(TAG,"FileNotFound");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.i(TAG,"IOexception");
+                    e.printStackTrace();
+                }
+
+                Poster poster = new Poster(title,category,name,number,email,start_date,stop_date,locations_checked,data);
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("title", title);
+                params.put("category", category);
+                params.put("contact_name", name);
+                params.put("contact_number", number);
+                params.put("contact_email", email);
+                params.put("date_posted", start_date);
+                params.put("date_expiry", stop_date);
+                params.put("locations", locations_checked);
+                params.put("serialized_image_data", data);
+                //TODO put the parameters in
+
+                Request req = new Request("POST","posters/", params, new Request.Callback() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,response);
+                    }
+                });
+                req.execute();
+
+
+
             }
         });
 
@@ -329,25 +396,11 @@ public class UploadActivity extends AppCompatActivity{
         //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null){
             posterUri = data.getData();
-            data.getByteArrayExtra("");
-            String posterString = data.getDataString();
-            data.getType();
-            File file = new File(posterString);
-
             if(posterUri == null) {
                 Log.i(TAG,"Uri for poster returned null");
             }
-
             pdfView.fromUri(posterUri).load();
 
-            byte[] posterBtye;
-            try {
-                posterBtye = loadFile(file.getPath());
-
-            } catch (IOException e) {
-                Log.i(TAG,"Cannot convert to byte");
-                e.printStackTrace();
-            }
 
  /*           InputStream posterInputStream = null;
             try {
@@ -363,6 +416,8 @@ public class UploadActivity extends AppCompatActivity{
     }
 
 
+
+
     private boolean validate(TextInputLayout check) {
         String emailInput = check.getEditText().getText().toString().trim();
 
@@ -374,35 +429,4 @@ public class UploadActivity extends AppCompatActivity{
             return true;
         }
     }
-
-    public static byte[] readFully(InputStream stream) throws IOException
-    {
-        byte[] buffer = new byte[8192];
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        int bytesRead;
-        while ((bytesRead = stream.read(buffer)) != -1)
-        {
-            baos.write(buffer, 0, bytesRead);
-        }
-        return baos.toByteArray();
-    }
-
-    public static byte[] loadFile(String sourcePath) throws IOException
-    {
-        InputStream inputStream = null;
-        try
-        {
-            inputStream = new FileInputStream(sourcePath);
-            return readFully(inputStream);
-        }
-        finally
-        {
-            if (inputStream != null)
-            {
-                inputStream.close();
-            }
-        }
-    }
-
 }

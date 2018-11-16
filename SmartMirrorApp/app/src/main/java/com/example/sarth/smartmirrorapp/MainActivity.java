@@ -11,6 +11,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
+import java.net.CookieManager;
+import java.net.CookieHandler;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
@@ -24,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        CookieManager cookieManager = new CookieManager();
+        CookieHandler.setDefault(cookieManager);
 
         button_upload = findViewById(R.id.button_upload);
         button_upload.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +57,21 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("username", "admin1");
+                params.put("password", "hahaha");
+                params.put("requested_privelage", "administrator");
+                Request req = new Request("POST","auth/login", params, new Request.Callback () {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(MainActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                req.execute();
+
             }
         });
     }
