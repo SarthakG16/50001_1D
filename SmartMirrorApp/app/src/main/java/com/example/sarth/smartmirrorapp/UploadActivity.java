@@ -4,40 +4,42 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import org.apache.commons.io.IOUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class UploadActivity extends AppCompatActivity{
@@ -74,6 +76,11 @@ public class UploadActivity extends AppCompatActivity{
     private String title;
     private String start_date;
     private String stop_date;
+    private String name;
+    private String number;
+    private String email;
+    private String data;
+
     private PDFView pdfView;
     private final static String TAG = "Logcat";
     private final static int PICK_FILE_REQUEST = 1;
@@ -223,6 +230,7 @@ public class UploadActivity extends AppCompatActivity{
                 boolean email_correct = validate(contact_email);
                 boolean title_correct = validate(titleInput);
 
+
                 category = spinner_categories.getSelectedItem().toString();
 
                 if(!title_correct) { //If no title is specified
@@ -288,7 +296,46 @@ public class UploadActivity extends AppCompatActivity{
                     }
                 }
 
-                Toast.makeText(UploadActivity.this, locations_checked, Toast.LENGTH_LONG).show();
+                title = titleInput.getEditText().getText().toString().trim();
+                name = contact_name.getEditText().getText().toString().trim();
+                number = contact_number.getEditText().getText().toString().trim();
+                email = contact_email.getEditText().getText().toString().trim();
+                start_date = date_start.getText().toString();
+                stop_date = date_stop.getText().toString();
+                data = "";
+
+                try {
+                    ContentResolver cr = getContentResolver();
+                    InputStream is = cr.openInputStream(posterUri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    IOUtils.copy(is, baos);
+                    byte[] result = baos.toByteArray();
+                    is.close();
+                    baos.close();
+                    data = Base64.encodeToString(result);
+                    Log.i(TAG,data);
+                } catch (FileNotFoundException e) {
+                    Log.i(TAG,"FileNotFound");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    Log.i(TAG,"IOexception");
+                    e.printStackTrace();
+                }
+
+                Poster poster = new Poster(title,category,name,number,email,start_date,stop_date,locations_checked,data);
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("username", "admin1");
+                params.put("password", "hahaha");
+                params.put("requested_privelage", "administrator");
+                //TODO put the parameters in
+                Request req = new Request("POST","auth/login", params, new RequestCallback() {
+                    @Override
+                    public void execute(String response) {
+                        Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                req.execute();
 
             }
         });
@@ -327,6 +374,8 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
+
+
 
  /*           InputStream posterInputStream = null;
             try {

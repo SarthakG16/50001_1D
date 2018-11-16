@@ -6,20 +6,23 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Poster implements Serializable{
-    /*public String description;
+    public String title;
     public String category;
     public String name;
     public String number;
     public String email;
     public String postDate;
     public String expiryDate;
-    public List<String> locations;
-    public String enquiries;*/
-    public Uri poster_uri;
+    public String locations;
+    public String data;
 
-/*
-    public Poster(String description, String category, String name, String number, String email, String postDate, String expiryDate, List<String> locations, String enquiries) {
-        this.description = description;
+    public Poster(String title) {
+        this.title = title;
+    }
+
+    public Poster(String title, String category, String name,
+                  String number, String email, String postDate, String expiryDate, String locations,String data) {
+        this.title = title;
         this.category = category;
         this.name = name;
         this.number = number;
@@ -27,12 +30,10 @@ public class Poster implements Serializable{
         this.postDate = postDate;
         this.expiryDate = expiryDate;
         this.locations = locations;
-        this.enquiries = enquiries;
-    }
-*/
-
-    public Poster(Uri poster_uri) {
-        poster_uri =poster_uri;
+        this.data = data;
     }
 
+    public void setDataFromBytes(byte[] dataFromBytes) {
+        this.data = Base64.encodeToString(dataFromBytes);
+    }
 }
