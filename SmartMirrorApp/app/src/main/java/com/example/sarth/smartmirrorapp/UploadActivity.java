@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -32,7 +33,11 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.DateFormat;
@@ -324,10 +329,25 @@ public class UploadActivity extends AppCompatActivity{
         //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null){
             posterUri = data.getData();
+            data.getByteArrayExtra("");
+            String posterString = data.getDataString();
+            data.getType();
+            File file = new File(posterString);
+
             if(posterUri == null) {
                 Log.i(TAG,"Uri for poster returned null");
             }
+
             pdfView.fromUri(posterUri).load();
+
+            byte[] posterBtye;
+            try {
+                posterBtye = loadFile(file.getPath());
+
+            } catch (IOException e) {
+                Log.i(TAG,"Cannot convert to byte");
+                e.printStackTrace();
+            }
 
  /*           InputStream posterInputStream = null;
             try {
@@ -343,8 +363,6 @@ public class UploadActivity extends AppCompatActivity{
     }
 
 
-
-
     private boolean validate(TextInputLayout check) {
         String emailInput = check.getEditText().getText().toString().trim();
 
@@ -356,4 +374,35 @@ public class UploadActivity extends AppCompatActivity{
             return true;
         }
     }
+
+    public static byte[] readFully(InputStream stream) throws IOException
+    {
+        byte[] buffer = new byte[8192];
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        int bytesRead;
+        while ((bytesRead = stream.read(buffer)) != -1)
+        {
+            baos.write(buffer, 0, bytesRead);
+        }
+        return baos.toByteArray();
+    }
+
+    public static byte[] loadFile(String sourcePath) throws IOException
+    {
+        InputStream inputStream = null;
+        try
+        {
+            inputStream = new FileInputStream(sourcePath);
+            return readFully(inputStream);
+        }
+        finally
+        {
+            if (inputStream != null)
+            {
+                inputStream.close();
+            }
+        }
+    }
+
 }
