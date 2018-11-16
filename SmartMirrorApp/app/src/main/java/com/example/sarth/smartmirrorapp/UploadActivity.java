@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +30,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +38,10 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -161,6 +167,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
                 AlertDialog.Builder mBuilder =  new AlertDialog.Builder(UploadActivity.this);
+                mBuilder.setTitle("Your Poster");
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
                 poster_expanded.fromUri(posterUri).load();
@@ -311,6 +318,9 @@ public class UploadActivity extends AppCompatActivity{
                     baos.close();
                     data = Base64.encodeToString(result);
                     Log.i(TAG,data);
+                    pdfView.fromBytes(result).load();
+                    Log.i(TAG,"Displaying now");
+
                 } catch (FileNotFoundException e) {
                     Log.i(TAG,"FileNotFound");
                     e.printStackTrace();
@@ -332,7 +342,9 @@ public class UploadActivity extends AppCompatActivity{
                 params.put("locations", locations_checked);
                 params.put("serialized_image_data", data);
                 //TODO put the parameters in
+
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
+
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
@@ -340,6 +352,8 @@ public class UploadActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
+
+
 
             }
         });
@@ -378,7 +392,6 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
-
 
 
  /*           InputStream posterInputStream = null;
