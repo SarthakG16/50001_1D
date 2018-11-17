@@ -7,10 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".RequestsActivity">
 
+    <Button
+        android:id="@+id/requests_search_button"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/background_light"
+        android:text="Search Options...." />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/request_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/requests_search_button"
 
         />
 </RelativeLayout>
