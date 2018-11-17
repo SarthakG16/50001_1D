@@ -1,18 +1,16 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -32,32 +30,30 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeSet;
 
 public class UploadActivity extends AppCompatActivity{
 
-    private Button upload_poster;
+    private boolean clear = false;
     private Uri posterUri;
     private Spinner spinner_categories;
+
     private CheckBox location_1;
     private CheckBox location_2;
     private CheckBox location_3;
@@ -77,29 +73,53 @@ public class UploadActivity extends AppCompatActivity{
 
 
     //BUTTONS
+    private Button upload_poster;
     private Button upload_button;
-    private Button poster_preview;
-    private ImageButton button_date_start;
-    private ImageButton button_date_stop;
+    private Button poster_preview_button;
+    private ImageButton start_date_button;
+    private ImageButton stop_date_button;
 
     private String category;
     private String locations_checked ="";
     private String title;
-    private String start_date;
-    private String stop_date;
+    private String server_start_date;
+    private String shared_start_date;
+    private String server_stop_date;
+    private String shared_stop_date;
     private String name;
     private String number;
     private String email;
-    private String data;
+    private String serialized_data;
 
     private PDFView pdfView;
     private final static String TAG = "Logcat";
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile = "com.example.android.mainsharedprefs";
+    public static final String TITLE_KEY = "Title_Key";
+    public static final String CAT_KEY = "Cat_Key";
+    public static final String NAME_KEY = "Name_Key";
+    public static final String NUMBER_KEY = "Number_Key";
+    public static final String EMAIL_KEY = "Email_Key";
+    public static final String START_DATE_KEY = "Date0_Key";
+    public static final String STOP_DATE_KEY = "Date1_Key";
+    public static final String BOX1_KEY = "Box1_Key";
+    public static final String BOX2_KEY = "Box2_Key";
+    public static final String BOX3_KEY = "Box3_Key";
+    public static final String BOX4_KEY = "Box4_Key";
+    public static final String BOX5_KEY = "Box5_Key";
+    public static final String BOX6_KEY = "Box6_Key";
+    public static final String BOX7_KEY = "Box7_Key";
+    public static final String BOX8_KEY = "Box8_Key";
+
     private final static int PICK_FILE_REQUEST = 1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        //Preferences
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
         //Instantiating all the widgets
 
 
@@ -107,10 +127,13 @@ public class UploadActivity extends AppCompatActivity{
         Log.i(TAG,"Reached");
         //PDF related widgets
         pdfView = findViewById(R.id.pdfView);
-        poster_preview = findViewById(R.id.poster_preview);
+        poster_preview_button = findViewById(R.id.poster_preview_button);
         spinner_categories = findViewById(R.id.spinner_categories);
 
+
         titleInput =findViewById(R.id.upload_title);
+        //Prefs
+        titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
 
         location_1 = findViewById(R.id.upload_building_1);
         location_2 = findViewById(R.id.upload_building_2);
@@ -124,20 +147,40 @@ public class UploadActivity extends AppCompatActivity{
         final CheckBox[] locations_arr = {location_1,location_2,location_3,location_4,location_5,location_6,location_7,location_8};
         final List<CheckBox> locations_lst = new ArrayList<>(Arrays.asList(locations_arr));
 
+        location_1.setChecked(mPreferences.getBoolean(BOX1_KEY,false));
+        location_2.setChecked(mPreferences.getBoolean(BOX2_KEY,false));
+        location_3.setChecked(mPreferences.getBoolean(BOX3_KEY,false));
+        location_4.setChecked(mPreferences.getBoolean(BOX4_KEY,false));
+        location_5.setChecked(mPreferences.getBoolean(BOX5_KEY,false));
+        location_6.setChecked(mPreferences.getBoolean(BOX6_KEY,false));
+        location_7.setChecked(mPreferences.getBoolean(BOX7_KEY,false));
+        location_8.setChecked(mPreferences.getBoolean(BOX8_KEY,false));
+
+
         contact_name = findViewById(R.id.upload_contact_name);
         contact_number = findViewById(R.id.upload_contact_number);
         contact_email = findViewById(R.id.upload_contact_email);
+        //Prefs
+        contact_name.getEditText().setText(mPreferences.getString(NAME_KEY,""));
+        contact_number.getEditText().setText(mPreferences.getString(NUMBER_KEY,""));
+        contact_email.getEditText().setText(mPreferences.getString(EMAIL_KEY,""));
+
         upload_button= findViewById(R.id.upload_confirm_button);
 
         //Calendar Buttons  + TextView
-        button_date_stop = findViewById(R.id.calendar_button_stop);
-        button_date_start = findViewById(R.id.calendar_button_start);
+        start_date_button = findViewById(R.id.start_date_button);
+        stop_date_button = findViewById(R.id.stop_date_button);
 
-        date_start = findViewById(R.id.upload_date_start);
-        date_stop = findViewById(R.id.upload_date_stop);
+
+        date_start = findViewById(R.id.date_start);
+        date_stop = findViewById(R.id.date_stop);
+
+        //Prefs
+        date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date of screening Poster:" ));
+        date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date of screening Poster:"));
 
         //Spinner for categories begin
-        String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
+        final String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
 
         List<String> categories =  new ArrayList<>(Arrays.asList(cat));
 
@@ -146,7 +189,9 @@ public class UploadActivity extends AppCompatActivity{
         adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_categories.setAdapter(adapter_categories);
 
-        category = spinner_categories.getSelectedItem().toString();
+        //Pref
+        String temp_spinner_category = mPreferences.getString(CAT_KEY,"Select your Category");
+        spinner_categories.setSelection(categories.indexOf(temp_spinner_category));
 
 
 
@@ -167,18 +212,19 @@ public class UploadActivity extends AppCompatActivity{
         });
 
         //Poster Preview
-        poster_preview.setOnClickListener(new View.OnClickListener() {
+        poster_preview_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"Button Clicked");
                 if (posterUri == null) {
                     return;
                 }
-                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(UploadActivity.this);
+                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(UploadActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
                 mBuilder.setTitle("Your Poster");
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
-                poster_expanded.fromUri(posterUri).load();
+                Log.i(TAG,String.valueOf(poster_expanded == null));
+                poster_expanded.fromUri(posterUri).load();;
                 mBuilder.setView(poster_layout);
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
@@ -186,11 +232,11 @@ public class UploadActivity extends AppCompatActivity{
         });
 
         //Calendars
-        button_date_start.setOnClickListener(new View.OnClickListener() {
+        start_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
                 int month = c.get(Calendar.MONTH);
                 int year = c.get(Calendar.YEAR);
                 DatePickerDialog dpd_start = new DatePickerDialog(UploadActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -200,15 +246,17 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
-                        start_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_start.setText(start_date);
+                        server_start_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
+                        server_start_date += "00:00:00";
+                        shared_start_date = DateFormat.getDateInstance().format(c.getTime());
+                        date_start.setText(shared_start_date);
                     }
                 },year,month,day);
                 dpd_start.show();
             }
         });
 
-        button_date_stop.setOnClickListener(new View.OnClickListener() {
+        stop_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
@@ -222,8 +270,10 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
-                        stop_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_stop.setText(stop_date);
+                        server_stop_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
+                        server_stop_date += "23:59:59";
+                        shared_stop_date = DateFormat.getDateInstance().format(c.getTime());
+                        date_stop.setText(shared_stop_date);
                     }
                 },year,month,day);
                 dpd_stop.show();
@@ -312,9 +362,7 @@ public class UploadActivity extends AppCompatActivity{
                 name = contact_name.getEditText().getText().toString().trim();
                 number = contact_number.getEditText().getText().toString().trim();
                 email = contact_email.getEditText().getText().toString().trim();
-                start_date = date_start.getText().toString();
-                stop_date = date_stop.getText().toString();
-                data = "";
+                serialized_data = "";
 
                 try {
                     ContentResolver cr = getContentResolver();
@@ -324,10 +372,7 @@ public class UploadActivity extends AppCompatActivity{
                     byte[] result = baos.toByteArray();
                     is.close();
                     baos.close();
-                    data = Base64.encodeToString(result);
-                    Log.i(TAG,data);
-                    pdfView.fromBytes(result).load();
-                    Log.i(TAG,"Displaying now");
+                    serialized_data = Base64.encodeToString(result);
 
                 } catch (FileNotFoundException e) {
                     Log.i(TAG,"FileNotFound");
@@ -337,16 +382,16 @@ public class UploadActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
 
-                Poster poster = new Poster(title,category,name,number,email,start_date,stop_date,locations_checked,data);
-
-                HashMap<String, String> params = new HashMap<>();
+                Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,serialized_data);
+                Poster.requests.add(poster);
+               /* HashMap<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("category", category);
                 params.put("contact_name", name);
                 params.put("contact_number", number);
                 params.put("contact_email", email);
-                params.put("date_posted", start_date);
-                params.put("date_expiry", stop_date);
+                params.put("date_posted", server_start_date);
+                params.put("date_expiry", server_stop_date);
                 params.put("locations", locations_checked);
                 params.put("serialized_image_data", data);
                 //TODO put the parameters in
@@ -356,19 +401,23 @@ public class UploadActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        if (response.contains("Poster already exists with given title")) {
+                            titleInput.setError("Title Already Exists");
+                            Toast.makeText(UploadActivity.this,"Title already exists", Toast.LENGTH_LONG).show();
+
+                        }
                         Log.i(TAG,response);
                     }
                 });
                 req.execute();
-
-
+                clear = true;*/
 
             }
         });
 
     }
 
-    //TODO: Upload data to database
+    //TODO: Upload data to databas
 
 
     //make sure that permission is granted
@@ -400,18 +449,6 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
-
-
- /*           InputStream posterInputStream = null;
-            try {
-                posterInputStream = getContentResolver().openInputStream(posterUri);
-                Log.i(TAG,posterInputStream.toString());
-                Bitmap plantPoster = BitmapFactory.decodeStream(posterInputStream);
-                poster_image.setImageBitmap(plantPoster);
-            } catch (FileNotFoundException e) {
-                Log.i(TAG,"OH NO");
-                e.printStackTrace();
-            }*/
         }
     }
 
@@ -428,5 +465,32 @@ public class UploadActivity extends AppCompatActivity{
             check.setError(null);
             return true;
         }
+    }
+
+    @Override
+    protected void onPause() {
+            super.onPause();
+            SharedPreferences.Editor editor =mPreferences.edit();
+            if(clear) {
+                editor.clear();
+                editor.apply();
+                return;
+            }
+            editor.putString(TITLE_KEY,titleInput.getEditText().getText().toString());
+            editor.putString(CAT_KEY,spinner_categories.getSelectedItem().toString());
+            editor.putString(NAME_KEY,contact_name.getEditText().getText().toString());
+            editor.putString(NUMBER_KEY,contact_number.getEditText().getText().toString());
+            editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
+            editor.putString(START_DATE_KEY, shared_start_date);
+            editor.putString(STOP_DATE_KEY, shared_stop_date);
+            editor.putBoolean(BOX1_KEY, location_1.isChecked());
+            editor.putBoolean(BOX2_KEY, location_2.isChecked());
+            editor.putBoolean(BOX3_KEY, location_3.isChecked());
+            editor.putBoolean(BOX4_KEY, location_4.isChecked());
+            editor.putBoolean(BOX5_KEY, location_5.isChecked());
+            editor.putBoolean(BOX6_KEY, location_6.isChecked());
+            editor.putBoolean(BOX7_KEY, location_7.isChecked());
+            editor.putBoolean(BOX8_KEY, location_8.isChecked());
+            editor.apply();
     }
 }

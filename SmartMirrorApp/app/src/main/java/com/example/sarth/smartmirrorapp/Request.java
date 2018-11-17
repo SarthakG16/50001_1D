@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -66,7 +67,7 @@ class Request extends AsyncTask<Void, Void, String> {
 
             Gson gson = new Gson();
             String query = gson.toJson(params);
-            Log.e("REQINFO", query);
+            Log.e("REQ_INFO", query);
 
             try {
                 OutputStream os = urlConnection.getOutputStream();
@@ -94,23 +95,38 @@ class Request extends AsyncTask<Void, Void, String> {
         }
 
         catch(Exception e) {
-            Log.e("REQERROR", e.getMessage(), e);
+            Log.e("REQ_ERROR", e.getMessage(), e);
             return null;
         }
     }
 
     protected void onPostExecute(String response) {
         if(response == null) {
-            response = "NOTHING WAS RETURNED";
+            Log.i("REQ_ERROR","NOTHING WAS RETURNED");
+            return;
         }
-        Log.i("REQINFO", response);
+
+        if (response.contains("error_message")) {
+            Log.i("REQ_ERROR",response);
+            return;
+        }
+
+        Log.i("REQ_INFO", response);
+
         if (callback != null) {
             callback.onResponse(response);
         }
+
         if (postersCallback != null) {
             Gson g = new Gson();
-            Posters posters = g.fromJson(response, Posters.class);
-            postersCallback.onResponse(posters.posters);
+            List<Map<String, String>> posterDetails = g.fromJson(response, List.class);
+            List<Poster> posters = new ArrayList<>();
+            for (Map<String, String> posterDetail : posterDetails) {
+                Poster poster = new Poster(posterDetail);
+                posters.add(poster);
+            }
+            postersCallback.onResponse(posters);
+
         }
 
     }
