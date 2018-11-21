@@ -49,14 +49,7 @@ public class UploadActivity extends AppCompatActivity{
     private Uri posterUri;
     private Spinner spinner_categories;
 
-    private CheckBox location_1;
-    private CheckBox location_2;
-    private CheckBox location_3;
-    private CheckBox location_4;
-    private CheckBox location_5;
-    private CheckBox location_6;
-    private CheckBox location_7;
-    private CheckBox location_8;
+    private CheckBox[] locations;
 
     private TextInputLayout titleInput;
     private TextInputLayout contact_name;
@@ -100,14 +93,6 @@ public class UploadActivity extends AppCompatActivity{
     public static final String EMAIL_KEY = "Email_Key";
     public static final String START_DATE_KEY = "Date0_Key";
     public static final String STOP_DATE_KEY = "Date1_Key";
-    public static final String BOX1_KEY = "Box1_Key";
-    public static final String BOX2_KEY = "Box2_Key";
-    public static final String BOX3_KEY = "Box3_Key";
-    public static final String BOX4_KEY = "Box4_Key";
-    public static final String BOX5_KEY = "Box5_Key";
-    public static final String BOX6_KEY = "Box6_Key";
-    public static final String BOX7_KEY = "Box7_Key";
-    public static final String BOX8_KEY = "Box8_Key";
 
     private final static int PICK_FILE_REQUEST = 1;
 
@@ -133,26 +118,13 @@ public class UploadActivity extends AppCompatActivity{
         //Prefs
         titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
 
-        location_1 = findViewById(R.id.upload_building_1);
-        location_2 = findViewById(R.id.upload_building_2);
-        location_3 = findViewById(R.id.upload_building_3);
-        location_4 = findViewById(R.id.upload_building_4);
-        location_5 = findViewById(R.id.upload_building_5);
-        location_6 = findViewById(R.id.upload_building_6);
-        location_7 = findViewById(R.id.upload_building_7);
-        location_8 = findViewById(R.id.upload_building_8);
 
-        final CheckBox[] locations_arr = {location_1,location_2,location_3,location_4,location_5,location_6,location_7,location_8};
-        final List<CheckBox> locations_lst = new ArrayList<>(Arrays.asList(locations_arr));
-
-        location_1.setChecked(mPreferences.getBoolean(BOX1_KEY,false));
-        location_2.setChecked(mPreferences.getBoolean(BOX2_KEY,false));
-        location_3.setChecked(mPreferences.getBoolean(BOX3_KEY,false));
-        location_4.setChecked(mPreferences.getBoolean(BOX4_KEY,false));
-        location_5.setChecked(mPreferences.getBoolean(BOX5_KEY,false));
-        location_6.setChecked(mPreferences.getBoolean(BOX6_KEY,false));
-        location_7.setChecked(mPreferences.getBoolean(BOX7_KEY,false));
-        location_8.setChecked(mPreferences.getBoolean(BOX8_KEY,false));
+        locations = new CheckBox[8];
+        for (int i = 0; i < locations.length; i++) {
+            int resID = getResources().getIdentifier(String.format("upload_building_%s", i + 1), "id", getPackageName());
+            locations[i] = findViewById(resID);
+            locations[i].setChecked(mPreferences.getBoolean(String.format("BOX%s_KEY", i), false));
+        }
 
 
         contact_name = findViewById(R.id.upload_contact_name);
@@ -348,7 +320,7 @@ public class UploadActivity extends AppCompatActivity{
                 //If no date is entered.
 
 
-                for (CheckBox c : locations_lst) {
+                for (CheckBox c : locations) {
                     if (c.isChecked()) {
                         terminate = false;
                         break;
@@ -360,7 +332,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
-                for (CheckBox c : locations_lst) {
+                for (CheckBox c : locations) {
                     if (c.isChecked()) {
                         if(locations_checked.equals("")) {
                             locations_checked += c.getText();
@@ -497,14 +469,9 @@ public class UploadActivity extends AppCompatActivity{
             editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
             editor.putString(START_DATE_KEY, shared_start_date);
             editor.putString(STOP_DATE_KEY, shared_stop_date);
-            editor.putBoolean(BOX1_KEY, location_1.isChecked());
-            editor.putBoolean(BOX2_KEY, location_2.isChecked());
-            editor.putBoolean(BOX3_KEY, location_3.isChecked());
-            editor.putBoolean(BOX4_KEY, location_4.isChecked());
-            editor.putBoolean(BOX5_KEY, location_5.isChecked());
-            editor.putBoolean(BOX6_KEY, location_6.isChecked());
-            editor.putBoolean(BOX7_KEY, location_7.isChecked());
-            editor.putBoolean(BOX8_KEY, location_8.isChecked());
+            for (int i = 0; i < locations.length; i++) {
+                editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
+            }
             editor.apply();
     }
 }
