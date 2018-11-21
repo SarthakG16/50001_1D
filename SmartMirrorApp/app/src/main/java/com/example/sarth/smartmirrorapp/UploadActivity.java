@@ -100,24 +100,60 @@ public class UploadActivity extends AppCompatActivity{
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        //Preferences
+
+        // Preferences.
+
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        //Instantiating all the widgets
+        // Initialize title textView.
 
+        titleInput = findViewById(R.id.upload_title);
+        titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
 
-        upload_poster = findViewById(R.id.upload_poster);
-        Log.i(TAG,"Reached");
-        //PDF related widgets
+        // PDF related widgets.
+
         pdfView = findViewById(R.id.pdfView);
         poster_preview_button = findViewById(R.id.poster_preview_button);
         spinner_categories = findViewById(R.id.spinner_categories);
 
+        // Initialize the select poster button.
 
-        titleInput =findViewById(R.id.upload_title);
-        //Prefs
-        titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
+        upload_poster = findViewById(R.id.upload_poster);
 
+        // Initialize the category spibner.
+
+        final String[] cat = { "Select your Category", "Food", "Announcement", "Workshop", "Welfare", "Talks/Seminar", "Others" };
+
+        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
+        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, categories);
+        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_categories.setAdapter(adapter_categories);
+
+        String temp_spinner_category = mPreferences.getString(CAT_KEY,"Select your Category");
+        spinner_categories.setSelection(categories.indexOf(temp_spinner_category));
+
+        // Initialize calendar buttons and the textView.
+
+        start_date_button = findViewById(R.id.start_date_button);
+        stop_date_button = findViewById(R.id.stop_date_button);
+
+        date_start = findViewById(R.id.date_start);
+        date_stop = findViewById(R.id.date_stop);
+
+        date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date of screening Poster:" ));
+        date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date of screening Poster:"));
+
+        // Initialize contact details.
+
+        contact_name = findViewById(R.id.upload_contact_name);
+        contact_number = findViewById(R.id.upload_contact_number);
+        contact_email = findViewById(R.id.upload_contact_email);
+
+        contact_name.getEditText().setText(mPreferences.getString(NAME_KEY,""));
+        contact_number.getEditText().setText(mPreferences.getString(NUMBER_KEY,""));
+        contact_email.getEditText().setText(mPreferences.getString(EMAIL_KEY,""));
+
+        // Initialize location checkboxes.
 
         locations = new CheckBox[8];
         for (int i = 0; i < locations.length; i++) {
@@ -126,44 +162,8 @@ public class UploadActivity extends AppCompatActivity{
             locations[i].setChecked(mPreferences.getBoolean(String.format("BOX%s_KEY", i), false));
         }
 
-
-        contact_name = findViewById(R.id.upload_contact_name);
-        contact_number = findViewById(R.id.upload_contact_number);
-        contact_email = findViewById(R.id.upload_contact_email);
-        //Prefs
-        contact_name.getEditText().setText(mPreferences.getString(NAME_KEY,""));
-        contact_number.getEditText().setText(mPreferences.getString(NUMBER_KEY,""));
-        contact_email.getEditText().setText(mPreferences.getString(EMAIL_KEY,""));
-
-        upload_button= findViewById(R.id.upload_confirm_button);
-
-        //Calendar Buttons  + TextView
-        start_date_button = findViewById(R.id.start_date_button);
-        stop_date_button = findViewById(R.id.stop_date_button);
-
-
-        date_start = findViewById(R.id.date_start);
-        date_stop = findViewById(R.id.date_stop);
-
-        //Prefs
-        date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date of screening Poster:" ));
-        date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date of screening Poster:"));
-
-        //Spinner for categories begin
-        final String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
-
-        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
-
-        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item,
-                categories);
-        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_categories.setAdapter(adapter_categories);
-
-        //Pref
-        String temp_spinner_category = mPreferences.getString(CAT_KEY,"Select your Category");
-        spinner_categories.setSelection(categories.indexOf(temp_spinner_category));
-
-
+        // Initialize the upload button.
+        upload_button = findViewById(R.id.upload_confirm_button);
 
 
         //TODO: BUTTONS
