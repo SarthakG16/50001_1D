@@ -50,7 +50,7 @@
         android:id="@+id/recycler_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Category of Poster here"
+        android:text = "Name here"
         android:layout_toRightOf="@+id/recyler_item_pdf"
         android:layout_below="@+id/recyler_item_category"
         android:layout_toEndOf="@+id/recyler_item_pdf"

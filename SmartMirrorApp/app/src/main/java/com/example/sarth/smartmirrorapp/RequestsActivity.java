@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -15,8 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RequestsActivity extends AppCompatActivity {
@@ -24,7 +27,7 @@ public class RequestsActivity extends AppCompatActivity {
 
     //vars
     private RecyclerView requests;
-    private ArrayList<Poster> posters = new ArrayList<>();
+    private static List<Poster> posters = new ArrayList<>();
     private RecyclerViewAdapter recyclerViewAdapter;
     private Button search_options_button;
 
@@ -39,12 +42,15 @@ public class RequestsActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-        Log.i(TAG,"Reach Request Actiity");
+        Log.i(TAG,"Reach Request Activity");
 
         search_options_button = findViewById(R.id.requests_search_button);
         requests = findViewById(R.id.request_recycler);
 
-        posters = new ArrayList<>(Poster.requests);
+        HashMap<String, String> params = new HashMap<>();
+
+        getPosters(params);
+
         recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, posters);
         requests.setAdapter(recyclerViewAdapter);
         requests.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
@@ -55,6 +61,7 @@ public class RequestsActivity extends AppCompatActivity {
                 if (search_options_button.isActivated()) {
                     return;
                 }
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(RequestsActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
                 mBuilder.setTitle("Search Settings");
                 mBuilder.setIcon(R.drawable.list_icon);
@@ -74,6 +81,7 @@ public class RequestsActivity extends AppCompatActivity {
                 mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                     }
                 });
                 AlertDialog dialog = mBuilder.create();
@@ -114,5 +122,16 @@ public class RequestsActivity extends AppCompatActivity {
 
 
         return true;
+    }
+
+    public void getPosters (HashMap params) {
+        Request req = new Request("GET","posters", params, new Request.PostersCallback() {
+            @Override
+            public void onResponse(List<Poster> posters) {
+                Toast.makeText(RequestsActivity.this, "Received posters: " + posters.toString(), Toast.LENGTH_LONG).show();
+                RequestsActivity.posters = posters;
+            }
+        });
+        req.execute();
     }
 }

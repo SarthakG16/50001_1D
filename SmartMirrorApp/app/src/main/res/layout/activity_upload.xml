@@ -16,20 +16,34 @@
     android:focusableInTouchMode="true"
     tools:context=".UploadActivity"
     >
+
+    <TextView
+        android:id="@+id/upload_poster_details"
+        android:paddingTop="15dp"
+        android:layout_marginLeft="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "@string/poster_details"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginStart="7dp" />
+
+
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/upload_title"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:id="@+id/upload_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        android:layout_below="@id/upload_poster_details">
 
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -71,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/category"
+        android:textSize="16sp"
         android:layout_below="@+id/upload_poster"/>
 
     <Spinner
@@ -81,17 +96,68 @@
         android:layout_below="@+id/categories_title"/>
 
     <TextView
+        android:id="@+id/date_start"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/spinner_categories"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
+        android:paddingTop="15dp"
+        android:text="@string/upload_date_start"
+        android:textSize="16sp"
+        />
+
+    <ImageButton
+        android:id="@+id/start_date_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/spinner_categories"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/poster_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/calendar_icon"
+        android:layout_toRightOf="@+id/poster_layout" />
+    <TextView
+        android:id="@+id/date_stop"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/date_start"
+        android:layout_marginLeft="7dp"
+        android:layout_marginStart="7dp"
+        android:paddingTop="15dp"
+        android:text="@string/upload_date_stop"
+        android:textSize="16sp"
+        />
+    <ImageButton
+        android:id="@+id/stop_date_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/date_start"
+        android:layout_toEndOf="@+id/poster_layout"
+        android:scaleType="fitXY"
+        android:src="@drawable/calendar_icon"
+        android:layout_toRightOf="@+id/poster_layout" />
+
+
+
+
+
+    <TextView
         android:id="@+id/upload_contact"
         android:paddingTop="15dp"
         android:layout_marginLeft="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/contact_details"
-        android:layout_below="@+id/spinner_categories"/>
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@+id/date_stop"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/upload_contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,7 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
@@ -120,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/number"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:inputType="number" />
 
     </android.support.design.widget.TextInputLayout>
@@ -147,10 +213,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/upload_grid"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:text="@string/confirm" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/date_start"
         android:layout_width="250dp"
         android:layout_height="50dp"
@@ -186,7 +252,7 @@
         android:layout_toEndOf="@+id/poster_layout"
         android:scaleType="fitXY"
         android:src="@drawable/calendar_button"
-        android:layout_toRightOf="@+id/poster_layout" />
+        android:layout_toRightOf="@+id/poster_layout" />-->
 
 
     <TextView
@@ -196,7 +262,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/locations"
-        android:layout_below="@+id/date_stop"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_below="@+id/upload_contact_email"
         android:layout_marginStart="7dp" />
 
 

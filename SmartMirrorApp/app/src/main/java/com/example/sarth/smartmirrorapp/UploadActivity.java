@@ -39,6 +39,7 @@ import java.util.Calendar;
 
 import org.apache.commons.io.IOUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -84,6 +85,9 @@ public class UploadActivity extends AppCompatActivity{
     private String number;
     private String email;
     private String serialized_data;
+
+    private Date start = Calendar.getInstance().getTime();
+    private Date stop = null;
 
     private PDFView pdfView;
     private final static String TAG = "Logcat";
@@ -240,6 +244,15 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
+
+                        if (stop != null) {
+                            if (c.getTime().after(stop)) {
+                                Toast.makeText(UploadActivity.this, "Please choose a Start Date before the Last Date",
+                                        Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                        start = c.getTime();
                         server_start_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_start_date += "00:00:00";
                         shared_start_date = DateFormat.getDateInstance().format(c.getTime());
@@ -264,6 +277,12 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
+                        if(c.getTime().before(start)) {
+                            Toast.makeText(UploadActivity.this,"Please choose a Stop date after the Start Date"
+                            ,Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        stop = c.getTime();
                         server_stop_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_stop_date += "23:59:59";
                         shared_stop_date = DateFormat.getDateInstance().format(c.getTime());
@@ -305,6 +324,15 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
+                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(!name_correct){
                     Toast.makeText(UploadActivity.this,"Please enter your name",Toast.LENGTH_LONG).show();
                     return;
@@ -319,14 +347,6 @@ public class UploadActivity extends AppCompatActivity{
                 }
                 //If no date is entered.
 
-                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
 
                 for (CheckBox c : locations_lst) {
                     if (c.isChecked()) {
