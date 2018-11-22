@@ -45,6 +45,7 @@ import java.util.Calendar;
 
 import org.apache.commons.io.IOUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,14 +55,7 @@ public class UploadActivity extends AppCompatActivity{
     private Uri posterUri;
     private Spinner spinner_categories;
 
-    private CheckBox location_1;
-    private CheckBox location_2;
-    private CheckBox location_3;
-    private CheckBox location_4;
-    private CheckBox location_5;
-    private CheckBox location_6;
-    private CheckBox location_7;
-    private CheckBox location_8;
+    private CheckBox[] locations;
 
     private TextInputLayout titleInput;
     private TextInputLayout contact_name;
@@ -91,6 +85,9 @@ public class UploadActivity extends AppCompatActivity{
     private String email;
     private String serialized_data;
 
+    private Date start = Calendar.getInstance().getTime();
+    private Date stop = null;
+
     private PDFView pdfView;
     private final static String TAG = "Logcat";
     private SharedPreferences mPreferences;
@@ -102,14 +99,6 @@ public class UploadActivity extends AppCompatActivity{
     public static final String EMAIL_KEY = "Email_Key";
     public static final String START_DATE_KEY = "Date0_Key";
     public static final String STOP_DATE_KEY = "Date1_Key";
-    public static final String BOX1_KEY = "Box1_Key";
-    public static final String BOX2_KEY = "Box2_Key";
-    public static final String BOX3_KEY = "Box3_Key";
-    public static final String BOX4_KEY = "Box4_Key";
-    public static final String BOX5_KEY = "Box5_Key";
-    public static final String BOX6_KEY = "Box6_Key";
-    public static final String BOX7_KEY = "Box7_Key";
-    public static final String BOX8_KEY = "Box8_Key";
 
     private final static int PICK_FILE_REQUEST = 1;
 
@@ -117,83 +106,70 @@ public class UploadActivity extends AppCompatActivity{
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        //Preferences
+
+        // Preferences.
+
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        //Instantiating all the widgets
+        // Initialize title textView.
 
+        titleInput = findViewById(R.id.upload_title);
+        titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
 
-        upload_poster = findViewById(R.id.upload_poster);
-        Log.i(TAG,"Reached");
-        //PDF related widgets
+        // PDF related widgets.
+
         pdfView = findViewById(R.id.pdfView);
         poster_preview_button = findViewById(R.id.poster_preview_button);
         spinner_categories = findViewById(R.id.spinner_categories);
 
+        // Initialize the select poster button.
 
-        titleInput =findViewById(R.id.upload_title);
-        //Prefs
-        titleInput.getEditText().setText(mPreferences.getString(TITLE_KEY,""));
+        upload_poster = findViewById(R.id.upload_poster);
 
-        location_1 = findViewById(R.id.upload_building_1);
-        location_2 = findViewById(R.id.upload_building_2);
-        location_3 = findViewById(R.id.upload_building_3);
-        location_4 = findViewById(R.id.upload_building_4);
-        location_5 = findViewById(R.id.upload_building_5);
-        location_6 = findViewById(R.id.upload_building_6);
-        location_7 = findViewById(R.id.upload_building_7);
-        location_8 = findViewById(R.id.upload_building_8);
+        // Initialize the category spibner.
 
-        final CheckBox[] locations_arr = {location_1,location_2,location_3,location_4,location_5,location_6,location_7,location_8};
-        final List<CheckBox> locations_lst = new ArrayList<>(Arrays.asList(locations_arr));
+        final String[] cat = { "Select your Category", "Food", "Announcement", "Workshop", "Welfare", "Talks/Seminar", "Others" };
 
-        location_1.setChecked(mPreferences.getBoolean(BOX1_KEY,false));
-        location_2.setChecked(mPreferences.getBoolean(BOX2_KEY,false));
-        location_3.setChecked(mPreferences.getBoolean(BOX3_KEY,false));
-        location_4.setChecked(mPreferences.getBoolean(BOX4_KEY,false));
-        location_5.setChecked(mPreferences.getBoolean(BOX5_KEY,false));
-        location_6.setChecked(mPreferences.getBoolean(BOX6_KEY,false));
-        location_7.setChecked(mPreferences.getBoolean(BOX7_KEY,false));
-        location_8.setChecked(mPreferences.getBoolean(BOX8_KEY,false));
+        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
+        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item, categories);
+        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_categories.setAdapter(adapter_categories);
 
+        String temp_spinner_category = mPreferences.getString(CAT_KEY,"Select your Category");
+        spinner_categories.setSelection(categories.indexOf(temp_spinner_category));
 
-        contact_name = findViewById(R.id.upload_contact_name);
-        contact_number = findViewById(R.id.upload_contact_number);
-        contact_email = findViewById(R.id.upload_contact_email);
-        //Prefs
-        contact_name.getEditText().setText(mPreferences.getString(NAME_KEY,""));
-        contact_number.getEditText().setText(mPreferences.getString(NUMBER_KEY,""));
-        contact_email.getEditText().setText(mPreferences.getString(EMAIL_KEY,""));
+        // Initialize calendar buttons and the textView.
 
-        upload_button= findViewById(R.id.upload_confirm_button);
-
-        //Calendar Buttons  + TextView
         start_date_button = findViewById(R.id.start_date_button);
         stop_date_button = findViewById(R.id.stop_date_button);
-
 
         date_start = findViewById(R.id.date_start);
         date_stop = findViewById(R.id.date_stop);
 
-        //Prefs
         date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date of screening Poster:" ));
         date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date of screening Poster:"));
 
-        //Spinner for categories begin
-        final String[] cat = {"Select your Category","Food","Announcement","Workshop","Welfare","Talks/Seminar","Others"};
+        // Initialize contact details.
 
-        List<String> categories =  new ArrayList<>(Arrays.asList(cat));
+        contact_name = findViewById(R.id.upload_contact_name);
+        contact_number = findViewById(R.id.upload_contact_number);
+        contact_email = findViewById(R.id.upload_contact_email);
 
-        ArrayAdapter<String> adapter_categories = new ArrayAdapter<>(UploadActivity.this, android.R.layout.simple_spinner_item,
-                categories);
-        adapter_categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_categories.setAdapter(adapter_categories);
+        contact_name.getEditText().setText(mPreferences.getString(NAME_KEY,""));
+        contact_number.getEditText().setText(mPreferences.getString(NUMBER_KEY,""));
+        contact_email.getEditText().setText(mPreferences.getString(EMAIL_KEY,""));
 
-        //Pref
-        String temp_spinner_category = mPreferences.getString(CAT_KEY,"Select your Category");
-        spinner_categories.setSelection(categories.indexOf(temp_spinner_category));
+        // Initialize location checkboxes.
 
+        locations = new CheckBox[8];
+        for (int i = 0; i < locations.length; i++) {
+            int resID = getResources().getIdentifier(String.format("upload_building_%s", i + 1), "id", getPackageName());
+            locations[i] = findViewById(resID);
+            locations[i].setChecked(mPreferences.getBoolean(String.format("BOX%s_KEY", i), false));
+        }
 
+        // Initialize the upload button.
+        upload_button = findViewById(R.id.upload_confirm_button);
 
 
         //TODO: BUTTONS
@@ -246,6 +222,15 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
+
+                        if (stop != null) {
+                            if (c.getTime().after(stop)) {
+                                Toast.makeText(UploadActivity.this, "Please choose a Start Date before the Last Date",
+                                        Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                        start = c.getTime();
                         server_start_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_start_date += "00:00:00";
                         shared_start_date = DateFormat.getDateInstance().format(c.getTime());
@@ -270,6 +255,12 @@ public class UploadActivity extends AppCompatActivity{
                         c.set(Calendar.YEAR, year);
                         c.set(Calendar.MONTH, month);
                         c.set(Calendar.DATE, dayOfMonth);
+                        if(c.getTime().before(start)) {
+                            Toast.makeText(UploadActivity.this,"Please choose a Stop date after the Start Date"
+                            ,Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        stop = c.getTime();
                         server_stop_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_stop_date += "23:59:59";
                         shared_stop_date = DateFormat.getDateInstance().format(c.getTime());
@@ -311,6 +302,15 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
+                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
+                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(!name_correct){
                     Toast.makeText(UploadActivity.this,"Please enter your name",Toast.LENGTH_LONG).show();
                     return;
@@ -325,16 +325,8 @@ public class UploadActivity extends AppCompatActivity{
                 }
                 //If no date is entered.
 
-                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
 
-                for (CheckBox c : locations_lst) {
+                for (CheckBox c : locations) {
                     if (c.isChecked()) {
                         terminate = false;
                         break;
@@ -346,7 +338,7 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
-                for (CheckBox c : locations_lst) {
+                for (CheckBox c : locations) {
                     if (c.isChecked()) {
                         if(locations_checked.equals("")) {
                             locations_checked += c.getText();
@@ -483,14 +475,9 @@ public class UploadActivity extends AppCompatActivity{
             editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
             editor.putString(START_DATE_KEY, shared_start_date);
             editor.putString(STOP_DATE_KEY, shared_stop_date);
-            editor.putBoolean(BOX1_KEY, location_1.isChecked());
-            editor.putBoolean(BOX2_KEY, location_2.isChecked());
-            editor.putBoolean(BOX3_KEY, location_3.isChecked());
-            editor.putBoolean(BOX4_KEY, location_4.isChecked());
-            editor.putBoolean(BOX5_KEY, location_5.isChecked());
-            editor.putBoolean(BOX6_KEY, location_6.isChecked());
-            editor.putBoolean(BOX7_KEY, location_7.isChecked());
-            editor.putBoolean(BOX8_KEY, location_8.isChecked());
+            for (int i = 0; i < locations.length; i++) {
+                editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
+            }
             editor.apply();
     }
 }

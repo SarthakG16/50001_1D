@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".UploadActivity"
+        >
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:id="@+id/upload_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            app:errorEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title"
+                android:textSize="15sp"
+                android:inputType="text" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <FrameLayout
+            android:id="@+id/poster_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/upload_title">
+
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfView"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="5dp"
+                />
+            <Button
+                android:id="@+id/poster_preview_button"
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="5dp"
+                android:alpha="0"
+                />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/categories_title"
+            android:paddingTop="15dp"
+            android:layout_marginLeft="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:layout_below="@+id/poster_layout"/>
+
+
+        <TextView
+            android:id="@+id/upload_contact"
+            android:paddingTop="15dp"
+            android:layout_marginLeft="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_details"
+            android:layout_below="@+id/categories_title"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:id="@+id/upload_contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:layout_below="@+id/upload_contact">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textSize="15sp"
+                android:inputType="text" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:id="@+id/upload_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:layout_below="@+id/upload_contact_name">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number"
+                android:textSize="15sp"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/upload_contact_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upload_contact_number"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            app:errorEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/date_start"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/upload_contact_email"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
+            android:paddingTop="15dp"
+            android:text="@string/upload_date_start" />
+
+
+        <TextView
+            android:id="@+id/date_stop"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/date_start"
+            android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
+            android:paddingTop="15dp"
+            android:text="@string/upload_date_stop" />
+
+
+        <TextView
+            android:id="@+id/upload_locations"
+            android:layout_marginLeft="7dp"
+            android:paddingTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/locations"
+            android:layout_below="@+id/date_stop"
+            android:layout_marginStart="7dp" />
+
+
+        <GridLayout
+            android:id="@+id/upload_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/upload_locations"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="7dp"
+            android:columnCount="3"
+            android:rowCount="3">
+
+            <CheckBox
+                android:id="@+id/upload_building_1"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="@string/building_1" />
+
+            <CheckBox
+                android:id="@+id/upload_building_2"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="@string/building_2" />
+
+            <CheckBox
+                android:id="@+id/upload_building_3"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_row="0"
+                android:text="@string/building_3"/>
+
+            <CheckBox
+                android:id="@+id/upload_building_4"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="@string/building_4" />
+
+            <CheckBox
+                android:id="@+id/upload_building_5"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="@string/building_5"/>
+
+            <CheckBox
+                android:id="@+id/upload_building_6"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_row="1"
+                android:text="@string/building_6" />
+
+            <CheckBox
+                android:id="@+id/upload_building_7"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="@string/building_7" />
+
+            <CheckBox
+                android:id="@+id/upload_building_8"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="@string/building_8"/>
+
+
+
+        </GridLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/categories_title"
+            android:background="?android:attr/listDivider" />
+
+
+    </RelativeLayout>
+</ScrollView>
+
