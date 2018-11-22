@@ -219,7 +219,7 @@ public class UploadActivity extends AppCompatActivity{
 
                         if (stop != null) {
                             if (c.getTime().after(stop)) {
-                                Toast.makeText(UploadActivity.this, "Please choose a Start Date before the Last Date",
+                                Toast.makeText(UploadActivity.this, "Please choose a Start Date before the Stop Date",
                                         Toast.LENGTH_LONG).show();
                                 return;
                             }
@@ -370,7 +370,7 @@ public class UploadActivity extends AppCompatActivity{
 
                 Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,serialized_data);
                 Poster.requests.add(poster);
-               /* HashMap<String, String> params = new HashMap<>();
+/*                HashMap<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("category", category);
                 params.put("contact_name", name);
@@ -379,7 +379,7 @@ public class UploadActivity extends AppCompatActivity{
                 params.put("date_posted", server_start_date);
                 params.put("date_expiry", server_stop_date);
                 params.put("locations", locations_checked);
-                params.put("serialized_image_data", data);
+                params.put("serialized_image_data", serialized_data);
                 //TODO put the parameters in
 
                 Request req = new Request("POST","posters/", params, new Request.Callback() {

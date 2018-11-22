@@ -34,6 +34,10 @@
         <activity android:name=".RequestsActivity"
             android:parentActivityName=".MainActivity"
             android:label="Requests"/>
+        <activity android:name=".JudgementActivity"
+            android:parentActivityName=".RequestsActivity"
+            android:label=""
+            />
 
     </application>
 

@@ -49,7 +49,8 @@ public class RequestsActivity extends AppCompatActivity {
 
         HashMap<String, String> params = new HashMap<>();
 
-        getPosters(params);
+        //getPosters(params);
+        posters = Poster.requests;
 
         recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, posters);
         requests.setAdapter(recyclerViewAdapter);

@@ -19,7 +19,9 @@ public class Poster implements Serializable{
     public String locations;
     public String serialized_data;
     public byte[] data;
-    public static HashMap<String,Poster> archive = new HashMap<>();
+
+    public String status;
+    //public static HashMap<String,Poster> archive = new HashMap<>();
     public static List<Poster> requests = new ArrayList<>();
 
 
@@ -47,6 +49,7 @@ public class Poster implements Serializable{
         this.postDate = params.get("date_posted");
         this.expiryDate = params.get("date_expiry");
         this.locations = params.get("locations");
+
     }
 
     public String toString() {

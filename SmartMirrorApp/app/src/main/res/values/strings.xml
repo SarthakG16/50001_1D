@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartMirrorApp</string>
+    <string name="app_name">Smart Mirror</string>
     <string name="action_settings">Settings</string>
     <string name="poster_details">Poster Details:</string>
     <string name="title">Title</string>
@@ -11,8 +11,8 @@
     <string name="contact_details">Contact Details: </string>
     <string name="confirm">Confirm</string>
     <string name="locations">Locations: </string>
-    <string name="upload_date_start">Start Date of screening Poster: </string>
-    <string name="upload_date_stop">Stop Date of screening Poster: </string>
+    <string name="upload_date_start">Start Date: </string>
+    <string name="upload_date_stop">Stop Date: </string>
     <string name="building_1">Building 1</string>
     <string name="building_2">Building 2</string>
     <string name="building_3">Building 3</string>

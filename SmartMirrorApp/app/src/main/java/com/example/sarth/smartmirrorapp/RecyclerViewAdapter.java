@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,9 +59,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.i(TAG,"OnBindViewHolder is called");
-        Poster poster = posterList.get(position);
+        final Poster poster = posterList.get(position);
         holder.pdfView.fromBytes(poster.data).load();
         holder.titleView.setText(poster.title);
         holder.categoryView.setText(String.format("Category: %s", poster.category));
@@ -69,6 +70,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 //TODO: Intent to Approve/Reject OR DialogBox to Approve/Reject.
+                Intent judgementTime = new Intent(mContext,JudgementActivity.class);
+                judgementTime.putExtra("Position", position);
+                mContext.startActivity(judgementTime);
                 Toast.makeText(mContext, "Go To Request Approval Page", Toast.LENGTH_LONG).show();
             }
         });

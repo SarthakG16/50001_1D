@@ -69,25 +69,25 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
                 HashMap<String, String> params = new HashMap<>();
-//                params.put("username", "admin1");
-//                params.put("password", "hahaha");
-//                params.put("requested_privelage", "administrator");
-//                Request req = new Request("POST","auth/login", params, new Request.Callback () {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Toast.makeText(MainActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-                Request req = new Request("GET","posters", params, new Request.PostersCallback() {
+                params.put("username", "admin1");
+                params.put("password", "hahaha");
+                params.put("requested_privelage", "administrator");
+                Request req = new Request("POST","auth/login", params, new Request.Callback () {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(MainActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                   }
+                });
+                /*Request req = new Request("GET","posters", params, new Request.PostersCallback() {
                     @Override
                     public void onResponse(List<Poster> posters) {
                         Toast.makeText(MainActivity.this, "Received posters: " + posters.toString(), Toast.LENGTH_LONG).show();
                     }
-                });
+                });*/
                 req.execute();
 
             }
