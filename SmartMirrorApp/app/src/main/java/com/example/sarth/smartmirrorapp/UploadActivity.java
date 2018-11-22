@@ -370,7 +370,7 @@ public class UploadActivity extends AppCompatActivity{
 
                 Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,serialized_data);
                 Poster.requests.add(poster);
-/*                HashMap<String, String> params = new HashMap<>();
+                HashMap<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("category", category);
                 params.put("contact_name", name);
@@ -390,13 +390,12 @@ public class UploadActivity extends AppCompatActivity{
                         if (response.contains("Poster already exists with given title")) {
                             titleInput.setError("Title Already Exists");
                             Toast.makeText(UploadActivity.this,"Title already exists", Toast.LENGTH_LONG).show();
-
                         }
                         Log.i(TAG,response);
                     }
                 });
                 req.execute();
-                clear = true;*/
+                //clear = true;
 
             }
         });

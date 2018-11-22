@@ -24,20 +24,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".UploadActivity"
-            android:parentActivityName = ".MainActivity"
             android:label="Upload">
         </activity>
-        <activity android:name=".FilterActivity"
-            android:parentActivityName = ".MainActivity"
-            android:label="Filter">
-        </activity>
         <activity android:name=".RequestsActivity"
-            android:parentActivityName=".MainActivity"
             android:label="Requests"/>
         <activity android:name=".JudgementActivity"
-            android:parentActivityName=".RequestsActivity"
-            android:label=""
             />
+        <activity android:name=".SearchActivity"
+            android:label="Search"/>
 
     </application>
 

@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         button_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainToFilter = new Intent(MainActivity.this,FilterActivity.class);
-                Log.i(TAG,"Moving to filter page");
+                Intent mainToFilter = new Intent(MainActivity.this,SearchActivity.class);
+                Log.i(TAG,"Moving to search page");
                 startActivity(mainToFilter);
             }
         });
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
 
                 HashMap<String, String> params = new HashMap<>();
                 params.put("username", "admin1");

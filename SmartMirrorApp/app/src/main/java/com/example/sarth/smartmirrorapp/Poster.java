@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Poster implements Serializable{
+    public String id;
     public String title;
     public String category;
     public String name;
@@ -18,9 +19,9 @@ public class Poster implements Serializable{
     public String expiryDate;
     public String locations;
     public String serialized_data;
+    public String  status;
     public byte[] data;
 
-    public String status;
     //public static HashMap<String,Poster> archive = new HashMap<>();
     public static List<Poster> requests = new ArrayList<>();
 
@@ -43,12 +44,15 @@ public class Poster implements Serializable{
     public Poster(Map<String, String> params) {
         this.title = params.get("title");
         this.category = params.get("category");
-        this.name = params.get("name");
+        this.name = params.get("contact_name");
         this.number = params.get("contact_number");
         this.email = params.get("contact_email");
         this.postDate = params.get("date_posted");
         this.expiryDate = params.get("date_expiry");
         this.locations = params.get("locations");
+        this.serialized_data = params.get("serialized_image_data");
+        this.data = Base64.decode(serialized_data);
+        this.status = params.get("status");
 
     }
 
