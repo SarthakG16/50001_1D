@@ -1,5 +1,6 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,11 +21,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RequestsActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
     public static final String TAG =  "Logcat";
 
     //vars
-    private RecyclerView requests;
+    private RecyclerView search_recycler;
     private static List<Poster> posters = new ArrayList<>();
     private RecyclerViewAdapter recyclerViewAdapter;
     private Button search_options_button;
@@ -41,10 +42,10 @@ public class RequestsActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-        Log.i(TAG,"Reach Request Activity");
+        Log.i(TAG, "Reach Request Activity");
 
         search_options_button = findViewById(R.id.requests_search_button);
-        requests = findViewById(R.id.request_recycler);
+        search_recycler = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
@@ -67,7 +68,7 @@ public class RequestsActivity extends AppCompatActivity {
                     return;
                 }
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(RequestsActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(SearchActivity.this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
                 mBuilder.setTitle("Search Settings");
                 mBuilder.setIcon(R.drawable.list_icon);
                 mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
@@ -129,32 +130,32 @@ public class RequestsActivity extends AppCompatActivity {
         return true;
     }
 
+
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
-
-
         Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
                 List<Poster> filtered = new ArrayList<>();
 
                 for (Poster p : posters) {
-                    if (p.status.equals("pending")) {
+                    if (p.status.equals("pending")) {  //TODO change to "posted"
                         filtered.add(p);
                     }
                 }
 
-                RequestsActivity.posters = filtered;
+                SearchActivity.posters = filtered;
                 Poster.requests = filtered;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, filtered,"Request");
-                requests.setAdapter(recyclerViewAdapter);
-                requests.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
+                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, filtered,"Search");
+                search_recycler.setAdapter(recyclerViewAdapter);
+                search_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 
                 progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
             }
         });
         req.execute();
+
     }
 }

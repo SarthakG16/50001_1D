@@ -24,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private List<Poster> posterList = new ArrayList<>();
     private List<Poster> searchList = new ArrayList<>();
+    private String origin;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         PDFView pdfView;
@@ -45,10 +46,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public RecyclerViewAdapter(Context mContext, List<Poster> posterList) {
+    public RecyclerViewAdapter(Context mContext, List<Poster> posterList, String origin) {
         this.mContext = mContext;
         this.posterList = posterList;
         this.searchList = new ArrayList<>(posterList);
+        this.origin = origin;
     }
 
     @NonNull
@@ -57,11 +59,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycleritem,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.i(TAG,"OnBindViewHolder is called");
+
         final Poster poster = posterList.get(position);
+        holder.setIsRecyclable(false);
         holder.pdfView.fromBytes(poster.data).load();
         holder.titleView.setText(poster.title);
         holder.categoryView.setText(String.format("Category: %s", poster.category));
@@ -69,11 +72,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Intent to Approve/Reject OR DialogBox to Approve/Reject.
-                Intent judgementTime = new Intent(mContext,JudgementActivity.class);
+                Intent judgementTime = new Intent(mContext, JudgementActivity.class);
                 judgementTime.putExtra("Position", position);
+                judgementTime.putExtra("Origin",origin);
                 mContext.startActivity(judgementTime);
-                Toast.makeText(mContext, "Go To Request Approval Page", Toast.LENGTH_LONG).show();
             }
         });
     }

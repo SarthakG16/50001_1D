@@ -21,6 +21,9 @@
     <string name="building_6">Block 55</string>
     <string name="building_7">Block 57</string>
     <string name="building_8">Block 59</string>
+    <string name="reject">Reject</string>
+    <string name="approve">Approve</string>
+    <string name="remove">Remove</string>
     <string name="logout">Logout</string>
     <string name="request">Request</string>
     <string name="upload">Upload</string>

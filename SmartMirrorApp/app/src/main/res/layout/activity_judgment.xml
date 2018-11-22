@@ -75,8 +75,8 @@
 
 
         <TextView
-            android:id="@+id/date_start"
-            android:layout_width="250dp"
+            android:id="@+id/judge_date_start"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/judge_categories_title"
             android:layout_marginLeft="7dp"
@@ -88,21 +88,16 @@
             />
 
         <TextView
-            android:id="@+id/date_stop"
-            android:layout_width="250dp"
+            android:id="@+id/judge_date_stop"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/date_start"
+            android:layout_below="@+id/judge_date_start"
             android:layout_marginLeft="7dp"
             android:layout_marginStart="7dp"
             android:paddingTop="15dp"
             android:text="@string/upload_date_stop"
             android:textSize="16sp"
             />
-
-
-
-
-
 
         <TextView
             android:id="@+id/judge_contact"
@@ -113,7 +108,7 @@
             android:text="@string/contact_details"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_below="@+id/date_stop"/>
+            android:layout_below="@+id/judge_date_stop"/>
 
 
         <TextView
@@ -149,9 +144,7 @@
             android:layout_below="@id/judge_contact_number"
             android:textSize="16sp"
             />
-
-
-
+        
         <TextView
             android:id="@+id/upload_locations"
             android:layout_marginLeft="7dp"
@@ -247,6 +240,40 @@
                 android:layout_row="2"
                 android:text="@string/building_8"/>
         </GridLayout>
+        
+        <LinearLayout
+            android:id="@+id/judge_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_margin="7dp"
+            android:layout_below="@id/judge_grid"
+            >
+            <Button
+                android:id="@+id/judge_reject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/reject"
+                android:onClick="reject" />
+            <Button
+                android:id="@+id/judge_approve"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="@string/approve"
+                android:onClick="approve" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/judge_remove_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"
+            android:layout_below="@id/judge_grid"
+            android:layout_margin="7dp"
+            android:visibility="invisible"
+            android:onClick="remove"/>
 
     </RelativeLayout>
 </ScrollView>
