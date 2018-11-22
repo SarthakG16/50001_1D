@@ -12,8 +12,7 @@ public class JudgementActivity extends AppCompatActivity{
 
     private TextView title;
 
-    private PDFView pdfView
-            ;
+    private PDFView pdfView;
     private TextView category;
     private TextView start_date;
     private TextView stop_date;

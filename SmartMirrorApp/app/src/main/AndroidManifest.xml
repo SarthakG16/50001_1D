@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sarth.smartmirrorapp">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,33 +13,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">>
+        android:usesCleartextTraffic="true">
+        >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UploadActivity"
-            android:parentActivityName = ".MainActivity"
-            android:label="Upload">
-        </activity>
-        <activity android:name=".FilterActivity"
-            android:parentActivityName = ".MainActivity"
-            android:label="Filter">
-        </activity>
-        <activity android:name=".RequestsActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="Requests"/>
-        <activity android:name=".JudgementActivity"
-            android:parentActivityName=".RequestsActivity"
+        <activity
+            android:name=".UploadActivity"
+            android:label="Upload"
+            android:parentActivityName=".GuestActivity" />
+        <activity
+            android:name=".FilterActivity"
+            android:label="Filter"
+            android:parentActivityName=".AdminActivity" />
+        <activity
+            android:name=".RequestsActivity"
+            android:label="Requests"
+            android:parentActivityName=".AdminActivity" />
+        <activity
+            android:name=".JudgementActivity"
             android:label=""
-            />
-
+            android:parentActivityName=".RequestsActivity" />
+        <activity android:name=".UserHome" />
+        <activity
+            android:name=".AdminActivity"
+            android:label="@string/title_activity_admin"/>
+        <activity android:name=".GuestActivity"
+            android:label="@string/title_activity_guest"
+            ></activity>
     </application>
 
 </manifest>

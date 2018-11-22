@@ -2,6 +2,8 @@ package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,9 +23,8 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
 
-    private Button button_upload;
-    private Button button_filter;
-    private Button button_request;
+    private Button button_admin;
+    private Button button_guest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,38 +33,29 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        button_admin = findViewById(R.id.toAdmin);
+        button_guest = findViewById(R.id.toGuest);
+
+        button_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginToAdmin = new Intent(MainActivity.this,AdminActivity.class);
+                Log.i(TAG,"Moving to Admin page");
+                startActivity(loginToAdmin);
+            }
+        });
+
+        button_guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginToGuest= new Intent(MainActivity.this,GuestActivity.class);
+                Log.i(TAG,"Moving to Guest page");
+                startActivity(loginToGuest);
+            }
+        });
+
         CookieManager cookieManager = new CookieManager();
         CookieHandler.setDefault(cookieManager);
-
-        button_upload = findViewById(R.id.button_upload);
-        button_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainToUpload = new Intent(MainActivity.this,UploadActivity.class);
-                Log.i(TAG,"Moving to upload page");
-                startActivity(mainToUpload);
-            }
-        });
-
-        button_filter = findViewById(R.id.button_filter);
-        button_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainToFilter = new Intent(MainActivity.this,FilterActivity.class);
-                Log.i(TAG,"Moving to filter page");
-                startActivity(mainToFilter);
-            }
-        });
-
-        button_request = findViewById(R.id.button_request);
-        button_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainToRequest = new Intent(MainActivity.this, RequestsActivity.class);
-                Log.i(TAG,"Moving to Filter");
-                startActivity(mainToRequest);
-            }
-        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,27 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
