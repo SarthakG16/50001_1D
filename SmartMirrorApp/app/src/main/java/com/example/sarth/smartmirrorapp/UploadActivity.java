@@ -7,26 +7,20 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -234,7 +228,7 @@ public class UploadActivity extends AppCompatActivity{
                         server_start_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_start_date += "00:00:00";
                         shared_start_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_start.setText(shared_start_date);
+                        date_start.setText("Start date: " + shared_start_date);
                     }
                 },year,month,day);
                 dpd_start.show();
@@ -264,7 +258,7 @@ public class UploadActivity extends AppCompatActivity{
                         server_stop_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_stop_date += "23:59:59";
                         shared_stop_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_stop.setText(shared_stop_date);
+                        date_stop.setText("Stop date: " + shared_stop_date);
                     }
                 },year,month,day);
                 dpd_stop.show();
@@ -473,8 +467,8 @@ public class UploadActivity extends AppCompatActivity{
             editor.putString(NAME_KEY,contact_name.getEditText().getText().toString());
             editor.putString(NUMBER_KEY,contact_number.getEditText().getText().toString());
             editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
-            editor.putString(START_DATE_KEY, shared_start_date);
-            editor.putString(STOP_DATE_KEY, shared_stop_date);
+            editor.putString(START_DATE_KEY, date_start.getText().toString());
+            editor.putString(STOP_DATE_KEY, date_stop.getText().toString());
             for (int i = 0; i < locations.length; i++) {
                 editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
             }
