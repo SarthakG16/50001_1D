@@ -36,8 +36,8 @@ public class AdminActivity extends AppCompatActivity {
         text_request= findViewById(R.id.RequestContentView);
         text_search= findViewById(R.id.SearchContentView);
 
-        text_request.setText("You have" + "pending posters.");
-        text_search.setText("There are currently" + "posters.");
+        text_request.setText("You have " + " pending posters.");
+        text_search.setText("There are currently " + " posters.");
 
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +51,9 @@ public class AdminActivity extends AppCompatActivity {
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AdminToFilter = new Intent(AdminActivity.this,FilterActivity.class);
+                Intent AdminToSearch= new Intent(AdminActivity.this,SearchActivity.class);
                 Log.i(TAG,"Moving to Search page");
-                startActivity(AdminToFilter);
+                startActivity(AdminToSearch);
             }
         });
     }

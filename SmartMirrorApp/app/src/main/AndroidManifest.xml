@@ -28,33 +28,21 @@
             android:label="Upload"
             android:parentActivityName=".GuestActivity" />
         <activity
-            android:name=".FilterActivity"
-            android:label="Filter"
-            android:parentActivityName=".AdminActivity" />
-        <activity
             android:name=".RequestsActivity"
             android:label="Requests"
             android:parentActivityName=".AdminActivity" />
         <activity
-            android:name=".JudgementActivity"
-            android:label=""
-            android:parentActivityName=".RequestsActivity" />
-        <activity android:name=".UserHome" />
-        <activity
             android:name=".AdminActivity"
-            android:label="@string/title_activity_admin"/>
+            android:label="@string/title_activity_admin"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".GuestActivity"
-            android:label="@string/title_activity_guest"
-            ></activity>
-        <activity android:name=".UploadActivity"
-            android:label="Upload">
+            android:label="@string/title_activity_guest">
         </activity>
-        <activity android:name=".RequestsActivity"
-            android:label="Requests"/>
         <activity android:name=".JudgementActivity"
-            />
+            android:parentActivityName=".RequestsActivity"/>
         <activity android:name=".SearchActivity"
-            android:label="Search"/>
+            android:label="Search"
+            android:parentActivityName=".AdminActivity" />
 
     </application>
 
