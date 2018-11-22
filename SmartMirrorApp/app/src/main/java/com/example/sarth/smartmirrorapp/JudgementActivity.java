@@ -95,6 +95,7 @@ public class JudgementActivity extends AppCompatActivity{
             if (poster.locations.contains(locations[i].getText().toString())) {
                 locations[i].setChecked(true);
             }
+            locations[i].setClickable(false); // Not allowing the checkbox to be clickable so that Admin may not click by mistake
         }
 
 
