@@ -50,6 +50,7 @@ public class JudgementActivity extends AppCompatActivity{
         int position = intent.getIntExtra("Position",0);
         poster = Poster.requests.get(position);
         setTitle(poster.title);
+        Toast.makeText(JudgementActivity.this,poster.id,Toast.LENGTH_LONG).show();
 
         origin = intent.getStringExtra("Origin");
 
@@ -112,12 +113,14 @@ public class JudgementActivity extends AppCompatActivity{
             }
         });
         req.execute();*/
+        Intent toSearch = new Intent(JudgementActivity.this,SearchActivity.class);
+        startActivity(toSearch);
     }
 
     public void reject(View view) {
         Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
 
-        /*HashMap<String,String> params = new HashMap<>();
+        HashMap<String,String> params = new HashMap<>();
         //params.put("id",poster.id);
         params.put("status","rejected");
         Request req = new Request("POST","posters/", params, new Request.Callback() {
@@ -128,23 +131,27 @@ public class JudgementActivity extends AppCompatActivity{
                 Log.i(TAG,response);
             }
         });
-        req.execute();*/
+        req.execute();
+        Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+        startActivity(toRequests);
+
     }
 
     public void approve(View view) {
         Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
 
-        /*HashMap<String,String> params = new HashMap<>();
-        //params.put("id",poster.id);
+        HashMap<String,String> params = new HashMap<>();
+        params.put("id",poster.id);
         params.put("status","posted");
         Request req = new Request("POST","posters/", params, new Request.Callback() {
-
             @Override
             public void onResponse(String response) {
                 Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                 Log.i(TAG,response);
             }
         });
-        req.execute();*/
+        req.execute();
+        Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+        startActivity(toRequests);
     }
 }

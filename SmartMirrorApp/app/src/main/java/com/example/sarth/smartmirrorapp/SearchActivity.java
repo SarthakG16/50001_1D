@@ -147,7 +147,7 @@ public class SearchActivity extends AppCompatActivity {
                 SearchActivity.posters = filtered;
                 Poster.requests = filtered;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, posters,"Search");
+                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, filtered,"Search");
                 search_recycler.setAdapter(recyclerViewAdapter);
                 search_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 

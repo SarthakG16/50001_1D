@@ -42,6 +42,7 @@ public class Poster implements Serializable{
     }
 
     public Poster(Map<String, String> params) {
+        this.id = String.valueOf(params.get("id"));
         this.title = params.get("title");
         this.category = params.get("category");
         this.name = params.get("contact_name");

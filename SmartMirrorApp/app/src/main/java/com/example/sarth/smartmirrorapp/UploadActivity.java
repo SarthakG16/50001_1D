@@ -368,8 +368,6 @@ public class UploadActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
 
-                Poster poster = new Poster(title,category,name,number,email,server_start_date,server_stop_date,locations_checked,serialized_data);
-                Poster.requests.add(poster);
                 HashMap<String, String> params = new HashMap<>();
                 params.put("title", title);
                 params.put("category", category);

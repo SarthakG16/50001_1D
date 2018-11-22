@@ -122,7 +122,6 @@ class Request extends AsyncTask<Void, Void, String> {
             List<Map<String, String>> posterDetails = g.fromJson(response, List.class);
             List<Poster> posters = new ArrayList<>();
             for (Map<String, String> posterDetail : posterDetails) {
-                //Log.i("TESTING",posterDetail.get("id"));
                 Poster poster = new Poster(posterDetail);
                 posters.add(poster);
             }

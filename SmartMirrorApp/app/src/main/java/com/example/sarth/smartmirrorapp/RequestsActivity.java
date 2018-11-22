@@ -147,7 +147,7 @@ public class RequestsActivity extends AppCompatActivity {
                 RequestsActivity.posters = filtered;
                 Poster.requests = filtered;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, posters,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, filtered,"Request");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
 
