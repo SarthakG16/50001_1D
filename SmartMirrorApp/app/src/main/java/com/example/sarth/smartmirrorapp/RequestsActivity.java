@@ -133,21 +133,13 @@ public class RequestsActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
 
 
-        Request req = new Request("GET","posters", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/?status=pending", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                List<Poster> filtered = new ArrayList<>();
+                RequestsActivity.posters = posters;
+                Poster.requests = posters;
 
-                for (Poster p : posters) {
-                    if (p.status.equals("pending")) {
-                        filtered.add(p);
-                    }
-                }
-
-                RequestsActivity.posters = filtered;
-                Poster.requests = filtered;
-
-                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, filtered,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, posters,"Request");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
 

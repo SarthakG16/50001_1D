@@ -29,7 +29,7 @@ class Request extends AsyncTask<Void, Void, String> {
     PostersCallback postersCallback;
 
     public Request(String method, String command, Map<String, String> params, Callback callback) {
-        this.serverURL = "http://fishy.asuscomm.com:5000/";
+        this.serverURL = "http://178.128.21.6:5000/";
         this.method = method;
         this.command = command;
         this.params = params;
@@ -37,7 +37,7 @@ class Request extends AsyncTask<Void, Void, String> {
     }
 
     public Request(String method, String command, Map<String, String> params, PostersCallback callback) {
-        this.serverURL = "http://fishy.asuscomm.com:5000/";
+        this.serverURL = "http://178.128.21.6:5000/";
         this.method = method;
         this.command = command;
         this.params = params;

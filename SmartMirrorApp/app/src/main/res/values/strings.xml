@@ -30,5 +30,10 @@
     <string name="search">Search</string>
     <string name="title_activity_admin">Welcome back Admin</string>
     <string name="title_activity_guest">Welcome back Guest</string>
+    <string name="request_content">Number of pending posters:</string>
+    <string name="approved">Approved</string>
+    <string name="approved_content">Number of approved posters:</string>
+    <string name="search_title">Displaying Now</string>
+    <string name="search_content">Number of displayed posters:</string>
 
 </resources>

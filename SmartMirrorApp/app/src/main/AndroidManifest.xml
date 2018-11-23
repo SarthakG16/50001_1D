@@ -26,11 +26,12 @@
         <activity
             android:name=".UploadActivity"
             android:label="Upload"
-            android:parentActivityName=".GuestActivity" />
+
+             />
         <activity
             android:name=".RequestsActivity"
             android:label="Requests"
-            android:parentActivityName=".AdminActivity" />
+             />
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
@@ -39,10 +40,10 @@
             android:label="@string/title_activity_guest">
         </activity>
         <activity android:name=".JudgementActivity"
-            android:parentActivityName=".RequestsActivity"/>
+            />
         <activity android:name=".SearchActivity"
             android:label="Search"
-            android:parentActivityName=".AdminActivity" />
+             />
 
     </application>
 

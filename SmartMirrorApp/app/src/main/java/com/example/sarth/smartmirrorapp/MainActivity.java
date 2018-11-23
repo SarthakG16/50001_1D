@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        CookieManager cookieManager = new CookieManager();
+        CookieHandler.setDefault(cookieManager);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 HashMap<String, String> params = new HashMap<>();
                 params.put("username", "admin1");
                 params.put("password", "hahaha");
-                params.put("requested_privelage", "administrator");
+                params.put("requested_privilege", "administrator");
                 Request req = new Request("POST","auth/login", params, new Request.Callback () {
                     @Override
                     public void onResponse(String response) {

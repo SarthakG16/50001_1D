@@ -52,7 +52,7 @@ public class Poster implements Serializable{
         this.expiryDate = params.get("date_expiry");
         this.locations = params.get("locations");
         this.serialized_data = params.get("serialized_image_data");
-        this.data = Base64.decode(serialized_data);
+        //this.data = Base64.decode(serialized_data);
         this.status = params.get("status");
 
     }

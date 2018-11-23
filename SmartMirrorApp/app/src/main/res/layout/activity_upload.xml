@@ -140,9 +140,6 @@
         android:layout_toRightOf="@+id/poster_layout" />
 
 
-
-
-
     <TextView
         android:id="@+id/upload_contact"
         android:paddingTop="15dp"
