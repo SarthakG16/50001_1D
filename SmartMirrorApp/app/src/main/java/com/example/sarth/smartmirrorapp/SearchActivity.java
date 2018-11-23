@@ -133,19 +133,12 @@ public class SearchActivity extends AppCompatActivity {
 
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
-        Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/?status=posted", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                List<Poster> filtered = new ArrayList<>();
 
-                for (Poster p : posters) {
-                    if (p.status.equals("posted")) {
-                        filtered.add(p);
-                    }
-                }
-
-                SearchActivity.posters = filtered;
-                Poster.requests = filtered;
+                SearchActivity.posters = posters;
+                Poster.requests = posters;
 
                 recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, posters,"Search");
                 search_recycler.setAdapter(recyclerViewAdapter);
