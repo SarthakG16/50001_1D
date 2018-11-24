@@ -404,9 +404,6 @@ public class UploadActivity extends AppCompatActivity{
 
     }
 
-    //TODO: Upload data to databas
-
-
     //make sure that permission is granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
