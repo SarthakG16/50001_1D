@@ -116,7 +116,9 @@ class Request extends AsyncTask<Void, Void, String> {
 
         if (response.contains("error_message")) {
             Log.i("REQ_ERROR",response);
-            return;
+            if (!command.equals("auth/login")) {
+                return;
+            }
         }
 
         Log.i("REQ_INFO", response);

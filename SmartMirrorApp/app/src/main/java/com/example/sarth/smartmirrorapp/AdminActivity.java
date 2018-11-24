@@ -15,6 +15,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
 public class AdminActivity extends AppCompatActivity {
 
     private final static String TAG = "Logcat";
@@ -47,6 +54,22 @@ public class AdminActivity extends AppCompatActivity {
         text_request= findViewById(R.id.RequestNumberView);
         text_approve = findViewById(R.id.ApprovedNumberView);
         text_search= findViewById(R.id.SearchNumberView);
+
+        HashMap<String, String> params = new HashMap<>();
+
+        Request req = new Request("GET","posters/status", params, new Request.Callback () {
+            @Override
+            public void onResponse(String response) {
+                Gson g  = new Gson();
+                Map<String, String> posterDetails = g.fromJson(response, Map.class);
+
+                Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+            }
+        });
+        req.execute();
+
+
+
 
 
         button_request.setOnClickListener(new View.OnClickListener() {

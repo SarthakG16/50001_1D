@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
@@ -34,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         login_enter_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean username_correct = validate(login_username);
+                final boolean username_correct = validate(login_username);
                 boolean password_correct = validate(login_password);
                 if (!username_correct) {
                     Toast.makeText(LoginActivity.this, "Please enter your username.", Toast.LENGTH_LONG).show();
@@ -56,27 +59,34 @@ public class LoginActivity extends AppCompatActivity {
                 Request req_admin = new Request("POST", "auth/login", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.contains("success")) {
+                        Gson g1  = new Gson();
+                        final Map<String, String> login_info1 = g1.fromJson(response, Map.class);
+                        if (login_info1.get("status").equals("success")) {
+                            //Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                             Intent toAdmin = new Intent(LoginActivity.this, AdminActivity.class);
                             startActivity(toAdmin);
+                        } else {
+                            params.put("requested_privilege", "user");
+                            Request req_user = new Request("POST", "auth/login", params, new Request.Callback() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Gson g2 = new Gson();
+                                    Map<String,String> login_info2 = g2.fromJson(response,Map.class);
+                                    if (login_info2.get("status").equals("success")) {
+                                        //Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                                        Intent toGuest = new Intent(LoginActivity.this, GuestActivity.class);
+                                        startActivity(toGuest);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Incorrect username or password.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            req_user.execute();
                         }
+
                     }
                 });
                 req_admin.execute();
-                //try as guest
-                params.put("requested_privilege", "user");
-                Request req_user = new Request("POST", "auth/login", params, new Request.Callback() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.contains("success")) {
-                            Intent toGuest = new Intent(LoginActivity.this, GuestActivity.class);
-                            startActivity(toGuest);
-                        }
-                    }
-                });
-                req_user.execute();
-                //failed admin and guest
-                Toast.makeText(LoginActivity.this, "Incorrect username or password.", Toast.LENGTH_SHORT).show();
             }
 
             private boolean validate(TextInputLayout check) {

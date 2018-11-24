@@ -133,7 +133,7 @@ public class RequestsActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
 
 
-        Request req = new Request("GET","posters", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/?status=pending", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
                 RequestsActivity.posters = posters;

@@ -133,7 +133,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
-        Request req = new Request("GET","posters/mine/", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
 
