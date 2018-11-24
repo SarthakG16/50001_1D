@@ -24,10 +24,12 @@ public class AdminActivity extends AppCompatActivity {
     private Button button_request;
     private Button button_approve;
     private Button button_search;
+    private FloatingActionButton button_upload;
 
     private TextView text_request;
     private TextView text_approve;
     private TextView text_search;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +42,11 @@ public class AdminActivity extends AppCompatActivity {
         button_request= findViewById(R.id.RequestButton);
         button_approve = findViewById(R.id.ApprovedButton);
         button_search = findViewById(R.id.SearchButton);
+        button_upload = findViewById(R.id.AdminUploadButton);
 
         text_request= findViewById(R.id.RequestNumberView);
         text_approve = findViewById(R.id.ApprovedNumberView);
         text_search= findViewById(R.id.SearchNumberView);
-
-        //text_request.setText("You have " + " pending posters.");
-        //text_search.setText("There are currently " + " posters.");
-
 
 
         button_request.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +74,16 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(AdminToSearch);
             }
         });
+
+        button_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AdminToUpload= new Intent(AdminActivity.this,UploadActivity.class);
+                Log.i(TAG,"Moving to Upload page");
+                startActivity(AdminToUpload);
+
+            }
+        });
     }
 
     @Override
@@ -100,5 +109,6 @@ public class AdminActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

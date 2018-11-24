@@ -1,6 +1,8 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,21 +24,23 @@ public class GuestActivity extends AppCompatActivity {
     private Button button_search;
     private TextView text_request;
     private TextView text_search;
-    private ImageButton button_upload;
+    private FloatingActionButton button_upload;
+
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
 
+        refreshLayout = findViewById(R.id.guest_refreshlayout);
+
         button_request= findViewById(R.id.GuestRequestButton);
         button_search = findViewById(R.id.GuestSearchButton);
+        button_upload = findViewById(R.id.GuestUploadButton);
 
-        text_request= findViewById(R.id.GuestRequestContentView);
-        text_search= findViewById(R.id.GuestSearchContentView);
-
-        text_request.setText("You have" + "pending posters.");
-        text_search.setText("Your have" + "posters.");
+        text_request= findViewById(R.id.GuestRequestNumberView);
+        text_search= findViewById(R.id.GuestSearchNumberView);
 
         //layout to be confirmed
         /*
@@ -59,7 +63,6 @@ public class GuestActivity extends AppCompatActivity {
         });
         */
 
-        button_upload = findViewById(R.id.GuestUploadButton);
         button_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
