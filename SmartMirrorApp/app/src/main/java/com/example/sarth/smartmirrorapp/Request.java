@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;
 import java.io.OutputStream;
@@ -61,27 +62,32 @@ class Request extends AsyncTask<Void, Void, String> {
             urlConnection.setConnectTimeout(15000);
             urlConnection.setRequestMethod(method);
             urlConnection.setDoInput(true);
-            urlConnection.setDoOutput(true);
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            Log.i("REQ_INFO_M", method);
+            if (method == "POST") {
+                urlConnection.setDoOutput(true);
+                urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            }
             urlConnection.setRequestProperty("Accept", "application/json");
 
-            Gson gson = new Gson();
-            String query = gson.toJson(params);
-            Log.e("REQ_INFO", query);
-
             try {
-                OutputStream os = urlConnection.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
+                if (method == "POST") {
+                    Gson gson = new Gson();
+                    String query = gson.toJson(params);
+                    OutputStream os = urlConnection.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(query);
+                    writer.flush();
+                    writer.close();
+                    os.close();
+                }
+
+                Log.i("REQ_INFO_RES", Integer.toString(urlConnection.getResponseCode()));
 
                 String json_response = "";
                 InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
                 BufferedReader br = new BufferedReader(in);
-                String text = "";
+                String text;
                 while ((text = br.readLine()) != null) {
                     json_response += text;
                 }
@@ -89,7 +95,7 @@ class Request extends AsyncTask<Void, Void, String> {
                 return json_response;
             }
 
-            finally{
+            finally {
                 urlConnection.disconnect();
             }
         }
