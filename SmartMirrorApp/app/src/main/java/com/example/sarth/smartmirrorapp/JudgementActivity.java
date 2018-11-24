@@ -1,5 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,8 @@ public class JudgementActivity extends AppCompatActivity{
     private TextView title;
 
     private PDFView pdfView;
+    private Button poster_preview_button;
+
     private TextView category;
     private TextView start_date;
     private TextView stop_date;
@@ -46,7 +50,7 @@ public class JudgementActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
 
-        int position = intent.getIntExtra("Position",0);
+        final int position = intent.getIntExtra("Position",0);
         poster = Poster.requests.get(position);
         setTitle(poster.title);
         Toast.makeText(JudgementActivity.this,poster.id,Toast.LENGTH_LONG).show();
@@ -97,61 +101,135 @@ public class JudgementActivity extends AppCompatActivity{
             locations[i].setClickable(false); // Not allowing the checkbox to be clickable so that Admin may not click by mistake
         }
 
+        poster_preview_button = findViewById(R.id.judge_poster_preview_button);
+
+        poster_preview_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"Button Clicked");
+                if (poster.data == null) {
+                    return;
+                }
+                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog);
+                mBuilder.setTitle(poster.title);
+                View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
+                PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
+                poster_expanded.fromBytes(poster.data).load();;
+                mBuilder.setView(poster_layout);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+            }
+        });
 
     }
 
     public void remove(View view) {
         Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
-        /*HashMap<String,String> params = new HashMap<>();
-        //params.put("id",poster.id);
-        params.put("status","rejected");  //TODO: Should we just put it back to rejected, or DELETE it?
-        Request req = new Request("POST","posters/", params, new Request.Callback() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        builder.setTitle("Confirm");
+        builder.setIcon(R.drawable.ic_delete_black_24dp);
+        builder.setMessage("Delete the Poster: '" + poster.title+"' ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onResponse(String response) {
-                Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                Log.i(TAG,response);
+            public void onClick(DialogInterface dialog, int which) {
+                /*HashMap<String,String> params = new HashMap<>();
+                params.put("id",poster.id);
+                params.put("status","posted");
+                Request req = new Request("POST","posters/", params, new Request.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,response);
+                    }
+                });
+                req.execute();*/
+                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                startActivity(toRequests);
+
             }
         });
-        req.execute();*/
-        Intent toSearch = new Intent(JudgementActivity.this,SearchActivity.class);
-        startActivity(toSearch);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void reject(View view) {
         Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
 
-        HashMap<String,String> params = new HashMap<>();
-        //params.put("id",poster.id);
-        params.put("status","rejected");
-        Request req = new Request("POST","posters/", params, new Request.Callback() {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        builder.setTitle("Confirm");
+        builder.setIcon(R.drawable.ic_close_black_24dp);
+        builder.setMessage("Reject the Poster: '" + poster.title+"' ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onResponse(String response) {
-                Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                Log.i(TAG,response);
+            public void onClick(DialogInterface dialog, int which) {
+                /*HashMap<String,String> params = new HashMap<>();
+                params.put("id",poster.id);
+                params.put("status","rejected");
+                Request req = new Request("POST","posters/", params, new Request.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,response);
+                    }
+                });
+                req.execute();*/
+                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                startActivity(toRequests);
+
             }
         });
-        req.execute();
-        Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
-        startActivity(toRequests);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 
     public void approve(View view) {
+
         Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
 
-        HashMap<String,String> params = new HashMap<>();
-        params.put("id",poster.id);
-        params.put("status","posted");
-        Request req = new Request("POST","posters/", params, new Request.Callback() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        builder.setTitle("Confirm");
+        builder.setIcon(R.drawable.ic_check_black_24dp);
+        builder.setMessage("Approve the Poster: '" + poster.title+"' ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onResponse(String response) {
-                Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                Log.i(TAG,response);
+            public void onClick(DialogInterface dialog, int which) {
+                /*HashMap<String,String> params = new HashMap<>();
+                params.put("id",poster.id);
+                params.put("status","posted");
+                Request req = new Request("POST","posters/", params, new Request.Callback() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,response);
+                    }
+                });
+                req.execute();*/
+                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                startActivity(toRequests);
+
             }
         });
-        req.execute();
-        Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
-        startActivity(toRequests);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

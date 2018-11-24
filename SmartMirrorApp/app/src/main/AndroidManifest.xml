@@ -43,7 +43,7 @@
             />
         <activity android:name=".SearchActivity"
             android:label="Search"
-             />
+            android:parentActivityName=".AdminActivity" />
 
     </application>
 

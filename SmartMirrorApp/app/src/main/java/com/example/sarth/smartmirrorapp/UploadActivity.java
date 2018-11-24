@@ -93,6 +93,8 @@ public class UploadActivity extends AppCompatActivity{
     public static final String EMAIL_KEY = "Email_Key";
     public static final String START_DATE_KEY = "Date0_Key";
     public static final String STOP_DATE_KEY = "Date1_Key";
+    public static final String SERVER_START_DATE_KEY = "Server_Date0_key";
+    public static final String SERVER_STOP_DATE_KEY = "Server_Date1_key";
 
     private final static int PICK_FILE_REQUEST = 1;
 
@@ -140,8 +142,11 @@ public class UploadActivity extends AppCompatActivity{
         date_start = findViewById(R.id.date_start);
         date_stop = findViewById(R.id.date_stop);
 
-        date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date of screening Poster:" ));
-        date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date of screening Poster:"));
+        date_start.setText(mPreferences.getString(START_DATE_KEY,"Start Date:" ));
+        server_start_date = mPreferences.getString(SERVER_START_DATE_KEY,"");
+
+        date_stop.setText(mPreferences.getString(STOP_DATE_KEY, "Stop Date:"));
+        server_stop_date = mPreferences.getString(SERVER_STOP_DATE_KEY,"");
 
         // Initialize contact details.
 
@@ -193,7 +198,6 @@ public class UploadActivity extends AppCompatActivity{
                 mBuilder.setTitle("Your Poster");
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
-                Log.i(TAG,String.valueOf(poster_expanded == null));
                 poster_expanded.fromUri(posterUri).load();;
                 mBuilder.setView(poster_layout);
                 AlertDialog dialog = mBuilder.create();
@@ -228,7 +232,7 @@ public class UploadActivity extends AppCompatActivity{
                         server_start_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_start_date += "00:00:00";
                         shared_start_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_start.setText("Start date: " + shared_start_date);
+                        date_start.setText(String.format("Start date: %s", shared_start_date));
                     }
                 },year,month,day);
                 dpd_start.show();
@@ -258,7 +262,7 @@ public class UploadActivity extends AppCompatActivity{
                         server_stop_date = c.get(Calendar.YEAR) +"-" + (c.get(Calendar.MONTH)+1) + "-" + c.get(Calendar.DATE) + " ";
                         server_stop_date += "23:59:59";
                         shared_stop_date = DateFormat.getDateInstance().format(c.getTime());
-                        date_stop.setText("Stop date: " + shared_stop_date);
+                        date_stop.setText(String.format("Stop date: %s", shared_stop_date));
                     }
                 },year,month,day);
                 dpd_stop.show();
@@ -296,11 +300,11 @@ public class UploadActivity extends AppCompatActivity{
                     return;
                 }
 
-                if (date_start.getText().toString().equals("Start Date of screening Poster:")) {
+                if (date_start.getText().toString().equals("Start Date:") || server_start_date.equals("")) {
                     Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(date_stop.getText().toString().equals("Stop Date of screening Poster:")) {
+                if(date_stop.getText().toString().equals("Stop Date:") || server_stop_date.equals("")) {
                     Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -400,9 +404,6 @@ public class UploadActivity extends AppCompatActivity{
 
     }
 
-    //TODO: Upload data to databas
-
-
     //make sure that permission is granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
@@ -466,6 +467,9 @@ public class UploadActivity extends AppCompatActivity{
             editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
             editor.putString(START_DATE_KEY, date_start.getText().toString());
             editor.putString(STOP_DATE_KEY, date_stop.getText().toString());
+            editor.putString(SERVER_START_DATE_KEY,server_start_date);
+            editor.putString(SERVER_STOP_DATE_KEY,server_stop_date);
+
             for (int i = 0; i < locations.length; i++) {
                 editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
             }

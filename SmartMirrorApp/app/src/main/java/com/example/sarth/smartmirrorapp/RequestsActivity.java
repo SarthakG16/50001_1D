@@ -67,7 +67,7 @@ public class RequestsActivity extends AppCompatActivity {
                     return;
                 }
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(RequestsActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(RequestsActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
                 mBuilder.setTitle("Search Settings");
                 mBuilder.setIcon(R.drawable.list_icon);
                 mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
@@ -133,7 +133,7 @@ public class RequestsActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
 
 
-        Request req = new Request("GET","posters/?status=pending", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
                 RequestsActivity.posters = posters;
