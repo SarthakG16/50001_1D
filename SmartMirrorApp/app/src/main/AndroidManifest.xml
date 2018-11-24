@@ -23,27 +23,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login"/>
+
         <activity
             android:name=".UploadActivity"
-            android:label="Upload"
+            android:label="Upload"/>
 
-             />
         <activity
             android:name=".RequestsActivity"
-            android:label="Requests"
-             />
+            android:label="Requests"/>
+
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".GuestActivity"
-            android:label="@string/title_activity_guest">
-        </activity>
-        <activity android:name=".JudgementActivity"
-            />
+            android:label="@string/title_activity_guest"/>
+
+        <activity android:name=".JudgementActivity"/>
+
         <activity android:name=".SearchActivity"
             android:label="Search"
-            android:parentActivityName=".AdminActivity" />
+            android:parentActivityName=".AdminActivity"/>
 
     </application>
 

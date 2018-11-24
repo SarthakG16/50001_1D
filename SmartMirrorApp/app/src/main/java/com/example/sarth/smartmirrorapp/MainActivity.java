@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         button_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginToAdmin = new Intent(MainActivity.this,AdminActivity.class);
+                Intent loginToAdmin = new Intent(MainActivity.this,LoginActivity.class);
                 Log.i(TAG,"Moving to Admin page");
                 startActivity(loginToAdmin);
             }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         button_guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginToGuest= new Intent(MainActivity.this,GuestActivity.class);
+                Intent loginToGuest= new Intent(MainActivity.this,LoginActivity.class);
                 Log.i(TAG,"Moving to Guest page");
                 startActivity(loginToGuest);
             }
