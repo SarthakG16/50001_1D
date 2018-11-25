@@ -31,8 +31,8 @@ public class RequestsActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
 
     private CharSequence[] options = {"Title", "Category", "Name"};
-    private String choice = options[0].toString();
-    private int selected = 0;
+    private String choice = "";
+    private int selected = -1;
 
     private ProgressBar progressBar;
 
@@ -112,15 +112,16 @@ public class RequestsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (choice.equals("Title")) {
-                    recyclerViewAdapter.getFilter().filter(newText);
+                    recyclerViewAdapter.getTitleFilter().filter(newText);
                     return false;
                 } else if (choice.equals("Category")) {
                     recyclerViewAdapter.getCategoryFilter().filter(newText);
                     return false;
                 } else if (choice.equals("Name")) {
                     recyclerViewAdapter.getNameFilter().filter(newText);
+                } else {
+                    recyclerViewAdapter.getFilter().filter(newText);
                 }
-                recyclerViewAdapter.getNameFilter().filter(newText);
                 return false;
             }
         });

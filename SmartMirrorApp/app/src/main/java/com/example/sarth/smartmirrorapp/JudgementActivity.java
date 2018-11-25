@@ -133,9 +133,9 @@ public class JudgementActivity extends AppCompatActivity{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*HashMap<String,String> params = new HashMap<>();
+                HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                params.put("status","posted");
+                params.put("status","pending"); //TODO change later
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
@@ -143,7 +143,7 @@ public class JudgementActivity extends AppCompatActivity{
                         Log.i(TAG,response);
                     }
                 });
-                req.execute();*/
+                req.execute();
                 Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
                 startActivity(toRequests);
 
@@ -169,9 +169,9 @@ public class JudgementActivity extends AppCompatActivity{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*HashMap<String,String> params = new HashMap<>();
+                HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                params.put("status","rejected");
+                params.put("status","expired");
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
@@ -179,7 +179,7 @@ public class JudgementActivity extends AppCompatActivity{
                         Log.i(TAG,response);
                     }
                 });
-                req.execute();*/
+                req.execute();
                 Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
                 startActivity(toRequests);
 
@@ -207,7 +207,7 @@ public class JudgementActivity extends AppCompatActivity{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*HashMap<String,String> params = new HashMap<>();
+                HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
                 params.put("status","posted");
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
@@ -217,7 +217,7 @@ public class JudgementActivity extends AppCompatActivity{
                         Log.i(TAG,response);
                     }
                 });
-                req.execute();*/
+                req.execute();
                 Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
                 startActivity(toRequests);
 

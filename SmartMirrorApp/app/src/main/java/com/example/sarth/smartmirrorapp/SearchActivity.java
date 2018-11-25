@@ -30,9 +30,9 @@ public class SearchActivity extends AppCompatActivity {
     private Button search_options_button;
     private SwipeRefreshLayout refreshLayout;
 
-    private CharSequence[] options = {"Title", "Category", "Name"};
-    private String choice = options[0].toString();
-    private int selected = 0;
+    private CharSequence[] options = {"Title", "Category", "Name","Status"};
+    private String choice = "";
+    private int selected = -1;
 
     private ProgressBar progressBar;
 
@@ -112,15 +112,18 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (choice.equals("Title")) {
-                    recyclerViewAdapter.getFilter().filter(newText);
+                    recyclerViewAdapter.getTitleFilter().filter(newText);
                     return false;
                 } else if (choice.equals("Category")) {
                     recyclerViewAdapter.getCategoryFilter().filter(newText);
                     return false;
                 } else if (choice.equals("Name")) {
                     recyclerViewAdapter.getNameFilter().filter(newText);
+                } else if (choice.equals("Status")) {
+                    recyclerViewAdapter.getStatusFilter().filter(newText);
+                } else {
+                    recyclerViewAdapter.getFilter().filter(newText);
                 }
-                recyclerViewAdapter.getNameFilter().filter(newText);
                 return false;
             }
         });
@@ -132,7 +135,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
-        Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
 

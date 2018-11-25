@@ -42,7 +42,7 @@
         android:layout_toEndOf="@+id/recyler_item_pdf"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:layout_marginStart="30dp"
         android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
 
@@ -56,9 +56,37 @@
         android:layout_toEndOf="@+id/recyler_item_pdf"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
+        android:textSize="13sp"
+        android:layout_marginStart="30dp"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:id="@+id/recycler_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "@string/status"
+        android:layout_toRightOf="@+id/recyler_item_pdf"
+        android:layout_below="@+id/recycler_item_name"
+        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:layout_marginStart="30dp"
         android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:id="@+id/recycler_status_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "Pending"
+        android:layout_toRightOf="@+id/recycler_status"
+        android:layout_below="@+id/recycler_item_name"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:layout_marginStart="30dp"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+
 
     
 

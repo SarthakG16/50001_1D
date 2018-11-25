@@ -37,5 +37,6 @@
     <string name="guest_search_title">Your posters</string>
     <string name="search_content">Number of posters:</string>
     <string name="number_holder">100</string>
+    <string name="status">Status:</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.sarth.smartmirrorapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView titleView;
         TextView categoryView;
         TextView nameView;
+        TextView statusView;
         RelativeLayout parentLayout;
 
 
@@ -41,7 +43,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             titleView = itemView.findViewById(R.id.recyler_item_title);
             categoryView = itemView.findViewById(R.id.recyler_item_category);
             nameView = itemView.findViewById(R.id.recycler_item_name);
+            statusView = itemView.findViewById(R.id.recycler_status_content);
             parentLayout = itemView.findViewById(R.id.recycler_layout);
+
 
         }
     }
@@ -69,6 +73,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.titleView.setText(String.format("Title: %s", poster.title));
         holder.categoryView.setText(String.format("Category: %s", poster.category));
         holder.nameView.setText(String.format("By: %s", poster.name));
+        if (poster.status.equals("pending")) {
+            holder.statusView.setText("Pending");
+            holder.statusView.setTextColor(Color.RED);
+        } else if (poster.status.equals("approved")) {
+            holder.statusView.setText("Accepted");
+            holder.statusView.setTextColor(Color.GREEN  );
+        } else if (poster.status.equals("posted")) {
+            holder.statusView.setText("On Display");
+            holder.statusView.setTextColor(Color.BLUE);
+        } else if (poster.status.equals("expired")) {
+            holder.statusView.setText("Expired");
+            holder.statusView.setTextColor(Color.GRAY);
+        }
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +104,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public Filter getFilter() {
-        return titleFilter;
+        return everythingFilter;
     }
     public Filter getCategoryFilter() {
         return categoryFilter;
@@ -96,6 +113,43 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public Filter getNameFilter() {
         return nameFilter;
     }
+
+    public Filter getTitleFilter() {
+        return titleFilter;
+    }
+
+    public Filter getStatusFilter() {
+        return  statusFilter;
+    }
+
+    private Filter everythingFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Poster> filtered_list = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filtered_list.addAll(searchList);
+            } else {
+                String criteria = constraint.toString().toLowerCase().trim();
+                for (Poster p : searchList) {
+                    if (p.everything.toLowerCase().contains(criteria)) {
+                        filtered_list.add(p);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filtered_list;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            posterList.clear();
+            posterList.addAll((List<Poster>)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     private Filter titleFilter = new Filter() {
         @Override
@@ -166,6 +220,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String criteria = constraint.toString().toLowerCase().trim();
                 for (Poster p : searchList) {
                     if (p.name.toLowerCase().contains(criteria)) {
+                        filtered_list.add(p);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filtered_list;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            posterList.clear();
+            posterList.addAll((List<Poster>)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    private Filter statusFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Poster> filtered_list = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filtered_list.addAll(searchList);
+            } else {
+                String criteria = constraint.toString().toLowerCase().trim();
+                for (Poster p : searchList) {
+                    if (p.status_filter.toLowerCase().contains(criteria)) {
                         filtered_list.add(p);
                     }
                 }

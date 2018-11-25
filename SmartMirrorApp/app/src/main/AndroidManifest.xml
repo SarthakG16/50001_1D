@@ -35,20 +35,24 @@
 
         <activity
             android:name=".RequestsActivity"
-            android:label="Requests"/>
+            android:label="Requests"
+            android:parentActivityName=".AdminActivity"/>
 
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
 
         <activity android:name=".GuestActivity"
-            android:label="@string/title_activity_guest"/>
+            android:label="@string/title_activity_guest"
+            android:parentActivityName=".MainActivity"/>
 
         <activity android:name=".JudgementActivity"/>
 
         <activity android:name=".SearchActivity"
-            android:label="Search" />
+            android:label="Search"
+            android:parentActivityName=".AdminActivity"/>
 
     </application>
 
