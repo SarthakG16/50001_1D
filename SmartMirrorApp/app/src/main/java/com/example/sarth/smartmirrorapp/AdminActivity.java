@@ -30,7 +30,7 @@ public class AdminActivity extends AppCompatActivity {
     private SwipeRefreshLayout refreshLayout;
 
     private Button button_request;
-    private Button button_approve;
+    private Button button_display;
     private Button button_search;
     private FloatingActionButton button_upload;
 
@@ -49,12 +49,12 @@ public class AdminActivity extends AppCompatActivity {
         refreshLayout = findViewById(R.id.admin_refreshlayout);
 
         button_request= findViewById(R.id.RequestButton);
-        button_approve = findViewById(R.id.ApprovedButton);
+        button_display = findViewById(R.id.DisplayingButton);
         button_search = findViewById(R.id.SearchButton);
         button_upload = findViewById(R.id.AdminUploadButton);
 
         text_request= findViewById(R.id.RequestNumberView);
-        text_approve = findViewById(R.id.ApprovedNumberView);
+        text_approve = findViewById(R.id.DisplayingNumberView);
         text_search= findViewById(R.id.SearchNumberView);
 
         getData();
@@ -76,11 +76,16 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        button_approve.setOnClickListener(new View.OnClickListener() {
+        button_display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO
                 Toast.makeText(AdminActivity.this,"To make a new activity",Toast.LENGTH_LONG).show();
+                /*
+                Intent AdminToDisplaying= new Intent(AdminActivity.this,Displaying.class);
+                Log.i(TAG,"Moving to Displaying page");
+                startActivity(AdminToDisplaying);
+                 */
             }
         });
 
@@ -119,10 +124,17 @@ public class AdminActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.logout){
+            //TODO: remove user details
+            Intent intent = new Intent(AdminActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            /*
             Intent Logout = new Intent(AdminActivity.this,MainActivity.class);
             Log.i(TAG,"Moving to Login page");
             Toast.makeText(this, "Logout Successful", Toast.LENGTH_SHORT).show();
             startActivity(Logout);
+            */
         }
 
         return super.onOptionsItemSelected(item);
@@ -160,6 +172,12 @@ public class AdminActivity extends AppCompatActivity {
         });
         req.execute();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"Destroying page. To clear login details");
     }
 
 

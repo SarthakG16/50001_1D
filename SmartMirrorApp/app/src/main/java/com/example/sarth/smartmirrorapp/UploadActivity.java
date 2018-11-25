@@ -399,6 +399,9 @@ public class UploadActivity extends AppCompatActivity{
                 req.execute();
                 //clear = true;
 
+                //TODO: Return to their respective home activity
+
+
             }
         });
 
@@ -436,9 +439,6 @@ public class UploadActivity extends AppCompatActivity{
         }
     }
 
-
-
-
     private boolean validate(TextInputLayout check) {
         String emailInput = check.getEditText().getText().toString().trim();
 
@@ -453,26 +453,27 @@ public class UploadActivity extends AppCompatActivity{
 
     @Override
     protected void onPause() {
-            super.onPause();
-            SharedPreferences.Editor editor =mPreferences.edit();
-            if(clear) {
-                editor.clear();
-                editor.apply();
-                return;
-            }
-            editor.putString(TITLE_KEY,titleInput.getEditText().getText().toString());
-            editor.putString(CAT_KEY,spinner_categories.getSelectedItem().toString());
-            editor.putString(NAME_KEY,contact_name.getEditText().getText().toString());
-            editor.putString(NUMBER_KEY,contact_number.getEditText().getText().toString());
-            editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
-            editor.putString(START_DATE_KEY, date_start.getText().toString());
-            editor.putString(STOP_DATE_KEY, date_stop.getText().toString());
-            editor.putString(SERVER_START_DATE_KEY,server_start_date);
-            editor.putString(SERVER_STOP_DATE_KEY,server_stop_date);
-
-            for (int i = 0; i < locations.length; i++) {
-                editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
-            }
+        super.onPause();
+        Log.i(TAG,"Upload on pause");
+        SharedPreferences.Editor editor =mPreferences.edit();
+        if(clear) {
+            editor.clear();
             editor.apply();
+            return;
+        }
+        editor.putString(TITLE_KEY,titleInput.getEditText().getText().toString());
+        editor.putString(CAT_KEY,spinner_categories.getSelectedItem().toString());
+        editor.putString(NAME_KEY,contact_name.getEditText().getText().toString());
+        editor.putString(NUMBER_KEY,contact_number.getEditText().getText().toString());
+        editor.putString(EMAIL_KEY,contact_email.getEditText().getText().toString());
+        editor.putString(START_DATE_KEY, date_start.getText().toString());
+        editor.putString(STOP_DATE_KEY, date_stop.getText().toString());
+        editor.putString(SERVER_START_DATE_KEY,server_start_date);
+        editor.putString(SERVER_STOP_DATE_KEY,server_stop_date);
+
+        for (int i = 0; i < locations.length; i++) {
+            editor.putBoolean(String.format("BOX%s_KEY", i), locations[i].isChecked());
+        }
+        editor.apply();
     }
 }

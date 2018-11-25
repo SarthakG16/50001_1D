@@ -21,10 +21,13 @@ public class GuestActivity extends AppCompatActivity {
     private final static String TAG = "Logcat";
 
     private Button button_request;
+    private Button button_display;
     private Button button_search;
-    private TextView text_request;
-    private TextView text_search;
     private FloatingActionButton button_upload;
+
+    private TextView text_request;
+    private TextView text_display;
+    private TextView text_search;
 
     private SwipeRefreshLayout refreshLayout;
 
@@ -35,15 +38,16 @@ public class GuestActivity extends AppCompatActivity {
 
         refreshLayout = findViewById(R.id.guest_refreshlayout);
 
-        button_request= findViewById(R.id.GuestRequestButton);
+        button_request = findViewById(R.id.GuestRequestButton);
+        button_display = findViewById(R.id.GuestDisplayingButton);
         button_search = findViewById(R.id.GuestSearchButton);
         button_upload = findViewById(R.id.GuestUploadButton);
 
         text_request= findViewById(R.id.GuestRequestNumberView);
+        text_display = findViewById(R.id.GuestDisplayingButton);
         text_search= findViewById(R.id.GuestSearchNumberView);
 
-        //layout to be confirmed
-        /*
+
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,15 +57,28 @@ public class GuestActivity extends AppCompatActivity {
             }
         });
 
+        button_display.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Toast.makeText(GuestActivity.this,"To make a new activity",Toast.LENGTH_LONG).show();
+                /*
+                Intent GuestToDisplaying= new Intent(GuestActivity.this,Displaying.class);
+                Log.i(TAG,"Moving to Displaying page");
+                startActivity(GuestToDisplaying);
+                 */
+            }
+        });
+
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent GuestToFilter = new Intent(GuestActivity.this,FilterActivity.class);
+                Intent GuestToFilter = new Intent(GuestActivity.this,SearchActivity.class);
                 Log.i(TAG,"Moving to Search page");
                 startActivity(GuestToFilter);
             }
         });
-        */
+
 
         button_upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +105,25 @@ public class GuestActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.logout){
+            //TODO: remove user details
+            Intent intent = new Intent(GuestActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+            /*
             Intent Logout = new Intent(GuestActivity.this,MainActivity.class);
             Log.i(TAG,"Moving to Login page");
             Toast.makeText(this, "Logout Successful", Toast.LENGTH_SHORT).show();
             startActivity(Logout);
+            */
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"Destroying page. To clear login details");
     }
 }
