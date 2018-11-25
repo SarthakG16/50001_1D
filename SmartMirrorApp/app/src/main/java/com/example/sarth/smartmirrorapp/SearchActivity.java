@@ -1,6 +1,5 @@
 package com.example.sarth.smartmirrorapp;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

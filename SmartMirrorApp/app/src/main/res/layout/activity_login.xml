@@ -3,52 +3,107 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_username"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
 
-        <android.support.design.widget.TextInputEditText
+    <android.support.v7.widget.CardView
+        android:id="@+id/login_image_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:shape = "ring"
+        android:elevation="12dp"
+        app:cardCornerRadius="40dp">
+
+        <ImageView
+            android:id="@+id/login_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Username: "
-            android:textSize="16sp"
-            android:inputType="text" />
+            android:layout_height="80dp"
+            app:srcCompat="@mipmap/ic_launcher_round"
+            android:scaleType="centerCrop"
+            />
 
-    </android.support.design.widget.TextInputLayout>
+    </android.support.v7.widget.CardView>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_password"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        android:layout_below="@+id/login_username">
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password: "
-            android:textSize="16sp"
-            android:inputType="text" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/login_enter_button"
+    <RelativeLayout
+        android:id="@+id/login_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/login_password"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="75dp"
+        android:layout_below="@+id/login_image_view">
+
+        <TextView
+            android:id="@+id/login_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Sign in to Smart Mirror"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_username"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_description"
+            app:errorEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username:"
+                android:textSize="16sp"
+                android:inputType="text" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_password"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            android:layout_below="@+id/login_username">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password:"
+                android:textSize="16sp"
+                android:inputType= "textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/login_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_password"
+            android:layout_centerHorizontal="true"
+            android:text="Remember me" />
+
+        <Button
+            android:id="@+id/login_enter_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:hint="Login"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/login_checkbox"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/cheat_buttons_label"
@@ -56,7 +111,7 @@
         android:layout_height="wrap_content"
         android:text="CHEAT BUTTONS"
         android:textSize="15dp"
-        android:layout_below="@+id/login_enter_button"/>
+        android:layout_below="@+id/login_layout"/>
 
     <Button
         android:id="@+id/admin_cheat_button"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -28,16 +29,17 @@ public class LoginActivity extends AppCompatActivity {
 
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
 
-        login_username = (TextInputLayout) findViewById(R.id.login_username);
-        login_password = (TextInputLayout) findViewById(R.id.login_password);
-        login_enter_button = (Button) findViewById(R.id.login_enter_button);
+        login_username = findViewById(R.id.login_username);
+        login_password = findViewById(R.id.login_password);
+        login_enter_button = findViewById(R.id.login_enter_button);
 
         login_enter_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final boolean username_correct = validate(login_username);
+                boolean username_correct = validate(login_username);
                 boolean password_correct = validate(login_password);
                 if (!username_correct) {
                     Toast.makeText(LoginActivity.this, "Please enter your username.", Toast.LENGTH_LONG).show();
@@ -73,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Gson g2 = new Gson();
                                     Map<String,String> login_info2 = g2.fromJson(response,Map.class);
                                     if (login_info2.get("status").equals("success")) {
-                                        //Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                                         Intent toGuest = new Intent(LoginActivity.this, GuestActivity.class);
                                         startActivity(toGuest);
                                     } else {
@@ -89,17 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 req_admin.execute();
             }
 
-            private boolean validate(TextInputLayout check) {
-                String textInput = check.getEditText().getText().toString().trim();
 
-                if (textInput.isEmpty()) {
-                    check.setError("Field can't be empty");
-                    return false;
-                } else {
-                    check.setError(null);
-                    return true;
-                }
-            }
         });
 
         //CHEAT BUTTONS TO BE REMOVED
@@ -125,8 +116,6 @@ public class LoginActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //      .setAction("Action", null).show();
 
                 HashMap<String, String> params = new HashMap<>();
                 params.put("username", "admin1");
@@ -138,14 +127,20 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                     }
                 });
-                        /*Request req = new Request("GET","posters", params, new Request.PostersCallback() {
-                            @Override
-                            public void onResponse(List<Poster> posters) {
-                                Toast.makeText(MainActivity.this, "Received posters: " + posters.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        });*/
                 req.execute();
             }
         });
+    }
+
+    private boolean validate(TextInputLayout check) {
+        String textInput = check.getEditText().getText().toString().trim();
+
+        if (textInput.isEmpty()) {
+            check.setError("Field can't be empty");
+            return false;
+        } else {
+            check.setError(null);
+            return true;
+        }
     }
 }

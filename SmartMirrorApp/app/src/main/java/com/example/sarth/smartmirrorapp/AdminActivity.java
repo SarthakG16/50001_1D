@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -44,6 +45,7 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         refreshLayout = findViewById(R.id.admin_refreshlayout);
 
         button_request= findViewById(R.id.RequestButton);
@@ -55,21 +57,14 @@ public class AdminActivity extends AppCompatActivity {
         text_approve = findViewById(R.id.ApprovedNumberView);
         text_search= findViewById(R.id.SearchNumberView);
 
-        HashMap<String, String> params = new HashMap<>();
+        getData();
 
-        Request req = new Request("GET","posters/status", params, new Request.Callback () {
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(String response) {
-                Gson g  = new Gson();
-                Map<String, String> posterDetails = g.fromJson(response, Map.class);
-
-                Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+            public void onRefresh() {
+                getData();
             }
         });
-        req.execute();
-
-
-
 
 
         button_request.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +126,40 @@ public class AdminActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getData() {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        Request req = new Request("GET","posters/status", params, new Request.Callback () {
+            @Override
+            public void onResponse(String response) {
+                Gson g  = new Gson();
+                Map<String, String> dataMap = g.fromJson(response, Map.class);
+                String temp_pending = String.valueOf(dataMap.get("pending"));
+                double d1 = Double.valueOf(temp_pending);
+                if (d1>1) {
+                    text_request.setTextColor(Color.RED);
+                }
+
+                String temp_approved = String.valueOf(dataMap.get("approved"));
+                double d2 = Double.valueOf(temp_approved);
+
+                String temp_posted = String.valueOf(dataMap.get("posted"));
+                double d3 = Double.valueOf(temp_posted);
+
+
+                text_request.setText(String.valueOf((int)d1));
+                text_approve.setText(String.valueOf((int)d2));
+                text_search.setText(String.valueOf((int)d3));
+
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+            }
+        });
+        req.execute();
+
     }
 
 

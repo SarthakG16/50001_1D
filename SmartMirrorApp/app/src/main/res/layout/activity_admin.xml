@@ -159,7 +159,7 @@
                         android:text="@string/approved"
                         android:textColor="@color/white"
                         android:textSize="30sp"
-                        app:autoSizeMinTextSize="16dp"
+                        android:autoSizeMinTextSize="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
