@@ -31,7 +31,7 @@
     <string name="title_activity_admin">Welcome back Admin</string>
     <string name="title_activity_guest">Welcome back Guest</string>
     <string name="request_content">Number of pending posters:</string>
-    <string name="display_title">Displaying Now</string>
+    <string name="display_title">On Display</string>
     <string name="display_content">Number of posters on display:</string>
     <string name="search_title">All posters</string>
     <string name="guest_search_title">Your posters</string>

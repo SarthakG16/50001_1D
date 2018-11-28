@@ -10,11 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class GuestActivity extends AppCompatActivity {
 
@@ -105,25 +107,34 @@ public class GuestActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.logout){
-            //TODO: remove user details
             Intent intent = new Intent(GuestActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-            /*
-            Intent Logout = new Intent(GuestActivity.this,MainActivity.class);
-            Log.i(TAG,"Moving to Login page");
-            Toast.makeText(this, "Logout Successful", Toast.LENGTH_SHORT).show();
-            startActivity(Logout);
-            */
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void logout(){
+        final HashMap<String, String> params = new HashMap<>();
+        Request req_admin = new Request("GET", "auth/logout", params, new Request.Callback() {
+            @Override
+            public void onResponse(String response) {
+                Gson g1  = new Gson();
+                final Map<String, String> logout_info1 = g1.fromJson(response, Map.class);
+                if (logout_info1.get("status").equals("success")) {
+                    Toast.makeText(GuestActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        req_admin.execute();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"Destroying page. To clear login details");
+        Log.i(TAG,"Destroying Guest page");
+        logout();
     }
 }

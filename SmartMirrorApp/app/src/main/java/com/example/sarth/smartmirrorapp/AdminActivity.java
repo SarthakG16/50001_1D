@@ -18,10 +18,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashMap;;
 import java.util.Map;
-import java.util.TreeSet;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -129,12 +127,6 @@ public class AdminActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-            /*
-            Intent Logout = new Intent(AdminActivity.this,MainActivity.class);
-            Log.i(TAG,"Moving to Login page");
-            Toast.makeText(this, "Logout Successful", Toast.LENGTH_SHORT).show();
-            startActivity(Logout);
-            */
         }
 
         return super.onOptionsItemSelected(item);
@@ -174,10 +166,27 @@ public class AdminActivity extends AppCompatActivity {
 
     }
 
+    protected void logout(){
+        final HashMap<String, String> params = new HashMap<>();
+        Request req_admin = new Request("GET", "auth/logout", params, new Request.Callback() {
+            @Override
+            public void onResponse(String response) {
+                Gson g1  = new Gson();
+                final Map<String, String> logout_info1 = g1.fromJson(response, Map.class);
+                if (logout_info1.get("status").equals("success")) {
+                    Toast.makeText(AdminActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        req_admin.execute();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"Destroying page. To clear login details");
+        Log.i(TAG,"Destroying Admin page");
+        logout();
     }
 
 

@@ -41,12 +41,10 @@
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name=".GuestActivity"
-            android:label="@string/title_activity_guest"
-            android:parentActivityName=".MainActivity"/>
+            android:label="@string/title_activity_guest" />
 
         <activity android:name=".JudgementActivity"/>
 
