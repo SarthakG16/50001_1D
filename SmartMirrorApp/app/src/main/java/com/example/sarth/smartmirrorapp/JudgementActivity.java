@@ -171,7 +171,7 @@ public class JudgementActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                params.put("status","expired");
+                params.put("status","rejected");
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {

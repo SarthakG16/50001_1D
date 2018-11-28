@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -42,12 +43,21 @@ public class GuestActivity extends AppCompatActivity {
 
         button_request = findViewById(R.id.GuestRequestButton);
         button_display = findViewById(R.id.GuestDisplayingButton);
-        button_search = findViewById(R.id.GuestSearchButton);
+        button_search = findViewById(R.id.GuestArchiveButton);
         button_upload = findViewById(R.id.GuestUploadButton);
 
         text_request= findViewById(R.id.GuestRequestNumberView);
-        text_display = findViewById(R.id.GuestDisplayingButton);
-        text_search= findViewById(R.id.GuestSearchNumberView);
+        text_display = findViewById(R.id.GuestDisplayingNumberView);
+        text_search= findViewById(R.id.GuestArchiveNumberView);
+
+        getData();
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
 
 
         button_request.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +123,40 @@ public class GuestActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getData() {
+
+        HashMap<String, String> params = new HashMap<>();
+
+        Request req = new Request("GET","posters/my_status", params, new Request.Callback () {
+            @Override
+            public void onResponse(String response) {
+                Gson g  = new Gson();
+                Map<String, String> dataMap = g.fromJson(response, Map.class);
+                String temp_pending = String.valueOf(dataMap.get("pending"));
+                double d1 = Double.valueOf(temp_pending);
+
+                String temp_approved = String.valueOf(dataMap.get("approved"));
+                double d2 = Double.valueOf(temp_approved);
+
+                String temp_posted = String.valueOf(dataMap.get("posted"));
+                double d3 = Double.valueOf(temp_posted);
+
+                String temp_expired = String.valueOf(dataMap.get("expired"));
+                double d4 = Double.valueOf(temp_expired);
+
+
+                text_request.setText(String.valueOf((int)(d1+d2)));
+                text_display.setText(String.valueOf((int)d3));
+                text_search.setText(String.valueOf((int)d4));
+
+                refreshLayout.setRefreshing(false);
+                Toast.makeText(GuestActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+            }
+        });
+        req.execute();
+
     }
 
     protected void logout(){

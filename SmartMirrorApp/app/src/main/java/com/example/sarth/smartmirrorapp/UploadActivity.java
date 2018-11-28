@@ -190,7 +190,9 @@ public class UploadActivity extends AppCompatActivity{
         poster_preview_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"Button Clicked");
+                if (poster_preview_button.isActivated()) {
+                    return;
+                }
                 if (posterUri == null) {
                     return;
                 }

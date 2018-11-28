@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable{
@@ -45,8 +46,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             nameView = itemView.findViewById(R.id.recycler_item_name);
             statusView = itemView.findViewById(R.id.recycler_status_content);
             parentLayout = itemView.findViewById(R.id.recycler_layout);
-
-
         }
     }
 
@@ -84,6 +83,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.statusView.setTextColor(Color.BLUE);
         } else if (poster.status.equals("expired")) {
             holder.statusView.setText("Expired");
+            holder.statusView.setTextColor(Color.GRAY);
+        } else if (poster.status.equals("rejected")) {
+            holder.statusView.setText("Rejected");
             holder.statusView.setTextColor(Color.GRAY);
         }
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
