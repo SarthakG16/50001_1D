@@ -182,12 +182,11 @@ public class AdminActivity extends AppCompatActivity {
         req_admin.execute();
     }
 
+
+
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG,"Destroying Admin page");
+    public void onBackPressed() {
+        super.onBackPressed();
         logout();
     }
-
-
 }
