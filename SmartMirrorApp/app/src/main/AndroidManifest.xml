@@ -36,7 +36,7 @@
         <activity
             android:name=".RequestsActivity"
             android:label="Requests"
-            android:parentActivityName=".AdminActivity"/>
+            />
 
         <activity
             android:name=".AdminActivity"
@@ -46,11 +46,11 @@
         <activity android:name=".GuestActivity"
             android:label="@string/title_activity_guest" />
 
-        <activity android:name=".JudgementActivity"/>
-
+        <activity android:name=".JudgementActivity"
+            />
         <activity android:name=".SearchActivity"
             android:label="Search"
-            android:parentActivityName=".AdminActivity"/>
+            />
 
     </application>
 

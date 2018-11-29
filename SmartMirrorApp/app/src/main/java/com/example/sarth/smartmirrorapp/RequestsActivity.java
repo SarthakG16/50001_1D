@@ -41,7 +41,8 @@ public class RequestsActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-        Log.i(TAG,"Reach Request Activity");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         search_options_button = findViewById(R.id.requests_search_button);
         requests = findViewById(R.id.request_recycler);
@@ -149,5 +150,16 @@ public class RequestsActivity extends AppCompatActivity {
             }
         });
         req.execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
