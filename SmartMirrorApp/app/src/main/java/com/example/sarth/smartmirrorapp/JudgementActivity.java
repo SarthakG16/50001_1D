@@ -16,7 +16,12 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class JudgementActivity extends AppCompatActivity{
     private final static String TAG = "Logcat";
@@ -88,10 +93,24 @@ public class JudgementActivity extends AppCompatActivity{
         contact_email.setText(String.format("Email: %s", poster.email));
 
         start_date = findViewById(R.id.judge_date_start);
-        start_date.setText(String.format("Start Date: %s", poster.postDate));
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        try {
+            cal.setTime(sdf.parse(poster.postDate));
+        } catch (ParseException e) {
+            Toast.makeText(JudgementActivity.this,"Wrong Date Shown",Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        start_date.setText(String.format("Start Date: %s", DateFormat.getDateInstance().format(cal.getTime())));
 
         stop_date = findViewById(R.id.judge_date_stop);
-        stop_date.setText(String.format("Stop Date: %s", poster.expiryDate));
+        try {
+            cal.setTime(sdf.parse(poster.expiryDate));
+        } catch (ParseException e) {
+            Toast.makeText(JudgementActivity.this,"Wrong Date Shown",Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+        stop_date.setText(String.format("Stop Date: %s", DateFormat.getDateInstance().format(cal.getTime())));
 
         locations = new CheckBox[8];
         for (int i = 0; i < locations.length; i++) {
