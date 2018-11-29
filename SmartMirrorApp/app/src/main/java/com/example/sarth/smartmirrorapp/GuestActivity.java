@@ -1,7 +1,6 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -63,7 +62,7 @@ public class GuestActivity extends AppCompatActivity {
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent GuestToRequest = new Intent(GuestActivity.this, RequestsActivity.class);
+                Intent GuestToRequest = new Intent(GuestActivity.this, AdminFilterActivity.class);
                 Log.i(TAG,"Moving to Request page");
                 startActivity(GuestToRequest);
             }

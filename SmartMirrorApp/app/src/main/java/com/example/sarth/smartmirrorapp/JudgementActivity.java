@@ -165,7 +165,7 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                 startActivity(toRequests);
 
             }
@@ -201,7 +201,7 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                 startActivity(toRequests);
 
             }
@@ -239,7 +239,7 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,RequestsActivity.class);
+                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                 startActivity(toRequests);
 
             }

@@ -34,7 +34,7 @@
             android:label="Upload"/>
 
         <activity
-            android:name=".RequestsActivity"
+            android:name=".AdminFilterActivity"
             android:label="Requests"
             />
 

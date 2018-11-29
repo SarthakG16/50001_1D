@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -8,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RequestsActivity extends AppCompatActivity {
+public class AdminFilterActivity extends AppCompatActivity {
     public static final String TAG =  "Logcat";
 
     //vars
@@ -36,6 +36,10 @@ public class RequestsActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    public static final String FILTER_KEY = "Filter_key";
+    private String filter = "pending";
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class RequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_requests);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent toRequest = getIntent();
+        filter = toRequest.getStringExtra(FILTER_KEY);
 
         search_options_button = findViewById(R.id.requests_search_button);
         requests = findViewById(R.id.request_recycler);
@@ -68,7 +74,7 @@ public class RequestsActivity extends AppCompatActivity {
                     return;
                 }
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(RequestsActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
                 mBuilder.setTitle("Search Settings");
                 mBuilder.setIcon(R.drawable.list_icon);
                 mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
@@ -135,15 +141,15 @@ public class RequestsActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
 
 
-        Request req = new Request("GET","posters/?status=pending", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/?status="+filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                RequestsActivity.posters = posters;
+                AdminFilterActivity.posters = posters;
                 Poster.requests = posters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(RequestsActivity.this, posters,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(AdminFilterActivity.this, posters,"Request");
                 requests.setAdapter(recyclerViewAdapter);
-                requests.setLayoutManager(new LinearLayoutManager(RequestsActivity.this));
+                requests.setLayoutManager(new LinearLayoutManager(AdminFilterActivity.this));
 
                 progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

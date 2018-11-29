@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -68,31 +67,27 @@ public class AdminActivity extends AppCompatActivity {
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AdminToRequest = new Intent(AdminActivity.this, RequestsActivity.class);
-                Log.i(TAG,"Moving to Request page");
-                startActivity(AdminToRequest);
+                Intent adminToAdminFilter = new Intent(AdminActivity.this, AdminFilterActivity.class);
+                adminToAdminFilter.putExtra(AdminFilterActivity.FILTER_KEY,"pending");
+                startActivity(adminToAdminFilter);
             }
-        });
+        }); 
 
         button_display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                Toast.makeText(AdminActivity.this,"To make a new activity",Toast.LENGTH_LONG).show();
-                /*
-                Intent AdminToDisplaying= new Intent(AdminActivity.this,Displaying.class);
-                Log.i(TAG,"Moving to Displaying page");
-                startActivity(AdminToDisplaying);
-                 */
+                Intent adminToAdminFilter = new Intent(AdminActivity.this, AdminFilterActivity.class);
+                adminToAdminFilter.putExtra(AdminFilterActivity.FILTER_KEY,"posted");
+                startActivity(adminToAdminFilter);
             }
         });
 
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent AdminToSearch= new Intent(AdminActivity.this,SearchActivity.class);
+                Intent adminToSearch= new Intent(AdminActivity.this,SearchActivity.class);
                 Log.i(TAG,"Moving to Search page");
-                startActivity(AdminToSearch);
+                startActivity(adminToSearch);
             }
         });
 
