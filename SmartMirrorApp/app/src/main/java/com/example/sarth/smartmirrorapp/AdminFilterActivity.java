@@ -50,6 +50,15 @@ public class AdminFilterActivity extends AppCompatActivity {
         Intent toRequest = getIntent();
         filter = toRequest.getStringExtra(FILTER_KEY);
 
+        switch (filter) {
+            case "pending":
+                setTitle("Requests");
+                break;
+            case "posted":
+                setTitle("On Display");
+                break;
+        }
+
         search_options_button = findViewById(R.id.requests_search_button);
         requests = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
