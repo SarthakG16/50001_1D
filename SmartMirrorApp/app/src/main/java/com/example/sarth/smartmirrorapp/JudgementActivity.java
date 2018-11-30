@@ -60,7 +60,6 @@ public class JudgementActivity extends AppCompatActivity{
         final int position = intent.getIntExtra("Position",0);
         poster = Poster.requests.get(position);
         setTitle(poster.title);
-        Toast.makeText(JudgementActivity.this,poster.id,Toast.LENGTH_LONG).show();
 
         origin = intent.getStringExtra("Origin");
 
@@ -69,7 +68,7 @@ public class JudgementActivity extends AppCompatActivity{
         button_approve = findViewById(R.id.judge_approve);
         button_remove = findViewById(R.id.judge_remove_search);
 
-        if (origin.equals("Search")) {
+        if (!poster.status.equals("pending")) {
             button_layout.setVisibility(View.INVISIBLE);
             button_remove.setVisibility(View.VISIBLE);
         }
@@ -156,17 +155,22 @@ public class JudgementActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                params.put("status","expired"); //TODO change later
+                if (poster.status.equals("posted")) {
+                    params.put("status","pending"); //TODO change to expired
+                } else {
+                    params.put("status", "pending"); //TODO change later to rejected
+                }
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
+                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
+                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
+                        startActivity(toRequests);
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                startActivity(toRequests);
 
             }
         });
@@ -198,11 +202,13 @@ public class JudgementActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
+                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
+                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
+                        startActivity(toRequests);
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                startActivity(toRequests);
+
 
             }
         });
@@ -236,11 +242,14 @@ public class JudgementActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
+                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
+                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
+                        startActivity(toRequests);
                     }
                 });
                 req.execute();
-                Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                startActivity(toRequests);
+                finish();
+
 
             }
         });

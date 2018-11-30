@@ -25,17 +25,18 @@
     <string name="approve">Approve</string>
     <string name="remove">Remove</string>
     <string name="logout">Logout</string>
-    <string name="request">Request</string>
+    <string name="request">Requests</string>
     <string name="upload">Upload</string>
     <string name="search">Search</string>
+    <string name="search_title">All posters</string>
+    <string name="search_content">Number of posters:</string>
     <string name="title_activity_admin">Welcome back Admin</string>
     <string name="title_activity_guest">Welcome back Guest</string>
-    <string name="request_content">Number of pending posters:</string>
+    <string name="request_content">Your requests:</string>
     <string name="display_title">On Display</string>
-    <string name="display_content">Number of posters on display:</string>
-    <string name="search_title">All posters</string>
-    <string name="guest_search_title">Your posters</string>
-    <string name="search_content">Number of posters:</string>
+    <string name="display_content">Your posters on display:</string>
+    <string name="archive_title">Archive</string>
+    <string name="archive_content">Your previous posters:</string>
     <string name="number_holder">100</string>
     <string name="status">Status:</string>
 

@@ -4,7 +4,12 @@
     tools:context="com.example.sarth.smartmirrorapp.MainActivity">
     <item
         android:id="@+id/logout"
-        android:orderInCategory="100"
+        android:orderInCategory="110"
         android:title="@string/logout"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/Archive"
+        android:orderInCategory="100"
+        android:title="Archive"
         app:showAsAction="never" />
 </menu>

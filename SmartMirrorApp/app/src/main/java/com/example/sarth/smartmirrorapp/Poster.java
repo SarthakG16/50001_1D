@@ -39,7 +39,6 @@ public class Poster implements Serializable{
         this.number = params.get("contact_number");
         this.email = params.get("contact_email");
         this.postDate = params.get("date_posted");
-        Log.i("REQ_", String.valueOf(this.postDate==null));
         this.expiryDate = params.get("date_expiry");
         this.locations = params.get("locations");
         this.serialized_data = params.get("serialized_image_data");

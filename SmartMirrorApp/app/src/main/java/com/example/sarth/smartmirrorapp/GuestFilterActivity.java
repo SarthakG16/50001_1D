@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AdminFilterActivity extends AppCompatActivity {
+public class GuestFilterActivity extends AppCompatActivity {
+
     public static final String TAG =  "Logcat";
 
     //vars
@@ -54,7 +55,7 @@ public class AdminFilterActivity extends AppCompatActivity {
 
         switch (filter) {
             case "pending":
-                setTitle("Requests");
+                setTitle("Your Requests");
                 break;
             case "posted":
                 setTitle("On Display");
@@ -85,7 +86,7 @@ public class AdminFilterActivity extends AppCompatActivity {
                     return;
                 }
 
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(GuestFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
                 mBuilder.setTitle("Search Settings");
                 mBuilder.setIcon(R.drawable.list_icon);
                 mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
@@ -152,15 +153,15 @@ public class AdminFilterActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
 
 
-        Request req = new Request("GET","posters/?status="+filter, params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                AdminFilterActivity.posters = posters;
+                GuestFilterActivity.posters = posters;
                 Poster.requests = posters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(AdminFilterActivity.this, posters,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters,"Request");
                 requests.setAdapter(recyclerViewAdapter);
-                requests.setLayoutManager(new LinearLayoutManager(AdminFilterActivity.this));
+                requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 
                 progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);

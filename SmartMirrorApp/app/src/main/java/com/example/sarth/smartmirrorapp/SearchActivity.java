@@ -139,7 +139,6 @@ public class SearchActivity extends AppCompatActivity {
         Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-
                 SearchActivity.posters = posters;
                 Poster.requests = posters;
 

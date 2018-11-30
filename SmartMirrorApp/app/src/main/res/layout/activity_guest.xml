@@ -56,7 +56,7 @@
                         android:text="@string/request"
                         android:textColor="@color/white"
                         android:textSize="30sp"
-                        app:autoSizeMinTextSize="16dp"
+                        android:autoSizeMinTextSize="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -224,7 +224,7 @@
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
-                        android:text="@string/guest_search_title"
+                        android:text="@string/archive_title"
                         android:textColor="@color/white"
                         android:textSize="30sp"
                         android:autoSizeMinTextSize="16dp" />
@@ -247,7 +247,7 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@string/search_content"
+                        android:text= "@string/archive_content"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

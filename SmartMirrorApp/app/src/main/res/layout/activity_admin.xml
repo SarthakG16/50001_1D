@@ -111,6 +111,7 @@
                         android:layout_marginRight="8dp"
                         android:text="@string/number_holder"
                         android:textColor="@color/white"
+                        app:layout_constraintHorizontal_bias="0.1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/RequestContentView"
@@ -183,7 +184,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="@string/display_content"
                         android:textColor="@color/white"
-                        app:autoSizeStepGranularity="2dp"
+                        android:autoSizeStepGranularity="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/DisplayingTextView" />

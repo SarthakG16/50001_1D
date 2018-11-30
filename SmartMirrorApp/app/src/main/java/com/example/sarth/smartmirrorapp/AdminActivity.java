@@ -148,10 +148,9 @@ public class AdminActivity extends AppCompatActivity {
                 String temp_posted = String.valueOf(dataMap.get("posted"));
                 double d3 = Double.valueOf(temp_posted);
 
-
                 text_request.setText(String.valueOf((int)d1));
-                text_approve.setText(String.valueOf((int)d2));
-                text_search.setText(String.valueOf((int)d3));
+                text_approve.setText(String.valueOf((int)d3));
+                text_search.setText(String.valueOf((int)(d3+d2)));
 
                 refreshLayout.setRefreshing(false);
                 Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();

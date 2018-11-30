@@ -24,12 +24,12 @@ public class GuestActivity extends AppCompatActivity {
 
     private Button button_request;
     private Button button_display;
-    private Button button_search;
+    private Button button_archive;
     private FloatingActionButton button_upload;
 
     private TextView text_request;
     private TextView text_display;
-    private TextView text_search;
+    private TextView text_archive;
 
     private SwipeRefreshLayout refreshLayout;
 
@@ -42,12 +42,12 @@ public class GuestActivity extends AppCompatActivity {
 
         button_request = findViewById(R.id.GuestRequestButton);
         button_display = findViewById(R.id.GuestDisplayingButton);
-        button_search = findViewById(R.id.GuestArchiveButton);
+        button_archive = findViewById(R.id.GuestArchiveButton);
         button_upload = findViewById(R.id.GuestUploadButton);
 
         text_request= findViewById(R.id.GuestRequestNumberView);
         text_display = findViewById(R.id.GuestDisplayingNumberView);
-        text_search= findViewById(R.id.GuestArchiveNumberView);
+        text_archive= findViewById(R.id.GuestArchiveNumberView);
 
         getData();
 
@@ -62,31 +62,30 @@ public class GuestActivity extends AppCompatActivity {
         button_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent GuestToRequest = new Intent(GuestActivity.this, AdminFilterActivity.class);
-                Log.i(TAG,"Moving to Request page");
-                startActivity(GuestToRequest);
+                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                Log.i(TAG,"Request Button Clicked (GUEST)");
+                startActivity(guestToGuestFilter);
             }
         });
 
         button_display.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                Toast.makeText(GuestActivity.this,"To make a new activity",Toast.LENGTH_LONG).show();
-                /*
-                Intent GuestToDisplaying= new Intent(GuestActivity.this,Displaying.class);
-                Log.i(TAG,"Moving to Displaying page");
-                startActivity(GuestToDisplaying);
-                 */
+                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                Log.i(TAG,"Display Button Clicked (GUEST)");
+                startActivity(guestToGuestFilter);
             }
         });
 
-        button_search.setOnClickListener(new View.OnClickListener() {
+        button_archive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent GuestToFilter = new Intent(GuestActivity.this,SearchActivity.class);
-                Log.i(TAG,"Moving to Search page");
-                startActivity(GuestToFilter);
+                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                Log.i(TAG,"Archive Button Clicked (GUEST)");
+                startActivity(guestToGuestFilter);
             }
         });
 
@@ -105,6 +104,8 @@ public class GuestActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem archive = menu.findItem(R.id.Archive);
+        archive.setVisible(false);
         return true;
     }
 
@@ -128,11 +129,11 @@ public class GuestActivity extends AppCompatActivity {
 
         HashMap<String, String> params = new HashMap<>();
 
-        Request req = new Request("GET","posters/my_status", params, new Request.Callback () {
+        Request req = new Request("GET","debug_current_user", params, new Request.Callback () {
             @Override
             public void onResponse(String response) {
                 Gson g  = new Gson();
-                Map<String, String> dataMap = g.fromJson(response, Map.class);
+               /* Map<String, String> dataMap = g.fromJson(response, Map.class);
                 String temp_pending = String.valueOf(dataMap.get("pending"));
                 double d1 = Double.valueOf(temp_pending);
 
@@ -148,7 +149,7 @@ public class GuestActivity extends AppCompatActivity {
 
                 text_request.setText(String.valueOf((int)(d1+d2)));
                 text_display.setText(String.valueOf((int)d3));
-                text_search.setText(String.valueOf((int)d4));
+                text_archive.setText(String.valueOf((int)d4));*/
 
                 refreshLayout.setRefreshing(false);
                 Toast.makeText(GuestActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
