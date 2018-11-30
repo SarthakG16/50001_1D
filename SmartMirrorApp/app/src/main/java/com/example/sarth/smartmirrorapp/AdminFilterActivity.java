@@ -129,6 +129,9 @@ public class AdminFilterActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (recyclerViewAdapter == null) {
+                    return false;
+                }
                 if (choice.equals("Title")) {
                     recyclerViewAdapter.getTitleFilter().filter(newText);
                     return false;

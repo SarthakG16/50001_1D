@@ -63,7 +63,7 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"request");
                 Log.i(TAG,"Request Button Clicked (GUEST)");
                 startActivity(guestToGuestFilter);
             }
@@ -73,7 +73,7 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"display");
                 Log.i(TAG,"Display Button Clicked (GUEST)");
                 startActivity(guestToGuestFilter);
             }
@@ -83,7 +83,7 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"pending");
+                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"archive");
                 Log.i(TAG,"Archive Button Clicked (GUEST)");
                 startActivity(guestToGuestFilter);
             }
@@ -129,11 +129,11 @@ public class GuestActivity extends AppCompatActivity {
 
         HashMap<String, String> params = new HashMap<>();
 
-        Request req = new Request("GET","debug_current_user", params, new Request.Callback () {
+        Request req = new Request("GET","posters/my_status", params, new Request.Callback () {
             @Override
             public void onResponse(String response) {
                 Gson g  = new Gson();
-               /* Map<String, String> dataMap = g.fromJson(response, Map.class);
+                Map<String, String> dataMap = g.fromJson(response, Map.class);
                 String temp_pending = String.valueOf(dataMap.get("pending"));
                 double d1 = Double.valueOf(temp_pending);
 
@@ -149,7 +149,7 @@ public class GuestActivity extends AppCompatActivity {
 
                 text_request.setText(String.valueOf((int)(d1+d2)));
                 text_display.setText(String.valueOf((int)d3));
-                text_archive.setText(String.valueOf((int)d4));*/
+                text_archive.setText(String.valueOf((int)d4));
 
                 refreshLayout.setRefreshing(false);
                 Toast.makeText(GuestActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();

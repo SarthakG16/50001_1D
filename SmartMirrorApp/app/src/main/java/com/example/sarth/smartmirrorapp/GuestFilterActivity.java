@@ -27,7 +27,7 @@ public class GuestFilterActivity extends AppCompatActivity {
 
     //vars
     private RecyclerView requests;
-    private static List<Poster> posters = new ArrayList<>();
+    private static List<Poster> posters;
     private RecyclerViewAdapter recyclerViewAdapter;
     private Button search_options_button;
     private SwipeRefreshLayout refreshLayout;
@@ -130,6 +130,9 @@ public class GuestFilterActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (recyclerViewAdapter ==null){
+                    return false;
+                }
                 if (choice.equals("Title")) {
                     recyclerViewAdapter.getTitleFilter().filter(newText);
                     return false;
@@ -156,10 +159,31 @@ public class GuestFilterActivity extends AppCompatActivity {
         Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                GuestFilterActivity.posters = posters;
-                Poster.requests = posters;
+                List<Poster> filteredPosters = new ArrayList<>();
+                if (filter.equals("request")) {
+                    for (Poster poster: posters) {
+                        if (poster.status.equals("pending") || poster.status.equals("rejected") || poster.status.equals("approved")) {
+                            filteredPosters.add(poster);
+                        }
+                    }
+                } else if (filter.equals("display")){
+                    for (Poster poster: posters) {
+                        if (poster.status.equals("posted")) {
+                            filteredPosters.add(poster);
+                        }
+                    }
+                } else if (filter.equals("archive")) {
+                    for (Poster poster: posters) {
+                        if (poster.status.equals("expired")) {
+                            filteredPosters.add(poster);
+                        }
+                    }
+                }
 
-                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters,"Request");
+                GuestFilterActivity.posters = filteredPosters;
+                Poster.requests = filteredPosters;
+
+                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, filteredPosters,"Request");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 

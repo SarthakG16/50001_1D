@@ -112,18 +112,25 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (choice.equals("Title")) {
-                    recyclerViewAdapter.getTitleFilter().filter(newText);
+                if (recyclerViewAdapter == null) {
                     return false;
-                } else if (choice.equals("Category")) {
-                    recyclerViewAdapter.getCategoryFilter().filter(newText);
-                    return false;
-                } else if (choice.equals("Name")) {
-                    recyclerViewAdapter.getNameFilter().filter(newText);
-                } else if (choice.equals("Status")) {
-                    recyclerViewAdapter.getStatusFilter().filter(newText);
-                } else {
-                    recyclerViewAdapter.getFilter().filter(newText);
+                }
+                switch (choice) {
+                    case "Title":
+                        recyclerViewAdapter.getTitleFilter().filter(newText);
+                        return false;
+                    case "Category":
+                        recyclerViewAdapter.getCategoryFilter().filter(newText);
+                        return false;
+                    case "Name":
+                        recyclerViewAdapter.getNameFilter().filter(newText);
+                        break;
+                    case "Status":
+                        recyclerViewAdapter.getStatusFilter().filter(newText);
+                        break;
+                    default:
+                        recyclerViewAdapter.getFilter().filter(newText);
+                        break;
                 }
                 return false;
             }
