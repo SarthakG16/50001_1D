@@ -39,11 +39,42 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="5" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="backgroundColor" value="100050" />
+                                      <entry key="iconShape" value="HRECT" />
+                                      <entry key="imageAsset" value="D:\Down\Intro to Info Sys\color icon\512.png" />
+                                      <entry key="outputName" value="icon_glance" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                           </map>
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
