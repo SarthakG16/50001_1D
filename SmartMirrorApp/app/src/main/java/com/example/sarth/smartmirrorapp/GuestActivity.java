@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GuestActivity extends AppCompatActivity {
+public class GuestActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String TAG = "Logcat";
 
@@ -40,10 +40,17 @@ public class GuestActivity extends AppCompatActivity {
 
         refreshLayout = findViewById(R.id.guest_refreshlayout);
 
+        //set up buttons
         button_request = findViewById(R.id.GuestRequestButton);
         button_display = findViewById(R.id.GuestDisplayingButton);
         button_archive = findViewById(R.id.GuestArchiveButton);
         button_upload = findViewById(R.id.GuestUploadButton);
+
+        //set up onClickListener
+        button_request.setOnClickListener(this);
+        button_display.setOnClickListener(this);
+        button_archive.setOnClickListener(this);
+        button_upload.setOnClickListener(this);
 
         text_request= findViewById(R.id.GuestRequestNumberView);
         text_display = findViewById(R.id.GuestDisplayingNumberView);
@@ -55,47 +62,6 @@ public class GuestActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 getData();
-            }
-        });
-
-
-        button_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"request");
-                Log.i(TAG,"Request Button Clicked (GUEST)");
-                startActivity(guestToGuestFilter);
-            }
-        });
-
-        button_display.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"display");
-                Log.i(TAG,"Display Button Clicked (GUEST)");
-                startActivity(guestToGuestFilter);
-            }
-        });
-
-        button_archive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent guestToGuestFilter = new Intent(GuestActivity.this, GuestFilterActivity.class);
-                guestToGuestFilter.putExtra(GuestFilterActivity.FILTER_KEY,"archive");
-                Log.i(TAG,"Archive Button Clicked (GUEST)");
-                startActivity(guestToGuestFilter);
-            }
-        });
-
-
-        button_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent GuestToUpload = new Intent(GuestActivity.this,UploadActivity.class);
-                Log.i(TAG,"Moving to upload page");
-                startActivity(GuestToUpload);
             }
         });
     }
@@ -180,5 +146,35 @@ public class GuestActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i(TAG,"Destroying Guest page");
         logout();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent fromGuest = null;
+        switch(v.getId()){
+            case R.id.GuestRequestButton:
+                fromGuest = new Intent(this, GuestFilterActivity.class);
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"request");
+                Log.i(TAG,"Guest to Request page");
+                break;
+
+            case R.id.GuestDisplayingButton:
+                fromGuest = new Intent(this, GuestFilterActivity.class);
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"display");
+                Log.i(TAG,"Guest to Now Displaying page");
+                break;
+
+            case R.id.GuestArchiveButton:
+                fromGuest= new Intent(this, GuestFilterActivity.class);
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"archive");
+                Log.i(TAG,"Guest to Archive page");
+                break;
+
+            case R.id.GuestUploadButton:
+                fromGuest= new Intent(this,UploadActivity.class);
+                Log.i(TAG,"Guest to Ypload page");
+                break;
+        }
+        startActivity(fromGuest);
     }
 }

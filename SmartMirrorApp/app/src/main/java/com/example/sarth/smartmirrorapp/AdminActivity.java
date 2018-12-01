@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;;
 import java.util.Map;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final static String TAG = "Logcat";
 
@@ -45,10 +45,17 @@ public class AdminActivity extends AppCompatActivity {
 
         refreshLayout = findViewById(R.id.admin_refreshlayout);
 
-        button_request= findViewById(R.id.RequestButton);
+        //set up buttons
+        button_request = findViewById(R.id.RequestButton);
         button_display = findViewById(R.id.DisplayingButton);
         button_search = findViewById(R.id.SearchButton);
         button_upload = findViewById(R.id.AdminUploadButton);
+
+        //set up onClickListener
+        button_request.setOnClickListener(this);
+        button_display.setOnClickListener(this);
+        button_search.setOnClickListener(this);
+        button_upload.setOnClickListener(this);
 
         text_request= findViewById(R.id.RequestNumberView);
         text_approve = findViewById(R.id.DisplayingNumberView);
@@ -60,44 +67,6 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 getData();
-            }
-        });
-
-
-        button_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent adminToAdminFilter = new Intent(AdminActivity.this, AdminFilterActivity.class);
-                adminToAdminFilter.putExtra(AdminFilterActivity.FILTER_KEY,"pending");
-                startActivity(adminToAdminFilter);
-            }
-        }); 
-
-        button_display.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent adminToAdminFilter = new Intent(AdminActivity.this, AdminFilterActivity.class);
-                adminToAdminFilter.putExtra(AdminFilterActivity.FILTER_KEY,"posted");
-                startActivity(adminToAdminFilter);
-            }
-        });
-
-        button_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent adminToSearch= new Intent(AdminActivity.this,SearchActivity.class);
-                Log.i(TAG,"Moving to Search page");
-                startActivity(adminToSearch);
-            }
-        });
-
-        button_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AdminToUpload= new Intent(AdminActivity.this,UploadActivity.class);
-                Log.i(TAG,"Moving to Upload page");
-                startActivity(AdminToUpload);
-
             }
         });
     }
@@ -117,7 +86,6 @@ public class AdminActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.logout){
-            //TODO: remove user details
             Intent intent = new Intent(AdminActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -176,11 +144,39 @@ public class AdminActivity extends AppCompatActivity {
         req_admin.execute();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"Destorying admin page");
+        logout();
+    }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        logout();
+    public void onClick(View v) {
+        Intent fromAdmin = null;
+        switch(v.getId()){
+            case R.id.RequestButton:
+                fromAdmin = new Intent(this, AdminFilterActivity.class);
+                fromAdmin.putExtra(AdminFilterActivity.FILTER_KEY,"pending");
+                Log.i(TAG,"Admin to Request page");
+                break;
+
+            case R.id.DisplayingButton:
+                fromAdmin = new Intent(this, AdminFilterActivity.class);
+                fromAdmin.putExtra(AdminFilterActivity.FILTER_KEY,"posted");
+                Log.i(TAG,"Admin to Now Displaying page");
+                break;
+
+            case R.id.SearchButton:
+                fromAdmin= new Intent(this,SearchActivity.class);
+                Log.i(TAG,"Moving to Search page");
+                break;
+
+            case R.id.AdminUploadButton:
+                fromAdmin= new Intent(this,UploadActivity.class);
+                Log.i(TAG,"Admin to Admin Upload page");
+                break;
+        }
+        startActivity(fromAdmin);
     }
 }
