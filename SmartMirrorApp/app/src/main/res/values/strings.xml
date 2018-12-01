@@ -44,5 +44,7 @@
     <string name="username">Username:</string>
     <string name="remember_me">Remember me</string>
     <string name="login">Login</string>
+    <string name="by">By:</string>
+    <string name="icon_calender">icon_calender</string>
 
 </resources>

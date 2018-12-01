@@ -16,7 +16,7 @@
     <com.github.barteksc.pdfviewer.PDFView
         android:id="@+id/recyler_item_pdf"
         android:layout_width="100dp"
-        android:layout_height="100dp">
+        android:layout_height="120dp">
 
     </com.github.barteksc.pdfviewer.PDFView>
 
@@ -24,68 +24,68 @@
         android:id="@+id/recyler_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is where the Title will be"
-        android:layout_toRightOf="@+id/recyler_item_pdf"
-        android:layout_marginLeft="30dp"
-        android:textSize="17sp"
         android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_toEndOf="@+id/recyler_item_pdf"
-        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+        android:layout_toRightOf="@+id/recyler_item_pdf"
+        android:text="@string/title"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/recyler_item_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Category of Poster here"
-        android:layout_toRightOf="@+id/recyler_item_pdf"
         android:layout_below="@+id/recyler_item_title"
-        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:textSize="13sp"
-        android:layout_marginStart="30dp"
-        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_toRightOf="@+id/recyler_item_pdf"
+        android:text="@string/category"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/recycler_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Name here"
-        android:layout_toRightOf="@+id/recyler_item_pdf"
         android:layout_below="@+id/recyler_item_category"
-        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:textSize="13sp"
-        android:layout_marginStart="30dp"
-        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_toRightOf="@+id/recyler_item_pdf"
+        android:text="@string/by"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/recycler_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "@string/status"
-        android:layout_toRightOf="@+id/recyler_item_pdf"
         android:layout_below="@+id/recycler_item_name"
-        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:layout_marginStart="30dp"
-        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+        android:layout_toEndOf="@+id/recyler_item_pdf"
+        android:layout_toRightOf="@+id/recyler_item_pdf"
+        android:text="@string/status"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/recycler_status_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Pending"
-        android:layout_toRightOf="@+id/recycler_status"
         android:layout_below="@+id/recycler_item_name"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:layout_marginStart="30dp"
-        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"/>
+        android:layout_toEndOf="@+id/recycler_status"
+        android:layout_toRightOf="@+id/recycler_status"
+        android:textAppearance="@style/Base.ThemeOverlay.AppCompat.Light"
+        android:textSize="14sp" />
 
 
     

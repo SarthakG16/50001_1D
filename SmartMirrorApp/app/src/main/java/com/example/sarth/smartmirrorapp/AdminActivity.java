@@ -35,7 +35,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     private TextView text_approve;
     private TextView text_search;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

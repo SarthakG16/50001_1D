@@ -56,7 +56,6 @@
                         android:text="@string/request"
                         android:textColor="@color/white"
                         android:textSize="30sp"
-                        android:autoSizeMinTextSize="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -226,8 +225,7 @@
                         android:paddingRight="16dp"
                         android:text="@string/archive_title"
                         android:textColor="@color/white"
-                        android:textSize="30sp"
-                        android:autoSizeMinTextSize="16dp" />
+                        android:textSize="30sp"/>
 
                     <View
                         android:layout_width="match_parent"
