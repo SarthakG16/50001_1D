@@ -32,28 +32,25 @@
     <ImageView
         android:id="@+id/login_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:adjustViewBounds="true"
-        android:contentDescription="TODO"
-        android:paddingRight="32dp"
-        android:paddingBottom="8dp"
-        android:src="@drawable/logo_white" />
+        android:contentDescription="glance_logo"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo_white_curve" />
 
     <TextView
         android:id="@+id/login_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="200dp"
         android:text="@string/sign_in_to_smart_mirror"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/login_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_image_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/login_image_view" />
 
 
     <android.support.constraint.ConstraintLayout

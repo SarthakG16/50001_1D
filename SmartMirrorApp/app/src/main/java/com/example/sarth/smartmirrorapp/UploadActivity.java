@@ -402,6 +402,7 @@ public class UploadActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
+                finish();
                 //clear = true;
             }
         });

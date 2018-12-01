@@ -168,7 +168,6 @@
                         android:layout_marginBottom="8dp"
                         android:text="@string/display_content"
                         android:textColor="@color/white"
-                        android:autoSizeStepGranularity="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/DisplayingTextView" />
