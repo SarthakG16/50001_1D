@@ -144,8 +144,6 @@ public class JudgementActivity extends AppCompatActivity{
     }
 
     public void remove(View view) {
-        Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
         builder.setTitle("Confirm");
         builder.setIcon(R.drawable.ic_delete_black_24dp);
@@ -171,7 +169,8 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-
+                Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
+                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -185,8 +184,6 @@ public class JudgementActivity extends AppCompatActivity{
     }
 
     public void reject(View view) {
-        Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
         builder.setTitle("Confirm");
         builder.setIcon(R.drawable.ic_close_black_24dp);
@@ -208,8 +205,8 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
-
-
+                Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
+                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -224,9 +221,6 @@ public class JudgementActivity extends AppCompatActivity{
     }
 
     public void approve(View view) {
-
-        Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
         builder.setTitle("Confirm");
         builder.setIcon(R.drawable.ic_check_black_24dp);
@@ -248,11 +242,11 @@ public class JudgementActivity extends AppCompatActivity{
                     }
                 });
                 req.execute();
+                Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
                 finish();
-
-
             }
         });
+
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
