@@ -39,5 +39,10 @@
     <string name="archive_content">Your previous posters:</string>
     <string name="number_holder">100</string>
     <string name="status">Status:</string>
+    <string name="password">Password:</string>
+    <string name="sign_in_to_smart_mirror">Sign in to Smart Mirror</string>
+    <string name="username">Username:</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login">Login</string>
 
 </resources>

@@ -16,14 +16,37 @@
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="outputName" value="add_icon" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcher">
+                              <value>
+                                <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="clipartAsset">
+                                      <entry key="backgroundImage">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/Android/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_add_black_24dp.xml" />
+                                                <entry key="scalingPercent" value="0" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,7 +56,14 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="add_icon" />
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="1b2b58" />
+                                      <entry key="backgroundLayerName" value="glace_full_background" />
+                                      <entry key="foregroundImage" value="D:\SUTD\T4\50.001 Intro to Info Systems and Programming\1D\logo_white.png" />
+                                      <entry key="foregroundLayerName" value="glance_full_forground" />
+                                      <entry key="legacyIconShape" value="HRECT" />
+                                      <entry key="outputName" value="glance_full" />
+                                      <entry key="webIconShape" value="HRECT" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -44,12 +74,33 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="clipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="image">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="5" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="text">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -61,20 +112,14 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="backgroundColor" value="100050" />
                                       <entry key="iconShape" value="HRECT" />
-                                      <entry key="imageAsset" value="D:\Down\Intro to Info Sys\color icon\512.png" />
-                                      <entry key="outputName" value="icon_glance" />
+                                      <entry key="imageAsset" value="D:\SUTD\T4\50.001 Intro to Info Systems and Programming\1D\app_logo_blue.png" />
+                                      <entry key="outputName" value="icon_glance_round" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
@@ -93,25 +138,14 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/D:/Android/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_delete_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_delete_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\sarth" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="height" value="1448" />
+                            <entry key="outputName" value="ic_logo_white" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="D:\SUTD\T4\50.001 Intro to Info Systems and Programming\1D\logo_white.psd" />
+                            <entry key="width" value="3017" />
                           </map>
                         </option>
                       </PersistentState>

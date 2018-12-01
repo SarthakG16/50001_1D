@@ -403,10 +403,6 @@ public class UploadActivity extends AppCompatActivity{
                 });
                 req.execute();
                 //clear = true;
-
-                //TODO: Return to their respective home activity
-
-
             }
         });
 

@@ -172,7 +172,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.GuestUploadButton:
                 fromGuest= new Intent(this,UploadActivity.class);
-                Log.i(TAG,"Guest to Ypload page");
+                Log.i(TAG,"Guest to Guest Upload page");
                 break;
         }
         startActivity(fromGuest);

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_background"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    tools:layout_editor_absoluteY="81dp">
 
 
-<!--    <android.support.v7.widget.CardView
+    <!--    <android.support.v7.widget.CardView
         android:id="@+id/login_image_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -27,68 +29,99 @@
             />
 
     </android.support.v7.widget.CardView>-->
-
     <ImageView
         android:id="@+id/login_image_view"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:src="@mipmap/icon_glance" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="TODO"
+        android:paddingRight="32dp"
+        android:paddingBottom="8dp"
+        android:src="@drawable/logo_white" />
 
-
-    <RelativeLayout
-        android:id="@+id/login_layout"
+    <TextView
+        android:id="@+id/login_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/login_image_view">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:text="@string/sign_in_to_smart_mirror"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/login_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_image_view"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/login_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Sign in to Smart Mirror"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_description"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/login_username"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/login_description"
-            app:errorEnabled="true">
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="25dp"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username:"
-                android:textSize="16sp"
-                android:inputType="text" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:textColor="@color/offWhite"
+                android:textColorLink="@color/colorAccentLight"
+                android:textSize="18sp" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/login_password"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="25dp"
+            android:textColorHint="@color/colorPrimaryDark"
             app:errorEnabled="true"
-            android:layout_below="@+id/login_username">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_username">
 
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password:"
-                android:textSize="16sp"
-                android:inputType= "textPassword" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/offWhite"
+                android:textColorLink="@color/colorAccentLight"
+                android:textSize="18sp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -96,52 +129,68 @@
             android:id="@+id/login_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/login_password"
-            android:layout_centerHorizontal="true"
-            android:text="Remember me" />
+            android:layout_marginTop="8dp"
+            android:text="@string/remember_me"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_password" />
 
         <Button
             android:id="@+id/login_enter_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
-            android:hint="Login"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/login_checkbox"/>
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_rectangle_pink"
+            android:hint="@string/login"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_checkbox"
+            app:layout_constraintVertical_bias="0.0" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
-
-    <TextView
-        android:id="@+id/cheat_buttons_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CHEAT BUTTONS"
-        android:textSize="15dp"
-        android:layout_below="@+id/login_layout"/>
 
     <Button
         android:id="@+id/admin_cheat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
         android:hint="ADMIN"
-        android:layout_below="@+id/cheat_buttons_label"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/guest_cheat_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toRightOf="@+id/admin_cheat_button"
         android:hint="GUEST"
-        android:layout_below="@+id/cheat_buttons_label"
-        android:layout_toRightOf="@+id/admin_cheat_button"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fab"
+        app:layout_constraintStart_toEndOf="@+id/admin_cheat_button" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:layout_below="@+id/cheat_buttons_label"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
-</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
