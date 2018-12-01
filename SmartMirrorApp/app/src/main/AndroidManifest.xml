@@ -31,19 +31,22 @@
         <activity
             android:name=".UploadActivity"
             android:label="Upload" />
-        <activity android:name=".AdminFilterActivity" />
+        <activity
+            android:name=".AdminFilterActivity" />
         <activity
             android:name=".AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".GuestActivity"
             android:label="@string/title_activity_guest" />
-        <activity android:name=".JudgementActivity" />
+        <activity
+            android:name=".JudgementActivity" />
         <activity
             android:name=".SearchActivity"
             android:label="Search" />
-        <activity android:name=".GuestFilterActivity" />
+        <activity
+            android:name=".GuestFilterActivity" />
 
     </application>
 

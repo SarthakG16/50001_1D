@@ -38,8 +38,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
 
-        refreshLayout = findViewById(R.id.guest_refreshlayout);
-
         //set up buttons
         button_request = findViewById(R.id.GuestRequestButton);
         button_display = findViewById(R.id.GuestDisplayingButton);
@@ -56,8 +54,10 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         text_display = findViewById(R.id.GuestDisplayingNumberView);
         text_archive= findViewById(R.id.GuestArchiveNumberView);
 
+        //get posters from server
         getData();
 
+        refreshLayout = findViewById(R.id.guest_refreshlayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -68,7 +68,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem archive = menu.findItem(R.id.Archive);
         archive.setVisible(false);
@@ -77,12 +76,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.logout){
+        if (item.getItemId() == R.id.logout){
             Intent intent = new Intent(GuestActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -112,7 +106,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 String temp_expired = String.valueOf(dataMap.get("expired"));
                 double d4 = Double.valueOf(temp_expired);
 
-
                 text_request.setText(String.valueOf((int)(d1+d2)));
                 text_display.setText(String.valueOf((int)d3));
                 text_archive.setText(String.valueOf((int)d4));
@@ -135,7 +128,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 if (logout_info1.get("status").equals("success")) {
                     Toast.makeText(GuestActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         req_admin.execute();

@@ -4,30 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminActivity"
-    tools:layout_editor_absoluteY="25dp">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/AdminAppBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+    tools:context=".AdminActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/admin_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AdminAppBarLayout"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintHorizontal_bias="0.0">
 
         <android.support.constraint.ConstraintLayout

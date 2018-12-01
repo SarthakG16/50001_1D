@@ -40,10 +40,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        refreshLayout = findViewById(R.id.admin_refreshlayout);
 
         //set up buttons
         button_request = findViewById(R.id.RequestButton);
@@ -61,8 +57,10 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         text_approve = findViewById(R.id.DisplayingNumberView);
         text_search= findViewById(R.id.SearchNumberView);
 
+        //get posters from server
         getData();
 
+        refreshLayout = findViewById(R.id.admin_refreshlayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -80,18 +78,12 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.logout){
+        if (item.getItemId() == R.id.logout){
             Intent intent = new Intent(AdminActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,7 +110,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
 
                 text_request.setText(String.valueOf((int)d1));
                 text_approve.setText(String.valueOf((int)d3));
-                text_search.setText(String.valueOf((int)(d3+d2)));
+                text_search.setText(String.valueOf((int)(d1+d2+d3)));
 
                 refreshLayout.setRefreshing(false);
                 Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
@@ -138,7 +130,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
                 if (logout_info1.get("status").equals("success")) {
                     Toast.makeText(AdminActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         req_admin.execute();
