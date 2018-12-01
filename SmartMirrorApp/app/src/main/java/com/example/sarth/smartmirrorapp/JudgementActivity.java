@@ -58,7 +58,7 @@ public class JudgementActivity extends AppCompatActivity{
         Intent intent = getIntent();
 
         final int position = intent.getIntExtra("Position",0);
-        poster = Poster.requests.get(position);
+        poster = RecyclerViewAdapter.posterList.get(position);
         setTitle(poster.title);
 
         origin = intent.getStringExtra("Origin");

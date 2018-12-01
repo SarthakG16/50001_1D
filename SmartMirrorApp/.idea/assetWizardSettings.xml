@@ -16,9 +16,24 @@
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/D:/Android/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_sort_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="add_icon" />
+                                      <entry key="outputName" value="sort_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -59,7 +74,7 @@
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="1b2b58" />
                                       <entry key="backgroundLayerName" value="glace_full_background" />
-                                      <entry key="foregroundImage" value="D:\SUTD\T4\50.001 Intro to Info Systems and Programming\1D\logo_white.png" />
+                                      <entry key="foregroundImage" value="D:\AndroidStudioProjects\50001_1D\SmartMirrorApp\app\src\main\res\drawable-xxhdpi\logo_white.png" />
                                       <entry key="foregroundLayerName" value="glance_full_forground" />
                                       <entry key="legacyIconShape" value="HRECT" />
                                       <entry key="outputName" value="glance_full" />
@@ -120,6 +135,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

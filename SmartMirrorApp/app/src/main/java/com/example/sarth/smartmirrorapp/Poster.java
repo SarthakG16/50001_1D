@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,7 @@ public class Poster implements Serializable{
     public byte[] data;
 
     //public static HashMap<String,Poster> archive = new HashMap<>();
-    public static List<Poster> requests = new ArrayList<>();
-
-
+    public static List<Poster> posters = new ArrayList<>();
 
 
     public Poster(Map<String, String> params) {
@@ -63,4 +62,50 @@ public class Poster implements Serializable{
                 this.postDate, this.expiryDate,
                 this.locations, this.serialized_data);
     }
+
+    public static Comparator<Poster> TitleAscending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o1.title.compareTo(o2.title);
+        }
+    };
+
+    public static Comparator<Poster> TitleDescending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o2.title.compareTo(o1.title);
+        }
+    };
+
+    public static Comparator<Poster> CategoryAscending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o1.category.compareTo(o2.category);
+        }
+    };
+
+    public static Comparator<Poster> CategoryDescending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o2.category.compareTo(o1.category);
+        }
+    };
+
+    public static Comparator<Poster> NameAscending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o1.name.compareTo(o2.name);
+        }
+    };
+    public static Comparator<Poster> NameDescending = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            return o2.name.compareTo(o1.name);
+        }
+    };
+
+
+
+
+
 }

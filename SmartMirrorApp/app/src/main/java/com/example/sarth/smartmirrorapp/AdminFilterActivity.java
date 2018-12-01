@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,12 +30,15 @@ public class AdminFilterActivity extends AppCompatActivity {
     private RecyclerView requests;
     private static List<Poster> posters = new ArrayList<>();
     private RecyclerViewAdapter recyclerViewAdapter;
-    private Button search_options_button;
     private SwipeRefreshLayout refreshLayout;
 
-    private CharSequence[] options = {"Title", "Category", "Name"};
-    private String choice = "";
-    private int selected = -1;
+    private CharSequence[] search_options = {"Title", "Category", "Name"};
+    private String search_choice = "";
+    private int search_selected = -1;
+
+    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)"};
+    private String sort_choice = "";
+    private int sort_selected = -1;
 
     private ProgressBar progressBar;
 
@@ -61,7 +66,7 @@ public class AdminFilterActivity extends AppCompatActivity {
                 break;
         }
 
-        search_options_button = findViewById(R.id.requests_search_button);
+
         requests = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
         progressBar = findViewById(R.id.progress_bar);
@@ -77,40 +82,6 @@ public class AdminFilterActivity extends AppCompatActivity {
             }
         });
 
-
-        search_options_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (search_options_button.isActivated()) {
-                    return;
-                }
-
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
-                mBuilder.setTitle("Search Settings");
-                mBuilder.setIcon(R.drawable.list_icon);
-                mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected = which;
-                        choice = options[which].toString();
-                    }
-                });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
     }
 
     @Override
@@ -132,16 +103,19 @@ public class AdminFilterActivity extends AppCompatActivity {
                 if (recyclerViewAdapter == null) {
                     return false;
                 }
-                if (choice.equals("Title")) {
-                    recyclerViewAdapter.getTitleFilter().filter(newText);
-                    return false;
-                } else if (choice.equals("Category")) {
-                    recyclerViewAdapter.getCategoryFilter().filter(newText);
-                    return false;
-                } else if (choice.equals("Name")) {
-                    recyclerViewAdapter.getNameFilter().filter(newText);
-                } else {
-                    recyclerViewAdapter.getFilter().filter(newText);
+                switch (search_choice) {
+                    case "Title":
+                        recyclerViewAdapter.getTitleFilter().filter(newText);
+                        return false;
+                    case "Category":
+                        recyclerViewAdapter.getCategoryFilter().filter(newText);
+                        return false;
+                    case "Name":
+                        recyclerViewAdapter.getNameFilter().filter(newText);
+                        break;
+                    default:
+                        recyclerViewAdapter.getFilter().filter(newText);
+                        break;
                 }
                 return false;
             }
@@ -159,7 +133,29 @@ public class AdminFilterActivity extends AppCompatActivity {
             @Override
             public void onResponse(List<Poster> posters) {
                 AdminFilterActivity.posters = posters;
-                Poster.requests = posters;
+                Poster.posters = posters;
+
+                switch (sort_choice) {
+                    case "Title(A-Z)":
+                        Collections.sort(posters, Poster.TitleAscending);
+                        break;
+                    case "Title(Z-A)":
+                        Collections.sort(posters, Poster.TitleDescending);
+                        break;
+                    case "Category(A-Z)":
+                        Collections.sort(posters, Poster.CategoryAscending);
+                        break;
+                    case "Category(Z-A)":
+                        Collections.sort(posters, Poster.CategoryDescending);
+                        break;
+                    case "Name(A-Z)":
+                        Collections.sort(posters, Poster.NameAscending);
+                        break;
+                    case "Name(Z-A)":
+                        Collections.sort(posters, Poster.NameDescending);
+                    default:
+                        break;
+                }
 
                 recyclerViewAdapter = new RecyclerViewAdapter(AdminFilterActivity.this, posters,"Request");
                 requests.setAdapter(recyclerViewAdapter);
@@ -172,6 +168,83 @@ public class AdminFilterActivity extends AppCompatActivity {
         req.execute();
     }
 
+    public void search_options(MenuItem menuItem) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        mBuilder.setTitle("Search Settings");
+        mBuilder.setIcon(R.drawable.list_icon);
+        mBuilder.setSingleChoiceItems(search_options, search_selected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                search_selected = which;
+            }
+        });
+        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<CharSequence> temp = Arrays.asList(search_options);
+                search_selected = temp.indexOf(search_choice);
+            }
+        });
+        mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                search_choice = search_options[search_selected].toString();
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+    public void sort(MenuItem menuItem) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(AdminFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        mBuilder.setTitle("Sort Settings");
+        mBuilder.setIcon(R.drawable.sort_icon);
+        mBuilder.setSingleChoiceItems(sort_options, sort_selected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sort_selected = which;
+            }
+        });
+        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<CharSequence> temp = Arrays.asList(sort_options);
+                sort_selected = temp.indexOf(sort_choice);
+
+            }
+        });
+        mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sort_choice = sort_options[sort_selected].toString();
+                switch (sort_choice) {
+
+                    case "Title(A-Z)":
+                        Collections.sort(posters, Poster.TitleAscending);
+                        break;
+                    case "Title(Z-A)":
+                        Collections.sort(posters, Poster.TitleDescending);
+                        break;
+                    case "Category(A-Z)":
+                        Collections.sort(posters, Poster.CategoryAscending);
+                        break;
+                    case "Category(Z-A)":
+                        Collections.sort(posters, Poster.CategoryDescending);
+                        break;
+                    case "Name(A-Z)":
+                        Collections.sort(posters, Poster.NameAscending);
+                        break;
+                    case "Name(Z-A)":
+                        Collections.sort(posters, Poster.NameDescending);
+                    default:
+                        break;
+                }
+                recyclerViewAdapter.swap(posters);
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -182,4 +255,5 @@ public class AdminFilterActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

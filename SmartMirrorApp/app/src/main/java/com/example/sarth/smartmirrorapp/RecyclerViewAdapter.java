@@ -24,7 +24,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable{
     private static final String TAG = "Logcat_RecyclerView";
     private Context mContext;
-    private List<Poster> posterList = new ArrayList<>();
+    public static List<Poster> posterList = new ArrayList<>();
     private List<Poster> searchList = new ArrayList<>();
     private String origin;
 
@@ -51,7 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public RecyclerViewAdapter(Context mContext, List<Poster> posterList, String origin) {
         this.mContext = mContext;
-        this.posterList = posterList;
+        this.posterList = new ArrayList<>(posterList);
         this.searchList = new ArrayList<>(posterList);
         this.origin = origin;
     }
@@ -269,6 +269,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             notifyDataSetChanged();
         }
     };
+
+    public void swap(List<Poster> posters) {
+        posterList.clear();
+        searchList.clear();
+        searchList.addAll(posters);
+        Log.i(TAG, String.valueOf(searchList.size()));
+        posterList.addAll(posters);
+        notifyDataSetChanged();
+    }
 
 
 

@@ -9,6 +9,19 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         />
+    <item
+        android:id="@+id/search_options"
+        android:orderInCategory="100"
+        android:title="Search Options"
+        android:onClick="search_options"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sort"
+        android:orderInCategory="110"
+        android:title="Sort"
+        android:onClick="sort"
+        app:showAsAction="never" />
 
 
 

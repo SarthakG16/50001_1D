@@ -84,6 +84,11 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
+        if (item.getItemId() == R.id.Archive) {
+            Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
+            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"archive");
+            startActivity(toArchive);
+        }
         return super.onOptionsItemSelected(item);
     }
 
