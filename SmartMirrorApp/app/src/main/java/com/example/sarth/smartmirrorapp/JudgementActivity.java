@@ -166,11 +166,10 @@ public class JudgementActivity extends AppCompatActivity{
                         Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                         toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
                         startActivity(toRequests);
+                        Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
                     }
                 });
                 req.execute();
-                Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
-                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -202,11 +201,10 @@ public class JudgementActivity extends AppCompatActivity{
                         Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                         toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
                         startActivity(toRequests);
+                        Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
                     }
                 });
                 req.execute();
-                Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
-                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -239,11 +237,10 @@ public class JudgementActivity extends AppCompatActivity{
                         Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
                         toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
                         startActivity(toRequests);
+                        Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
                     }
                 });
                 req.execute();
-                Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
-                finish();
             }
         });
 
@@ -267,4 +264,5 @@ public class JudgementActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
