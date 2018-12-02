@@ -19,6 +19,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable{
@@ -130,6 +131,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             List<Poster> filtered_list = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
+                Log.i(TAG, String.valueOf(searchList.size()));
                 filtered_list.addAll(searchList);
             } else {
                 String criteria = constraint.toString().toLowerCase().trim();
@@ -272,10 +274,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void swap(List<Poster> posters) {
         posterList.clear();
-        searchList.clear();
-        searchList.addAll(posters);
-        Log.i(TAG, String.valueOf(searchList.size()));
         posterList.addAll(posters);
+        Collections.sort(searchList,Poster.TitleAscending);
+        notifyDataSetChanged();
+    }
+
+    public void sort(Comparator<Poster> comparator) {
+        Collections.sort(posterList,comparator);
+        Collections.sort(searchList,comparator);
         notifyDataSetChanged();
     }
 

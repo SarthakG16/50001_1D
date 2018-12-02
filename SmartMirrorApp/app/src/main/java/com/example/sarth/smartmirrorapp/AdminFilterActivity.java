@@ -217,28 +217,27 @@ public class AdminFilterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 sort_choice = sort_options[sort_selected].toString();
                 switch (sort_choice) {
-
                     case "Title(A-Z)":
-                        Collections.sort(posters, Poster.TitleAscending);
+                        recyclerViewAdapter.sort(Poster.TitleAscending);
                         break;
                     case "Title(Z-A)":
-                        Collections.sort(posters, Poster.TitleDescending);
+                        recyclerViewAdapter.sort(Poster.TitleDescending);
                         break;
                     case "Category(A-Z)":
-                        Collections.sort(posters, Poster.CategoryAscending);
+                        recyclerViewAdapter.sort(Poster.CategoryAscending);
                         break;
                     case "Category(Z-A)":
-                        Collections.sort(posters, Poster.CategoryDescending);
+                        recyclerViewAdapter.sort(Poster.CategoryDescending);
                         break;
                     case "Name(A-Z)":
-                        Collections.sort(posters, Poster.NameAscending);
+                        recyclerViewAdapter.sort(Poster.NameAscending);
                         break;
                     case "Name(Z-A)":
-                        Collections.sort(posters, Poster.NameDescending);
+                        recyclerViewAdapter.sort(Poster.NameDescending);
+                        break;
                     default:
                         break;
                 }
-                recyclerViewAdapter.swap(posters);
             }
         });
         AlertDialog dialog = mBuilder.create();
