@@ -154,6 +154,8 @@ public class GuestFilterActivity extends AppCompatActivity {
                             filteredPosters.add(poster);
                         }
                     }
+                } else {
+                    filteredPosters.addAll(posters);
                 }
 
                 switch (sort_choice) {

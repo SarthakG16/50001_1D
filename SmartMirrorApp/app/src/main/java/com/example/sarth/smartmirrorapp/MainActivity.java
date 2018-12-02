@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PWD_KEY = "Pwd_key";
     public static final String RMB_KEY = "Rmb_key";
 
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         if (login_info1.get("status").equals("success")) {
                             //Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                             Intent toAdmin = new Intent(MainActivity.this, AdminActivity.class);
+                            toAdmin.putExtra(USER_KEY,username);
                             startActivity(toAdmin);
                         } else {
                             params.put("requested_privilege", "user");
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                     Map<String,String> login_info2 = g2.fromJson(response,Map.class);
                                     if (login_info2.get("status").equals("success")) {
                                         Intent toGuest = new Intent(MainActivity.this, GuestActivity.class);
+                                        toGuest.putExtra(USER_KEY,username);
                                         startActivity(toGuest);
                                     } else {
                                         Toast.makeText(MainActivity.this, "Incorrect username or password.", Toast.LENGTH_SHORT).show();
