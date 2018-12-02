@@ -55,7 +55,8 @@
                 android:id="@+id/judge_pdfView"
                 android:layout_width="200dp"
                 android:layout_height="250dp"
-                />
+                android:background="@android:color/transparent" />
+
             <Button
                 android:id="@+id/judge_poster_preview_button"
                 android:layout_width="200dp"
@@ -277,15 +278,15 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="0.5"
-                android:background="@drawable/rounded_rectangle_green"
+                android:background="@drawable/rounded_rectangle_green_border"
                 android:onClick="approve"
                 android:text="@string/approve"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
         </LinearLayout>
 
         <Button
             android:id="@+id/judge_remove_search"
-            android:layout_width="match_parent"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/judge_grid"
             android:layout_centerHorizontal="true"
@@ -295,6 +296,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_rectangle_pink_border"
             android:onClick="remove"
             android:text="@string/remove"
             android:visibility="invisible" />

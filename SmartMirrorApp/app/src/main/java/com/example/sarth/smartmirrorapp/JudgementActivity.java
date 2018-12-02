@@ -130,7 +130,7 @@ public class JudgementActivity extends AppCompatActivity{
                 if (poster.data == null) {
                     return;
                 }
-                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog);
+                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(JudgementActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
                 mBuilder.setTitle(poster.title);
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
