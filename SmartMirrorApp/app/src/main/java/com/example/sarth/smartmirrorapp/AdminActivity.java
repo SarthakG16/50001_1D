@@ -145,7 +145,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"Destorying admin page");
+        Log.i(TAG,"Destroying admin page");
         logout();
     }
 

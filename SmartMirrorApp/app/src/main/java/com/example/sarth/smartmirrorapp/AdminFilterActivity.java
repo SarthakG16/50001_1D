@@ -213,7 +213,7 @@ public class AdminFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (search_selected == -1){
+                if (sort_selected == -1){
                     return;
                 }
                 sort_choice = sort_options[sort_selected].toString();

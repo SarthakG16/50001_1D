@@ -134,7 +134,7 @@ public class JudgementActivity extends AppCompatActivity{
                 mBuilder.setTitle(poster.title);
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
-                poster_expanded.fromBytes(poster.data).load();;
+                poster_expanded.fromBytes(poster.data).load();
                 mBuilder.setView(poster_layout);
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
