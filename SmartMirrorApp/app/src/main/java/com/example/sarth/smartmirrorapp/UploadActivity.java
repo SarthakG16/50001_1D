@@ -60,7 +60,6 @@ public class UploadActivity extends AppCompatActivity{
     private TextView date_start;
     private TextView date_stop;
 
-
     //BUTTONS
     private Button upload_poster;
     private Button upload_button;
@@ -273,7 +272,6 @@ public class UploadActivity extends AppCompatActivity{
                 dpd_stop.show();
             }
         });
-
 
         //Upload Confirm Button
         upload_button.setOnClickListener(new View.OnClickListener() {

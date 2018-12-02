@@ -45,8 +45,6 @@ public class AdminFilterActivity extends AppCompatActivity {
     public static final String FILTER_KEY = "Filter_key";
     private String filter = "pending";
 
-
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +71,6 @@ public class AdminFilterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         getPosters();
-
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -121,13 +118,11 @@ public class AdminFilterActivity extends AppCompatActivity {
             }
         });
 
-
         return true;
     }
 
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
-
 
         Request req = new Request("GET","posters/?status="+filter, params, new Request.PostersCallback() {
             @Override
@@ -188,6 +183,9 @@ public class AdminFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
                 search_choice = search_options[search_selected].toString();
             }
         });
@@ -215,6 +213,9 @@ public class AdminFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
                 sort_choice = sort_options[sort_selected].toString();
                 switch (sort_choice) {
                     case "Title(A-Z)":
@@ -234,8 +235,6 @@ public class AdminFilterActivity extends AppCompatActivity {
                         break;
                     case "Name(Z-A)":
                         recyclerViewAdapter.sort(Poster.NameDescending);
-                        break;
-                    default:
                         break;
                 }
             }

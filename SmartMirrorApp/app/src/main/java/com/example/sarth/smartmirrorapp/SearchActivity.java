@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +42,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +55,6 @@ public class SearchActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         getPosters();
-
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -110,7 +109,6 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
         Request req = new Request("GET","posters", params, new Request.PostersCallback() {
@@ -149,7 +147,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         req.execute();
-
     }
 
     public void search_options(MenuItem menuItem) {
@@ -172,6 +169,9 @@ public class SearchActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
                 search_choice = search_options[search_selected].toString();
             }
         });
@@ -200,6 +200,9 @@ public class SearchActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
                 sort_choice = sort_options[sort_selected].toString();
                 switch (sort_choice) {
                     case "Title(A-Z)":
@@ -220,8 +223,6 @@ public class SearchActivity extends AppCompatActivity {
                     case "Name(Z-A)":
                         recyclerViewAdapter.sort(Poster.NameDescending);
                         break;
-                    default:
-                        break;
                 }
             }
         });
@@ -240,6 +241,4 @@ public class SearchActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

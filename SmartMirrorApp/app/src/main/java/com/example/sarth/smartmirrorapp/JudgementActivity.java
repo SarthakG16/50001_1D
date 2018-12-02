@@ -140,7 +140,6 @@ public class JudgementActivity extends AppCompatActivity{
                 dialog.show();
             }
         });
-
     }
 
     public void remove(View view) {
@@ -264,5 +263,4 @@ public class JudgementActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
