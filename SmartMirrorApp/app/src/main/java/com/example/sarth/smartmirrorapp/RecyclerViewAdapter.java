@@ -69,7 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final Poster poster = posterList.get(position);
         holder.setIsRecyclable(false);
-        holder.pdfView.fromBytes(poster.data).load();
+        holder.pdfView.fromBytes(poster.data).enableDoubletap(false).load();
         holder.titleView.setText(String.format("Title: %s", poster.title));
         holder.categoryView.setText(String.format("Category: %s", poster.category));
         holder.nameView.setText(String.format("By: %s", poster.name));
