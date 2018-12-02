@@ -22,6 +22,7 @@
     <color name="colorComLight">#94E739</color>
     <color name="grey">#9b9b9b</color>
     <color name="offWhite">#f5f5f5</color>
+    <color name="offWhite_80">#b4fcfcfc</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="black_80">#80000000</color>
