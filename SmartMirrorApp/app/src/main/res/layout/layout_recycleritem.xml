@@ -9,7 +9,7 @@
     android:layout_marginTop="4dp"
     android:layout_marginRight="16dp"
     android:layout_marginBottom="8dp"
-    app:cardBackgroundColor="@color/offWhite_80"
+    app:cardBackgroundColor="@color/blue_light"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp">
 

@@ -3,6 +3,7 @@
     android:id="@+id/scrollView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background= "@color/blue_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context=".UploadActivity"
         >
 
         <TextView
@@ -25,6 +25,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text= "@string/poster_details"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -37,7 +38,6 @@
             android:layout_margin="8dp"
             android:text="@string/title"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_below="@id/judge_poster_details" />
 
@@ -69,12 +69,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:paddingLeft="8dp"
+            android:paddingLeft="12dp"
             android:paddingRight="8dp"
             android:text="@string/category"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_below="@+id/judge_poster_layout"/>
 
 
