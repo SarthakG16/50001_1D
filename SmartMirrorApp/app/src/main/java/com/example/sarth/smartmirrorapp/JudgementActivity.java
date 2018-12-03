@@ -231,9 +231,7 @@ public class JudgementActivity extends AppCompatActivity{
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
-                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
-                        startActivity(toRequests);
+                        finish();
                         Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
                     }
                 });
