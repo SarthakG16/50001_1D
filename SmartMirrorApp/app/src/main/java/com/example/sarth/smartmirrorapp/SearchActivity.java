@@ -33,7 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerViewAdapter recyclerViewAdapter;
     private SwipeRefreshLayout refreshLayout;
 
-    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)"};
+    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)","Status"};
     private String sort_choice = "";
     private int sort_selected = -1;
 
@@ -141,7 +141,11 @@ public class SearchActivity extends AppCompatActivity {
                         Collections.sort(filteredPosters, Poster.NameAscending);
                         break;
                     case "Name(Z-A)":
-                        Collections.sort(filteredPosters, Poster.NameDescending);
+                        Collections.sort(filteredPosters, Poster.Status);
+                        break;
+                    case "Status":
+                        Collections.sort(filteredPosters,Poster.Status);
+                        break;
                     default:
                         break;
                 }
@@ -228,6 +232,11 @@ public class SearchActivity extends AppCompatActivity {
                         break;
                     case "Name(Z-A)":
                         recyclerViewAdapter.sort(Poster.NameDescending);
+                        break;
+                    case "Status":
+                        recyclerViewAdapter.sort(Poster.Status);
+                        break;
+                    default:
                         break;
                 }
             }

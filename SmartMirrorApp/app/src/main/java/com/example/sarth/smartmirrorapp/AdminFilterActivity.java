@@ -37,7 +37,7 @@ public class AdminFilterActivity extends AppCompatActivity {
     private String search_choice = "";
     private int search_selected = -1;
 
-    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)"};
+    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)","Status"};
     private String sort_choice = "";
     private int sort_selected = -1;
 
@@ -150,6 +150,8 @@ public class AdminFilterActivity extends AppCompatActivity {
                         break;
                     case "Name(Z-A)":
                         Collections.sort(posters, Poster.NameDescending);
+                    case "Status":
+                        Collections.sort(posters, Poster.Status);
                     default:
                         break;
                 }
@@ -236,6 +238,11 @@ public class AdminFilterActivity extends AppCompatActivity {
                         break;
                     case "Name(Z-A)":
                         recyclerViewAdapter.sort(Poster.NameDescending);
+                        break;
+                    case "Status":
+                        recyclerViewAdapter.sort(Poster.Status);
+                        break;
+                    default:
                         break;
                 }
             }

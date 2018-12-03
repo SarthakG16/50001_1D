@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         if (login_info1.get("status").equals("success")) {
                             Intent toAdmin = new Intent(MainActivity.this, AdminActivity.class);
                             toAdmin.putExtra(USER_KEY,username);
+                            Toast.makeText(MainActivity.this,"Signed in as Admin",Toast.LENGTH_LONG).show();
                             startActivity(toAdmin);
                         } else {
                             params.put("requested_privilege", "user");
@@ -105,9 +106,12 @@ public class MainActivity extends AppCompatActivity {
                                     if (login_info2.get("status").equals("success")) {
                                         Intent toGuest = new Intent(MainActivity.this, GuestActivity.class);
                                         toGuest.putExtra(USER_KEY,username);
+                                        Toast.makeText(MainActivity.this,"Signed in as Gust",Toast.LENGTH_LONG).show();
                                         startActivity(toGuest);
                                     } else {
-                                        Toast.makeText(MainActivity.this, "Incorrect username or password.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this,login_info2.get("error_message"), Toast.LENGTH_SHORT).show();
+                                        login_username.setError("Incorrect Username or Password");
+                                        login_password.setError("Incorrect Username or Password");
                                     }
                                 }
                             });

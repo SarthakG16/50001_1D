@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.gson.Gson;
 
 import org.apache.commons.io.output.TaggedOutputStream;
 
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class JudgementActivity extends AppCompatActivity{
     private final static String TAG = "Logcat";
@@ -182,10 +184,15 @@ public class JudgementActivity extends AppCompatActivity{
                     Request req = new Request("POST", "posters/", params, new Request.Callback() {
                         @Override
                         public void onResponse(String response) {
-                            Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                            Log.i(TAG, response);
-                            finish();
-                            Toast.makeText(JudgementActivity.this, "Removed", Toast.LENGTH_LONG).show();
+                            Gson g = new Gson();
+                            Map<String,String> details = g.fromJson(response, Map.class);
+                            if (details.get("status").equals("success")) {
+                                Toast.makeText(JudgementActivity.this,"Poster Removed",Toast.LENGTH_LONG).show();
+                                finish();
+                            } else if (details.get("status").equals("failure")) {
+                                Toast.makeText(JudgementActivity.this, details.get("error_message"), Toast.LENGTH_SHORT).show();
+                            }
+                            Log.i(TAG,response);
                         }
                     });
                     req.execute();
@@ -194,10 +201,15 @@ public class JudgementActivity extends AppCompatActivity{
                         Request req = new Request("POST", "posters/cancel", params, new Request.Callback() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                                Log.i(TAG, response);
-                                finish();
-                                Toast.makeText(JudgementActivity.this, "Removed", Toast.LENGTH_LONG).show();
+                                Gson g = new Gson();
+                                Map<String,String> details = g.fromJson(response, Map.class);
+                                if (details.get("status").equals("success")) {
+                                    Toast.makeText(JudgementActivity.this,"Poster Removed",Toast.LENGTH_LONG).show();
+                                    finish();
+                                } else if (details.get("status").equals("failure")) {
+                                    Toast.makeText(JudgementActivity.this, details.get("error_message"), Toast.LENGTH_SHORT).show();
+                                }
+                                Log.i(TAG,response);
                             }
                         });
                         req.execute();
@@ -229,10 +241,15 @@ public class JudgementActivity extends AppCompatActivity{
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Gson g = new Gson();
+                        Map<String,String> details = g.fromJson(response, Map.class);
+                        if (details.get("status").equals("success")) {
+                            Toast.makeText(JudgementActivity.this,"Poster Rejected",Toast.LENGTH_LONG).show();
+                            finish();
+                        } else if (details.get("status").equals("failure")) {
+                            Toast.makeText(JudgementActivity.this, details.get("error_message"), Toast.LENGTH_SHORT).show();
+                        }
                         Log.i(TAG,response);
-                        finish();
-                        Toast.makeText(JudgementActivity.this,"Rejected",Toast.LENGTH_LONG).show();
                     }
                 });
                 req.execute();
@@ -260,14 +277,18 @@ public class JudgementActivity extends AppCompatActivity{
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
                 params.put("status","approved");
-                Log.i("REQ_", String.valueOf(Integer.parseInt(poster.id)));
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                        Gson g = new Gson();
+                        Map<String,String> details = g.fromJson(response, Map.class);
+                        if (details.get("status").equals("success")) {
+                            Toast.makeText(JudgementActivity.this,"Poster Approved",Toast.LENGTH_LONG).show();
+                            finish();
+                        } else if (details.get("status").equals("failure")) {
+                            Toast.makeText(JudgementActivity.this, details.get("error_message"), Toast.LENGTH_SHORT).show();
+                        }
                         Log.i(TAG,response);
-                        finish();
-                        Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
                     }
                 });
                 req.execute();

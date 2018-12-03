@@ -108,6 +108,19 @@ public class Poster implements Serializable{
         }
     };
 
+    public static Comparator<Poster> Status = new Comparator<Poster>() {
+        @Override
+        public int compare(Poster o1, Poster o2) {
+            HashMap<String,Integer> poster_priority = new HashMap<>();
+            poster_priority.put("expired",4);
+            poster_priority.put("rejected",3);
+            poster_priority.put("posted",2);
+            poster_priority.put("approved",1);
+            poster_priority.put("pending",0);
+            return poster_priority.get(o1.status).compareTo(poster_priority.get(o2.status));
+        }
+    };
+
 
 
 
