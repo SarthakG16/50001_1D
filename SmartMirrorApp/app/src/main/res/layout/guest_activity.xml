@@ -41,8 +41,7 @@
                     android:id="@+id/GuestRequestButton"
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
-                    android:alpha="0"
-                    android:requiresFadingEdge="horizontal" />
+                    android:alpha="0" />
 
                 <android.support.constraint.ConstraintLayout
 
@@ -132,8 +131,7 @@
                     android:id="@+id/GuestDisplayingButton"
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
-                    android:alpha="0"
-                    android:requiresFadingEdge="horizontal" />
+                    android:alpha="0" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -221,8 +219,7 @@
                     android:id="@+id/GuestArchiveButton"
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
-                    android:alpha="0"
-                    android:requiresFadingEdge="horizontal" />
+                    android:alpha="0"/>
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
