@@ -41,7 +41,7 @@ public class AdminFilterActivity extends AppCompatActivity {
     private String sort_choice = "";
     private int sort_selected = -1;
 
-    private ProgressBar progressBar;
+
 
     public static final String FILTER_KEY = "Filter_key";
     private String filter = "pending";
@@ -72,10 +72,7 @@ public class AdminFilterActivity extends AppCompatActivity {
 
         requests = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
 
-        getPosters();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -161,7 +158,6 @@ public class AdminFilterActivity extends AppCompatActivity {
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(AdminFilterActivity.this));
 
-                progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -262,6 +258,7 @@ public class AdminFilterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshLayout.setRefreshing(true);
         getPosters();
     }
 

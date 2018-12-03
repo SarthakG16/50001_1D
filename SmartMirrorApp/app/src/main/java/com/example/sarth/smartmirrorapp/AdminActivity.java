@@ -65,9 +65,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         text_approve = findViewById(R.id.DisplayingNumberView);
         text_search= findViewById(R.id.SearchNumberView);
 
-        //get posters from server
-        getData();
-
         refreshLayout = findViewById(R.id.admin_refreshlayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -182,5 +179,12 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
         startActivity(fromAdmin);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLayout.setRefreshing(true);
+        getData();
     }
 }

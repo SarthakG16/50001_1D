@@ -42,8 +42,6 @@ public class GuestFilterActivity extends AppCompatActivity {
     private String sort_choice = "";
     private int sort_selected = -1;
 
-    private ProgressBar progressBar;
-
     public static final String FILTER_KEY = "Filter_key";
     private String filter = "pending";
 
@@ -51,6 +49,7 @@ public class GuestFilterActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
+        Log.i(TAG,"Create");
 
         android.support.v7.app.ActionBar bar = getSupportActionBar();
         Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
@@ -75,10 +74,6 @@ public class GuestFilterActivity extends AppCompatActivity {
 
         requests = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-
-        getPosters();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -187,7 +182,6 @@ public class GuestFilterActivity extends AppCompatActivity {
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 
-                progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -288,6 +282,7 @@ public class GuestFilterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshLayout.setRefreshing(true);
         getPosters();
     }
 }

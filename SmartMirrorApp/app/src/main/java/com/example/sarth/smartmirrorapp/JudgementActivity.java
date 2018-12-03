@@ -76,12 +76,15 @@ public class JudgementActivity extends AppCompatActivity{
         button_approve = findViewById(R.id.judge_approve);
         button_remove = findViewById(R.id.judge_remove_search);
 
-        if ( origin.equals("Guest")) {
-            if (poster.status.equals("pending") || poster.status.equals("approved") || poster.status.equals("rejected")) {
+        if (origin.equals("Guest")) {
+            if(poster.status.equals("posted")) {
+                button_layout.setVisibility(View.GONE);
+            } else {
+                if (poster.status.equals("pending") || poster.status.equals("approved")) {
+                    button_remove.setText("Cancel");
+                }
                 button_layout.setVisibility(View.INVISIBLE);
                 button_remove.setVisibility(View.VISIBLE);
-            } else {
-                button_layout.setVisibility(View.GONE);
             }
         } else if (origin.equals("Admin") && !poster.status.equals("pending")) {
             if(poster.status.equals("approved")) {
@@ -172,7 +175,7 @@ public class JudgementActivity extends AppCompatActivity{
                 params.put("id",poster.id);
                 if(origin.equals("Admin")) {
                     if (poster.status.equals("posted")) {
-                        params.put("status", "pending"); //TODO change to expired
+                        params.put("status", "expired"); //TODO change to expired
                     } else {
                         params.put("status", "rejected"); //TODO change later to rejected
                     }
@@ -187,8 +190,8 @@ public class JudgementActivity extends AppCompatActivity{
                     });
                     req.execute();
                 } else if (origin.equals("Guest")) {
-                    if (poster.status.equals("pending") || poster.status.equals("approved")) {
-                        Request req = new Request("POST", "cancel", params, new Request.Callback() {
+                    if (!poster.status.equals("posted")) {
+                        Request req = new Request("POST", "posters/cancel", params, new Request.Callback() {
                             @Override
                             public void onResponse(String response) {
                                 Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
@@ -197,6 +200,7 @@ public class JudgementActivity extends AppCompatActivity{
                                 Toast.makeText(JudgementActivity.this, "Removed", Toast.LENGTH_LONG).show();
                             }
                         });
+                        req.execute();
                     }
                 }
             }

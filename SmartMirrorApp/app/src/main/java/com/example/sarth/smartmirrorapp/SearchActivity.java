@@ -41,7 +41,7 @@ public class SearchActivity extends AppCompatActivity {
     private String search_choice = "";
     private int search_selected = -1;
 
-    private ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -56,10 +56,6 @@ public class SearchActivity extends AppCompatActivity {
 
         search_recycler = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
-        progressBar = findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
-
-        getPosters();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -153,7 +149,6 @@ public class SearchActivity extends AppCompatActivity {
                 search_recycler.setAdapter(recyclerViewAdapter);
                 search_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 
-                progressBar.setVisibility(View.GONE);
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -211,7 +206,7 @@ public class SearchActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (search_selected == -1){
+                if (sort_selected == -1){
                     return;
                 }
                 sort_choice = sort_options[sort_selected].toString();
@@ -241,10 +236,6 @@ public class SearchActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public static void refresh() {
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -260,6 +251,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshLayout.setRefreshing(true);
         getPosters();
     }
 }

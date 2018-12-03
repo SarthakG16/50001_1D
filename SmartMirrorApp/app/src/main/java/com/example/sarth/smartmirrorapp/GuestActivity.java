@@ -62,9 +62,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         text_display = findViewById(R.id.GuestDisplayingNumberView);
         text_archive= findViewById(R.id.GuestArchiveNumberView);
 
-        //get posters from server
-        getData();
-
         refreshLayout = findViewById(R.id.guest_refreshlayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -179,5 +176,12 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
         startActivity(fromGuest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLayout.setRefreshing(true);
+        getData();
     }
 }
