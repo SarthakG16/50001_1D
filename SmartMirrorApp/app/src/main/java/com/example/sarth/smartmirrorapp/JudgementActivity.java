@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import org.apache.commons.io.output.TaggedOutputStream;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,13 +64,17 @@ public class JudgementActivity extends AppCompatActivity{
         setTitle(poster.title);
 
         origin = intent.getStringExtra("Origin");
+        Toast.makeText(JudgementActivity.this,origin + poster.status, Toast.LENGTH_SHORT).show();
 
         button_layout = findViewById(R.id.judge_button_layout);
         button_reject = findViewById(R.id.judge_reject);
         button_approve = findViewById(R.id.judge_approve);
         button_remove = findViewById(R.id.judge_remove_search);
 
-        if (!poster.status.equals("pending")) {
+        if ( origin.equals("Guest")) {
+            button_layout.setVisibility(View.INVISIBLE);
+            button_remove.setVisibility(View.VISIBLE);
+        } else if (origin.equals("Admin") && !poster.status.equals("pending")) {
             button_layout.setVisibility(View.INVISIBLE);
             button_remove.setVisibility(View.VISIBLE);
         }
@@ -155,16 +161,14 @@ public class JudgementActivity extends AppCompatActivity{
                 if (poster.status.equals("posted")) {
                     params.put("status","pending"); //TODO change to expired
                 } else {
-                    params.put("status", "pending"); //TODO change later to rejected
+                    params.put("status", "rejected"); //TODO change later to rejected
                 }
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
-                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
-                        startActivity(toRequests);
+                        finish();
                         Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
                     }
                 });
@@ -227,16 +231,14 @@ public class JudgementActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                params.put("status","posted");
+                params.put("status","approved");
                 Log.i("REQ_", String.valueOf(Integer.parseInt(poster.id)));
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                         Log.i(TAG,response);
-                        Intent toRequests = new Intent(JudgementActivity.this,AdminFilterActivity.class);
-                        toRequests.putExtra(AdminFilterActivity.FILTER_KEY, poster.status);
-                        startActivity(toRequests);
+                        finish();
                         Toast.makeText(JudgementActivity.this,"Approved",Toast.LENGTH_LONG).show();
                     }
                 });

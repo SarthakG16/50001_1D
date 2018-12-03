@@ -77,8 +77,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.statusView.setText("Pending");
             holder.statusView.setTextColor(Color.RED);
         } else if (poster.status.equals("approved")) {
-            holder.statusView.setText("Accepted");
-            holder.statusView.setTextColor(Color.GREEN  );
+            holder.statusView.setText("Approved");
+            holder.statusView.setTextColor(Color.rgb(95,183,00));
         } else if (poster.status.equals("posted")) {
             holder.statusView.setText("On Display");
             holder.statusView.setTextColor(Color.BLUE);
