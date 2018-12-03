@@ -58,7 +58,6 @@ public class GuestFilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
         filter = toRequest.getStringExtra(FILTER_KEY);
-        Log.i("REQ_",filter);
 
         switch (filter) {
             case "request":
