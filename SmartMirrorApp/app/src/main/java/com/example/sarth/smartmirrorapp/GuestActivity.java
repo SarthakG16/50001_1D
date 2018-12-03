@@ -36,7 +36,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guest);
+        setContentView(R.layout.guest_activity);
 
         Intent toGuest = getIntent();
         setTitle("Welcome Back " + toGuest.getStringExtra(MainActivity.USER_KEY));
