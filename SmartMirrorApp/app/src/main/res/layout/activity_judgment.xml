@@ -3,7 +3,6 @@
     android:id="@+id/scrollView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background= "@color/blue_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -171,6 +170,7 @@
             android:layout_below="@+id/upload_locations"
             android:layout_centerHorizontal="true"
             android:paddingTop="8dp"
+            android:paddingBottom="20dp"
             android:columnCount="3"
             android:rowCount="3">
 
@@ -253,8 +253,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/judge_grid"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:weightSum="1">
 
             <Button
@@ -297,7 +297,7 @@
             android:background="@drawable/rounded_rectangle_pink_border"
             android:onClick="remove"
             android:text="@string/remove"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 </ScrollView>

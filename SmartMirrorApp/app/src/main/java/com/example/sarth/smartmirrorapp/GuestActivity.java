@@ -119,7 +119,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 text_archive.setText(String.valueOf((int)d4));
 
                 refreshLayout.setRefreshing(false);
-                Toast.makeText(GuestActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
             }
         });
         req.execute();
@@ -172,6 +171,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.GuestUploadButton:
                 fromGuest= new Intent(this,UploadActivity.class);
+                fromGuest.putExtra("Origin","Guest");
                 Log.i(TAG,"Guest to Guest Upload page");
                 break;
         }

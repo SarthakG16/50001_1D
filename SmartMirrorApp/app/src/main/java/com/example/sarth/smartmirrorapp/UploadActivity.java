@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 
@@ -44,6 +45,7 @@ import org.apache.commons.io.IOUtils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UploadActivity extends AppCompatActivity{
 
@@ -79,6 +81,7 @@ public class UploadActivity extends AppCompatActivity{
     private String number;
     private String email;
     private String serialized_data;
+    private String origin = "";
 
     private Date start = Calendar.getInstance().getTime();
     private Date stop = null;
@@ -87,6 +90,7 @@ public class UploadActivity extends AppCompatActivity{
     private final static String TAG = "Logcat";
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.example.android.mainsharedprefs";
+    private String adminPrefFile = "com.example.android.adminsharedprefs";
     public static final String TITLE_KEY = "Title_Key";
     public static final String CAT_KEY = "Cat_Key";
     public static final String NAME_KEY = "Name_Key";
@@ -110,9 +114,14 @@ public class UploadActivity extends AppCompatActivity{
         Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
         bar.setBackgroundDrawable(gradient);
 
+        Intent toUpload = getIntent();
+        origin = toUpload.getStringExtra("Origin");
         // Preferences.
-
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        if (origin.equals("Admin")) {
+            mPreferences = getSharedPreferences(adminPrefFile, MODE_PRIVATE);
+        } else {
+            mPreferences = getSharedPreferences(sharedPrefFile,MODE_PRIVATE);
+        }
 
         // Initialize title textView.
 
@@ -177,8 +186,6 @@ public class UploadActivity extends AppCompatActivity{
         // Initialize the upload button.
         upload_button = findViewById(R.id.upload_confirm_button);
 
-
-        //TODO: BUTTONS
         //Select poster
         upload_poster.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,138 +285,6 @@ public class UploadActivity extends AppCompatActivity{
             }
         });
 
-        //Upload Confirm Button
-        upload_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean terminate = true;
-
-                boolean name_correct = validate(contact_name);
-                boolean number_correct =validate(contact_number);
-                boolean email_correct = validate(contact_email);
-                boolean title_correct = validate(titleInput);
-
-
-                category = spinner_categories.getSelectedItem().toString();
-
-                if(!title_correct) { //If no title is specified
-                    Toast.makeText(UploadActivity.this, "Please Specify a Title.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                //if not poster is selected
-                if(posterUri == null){
-                    Toast.makeText(UploadActivity.this, "Please upload your poster.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (category.equals("Select your Category")) {
-                    Toast.makeText(UploadActivity.this, "Please Choose a Category.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (date_start.getText().toString().equals("Start Date:") || server_start_date.equals("")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(date_stop.getText().toString().equals("Stop Date:") || server_stop_date.equals("")) {
-                    Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(!name_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your name",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(!number_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your number.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(!email_correct){
-                    Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                //If no date is entered.
-
-
-                for (CheckBox c : locations) {
-                    if (c.isChecked()) {
-                        terminate = false;
-                        break;
-                    }
-                }
-
-                if(terminate) { // If no checkboxes are clicked
-                    Toast.makeText(UploadActivity.this, "Please choose at least one location.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                for (CheckBox c : locations) {
-                    if (c.isChecked()) {
-                        if(locations_checked.equals("")) {
-                            locations_checked += c.getText();
-                        } else {
-                            if(!locations_checked.contains(c.getText())) {
-                                locations_checked += ", " + c.getText();
-                            }
-                        }
-                    }
-                }
-
-                title = titleInput.getEditText().getText().toString().trim();
-                name = contact_name.getEditText().getText().toString().trim();
-                number = contact_number.getEditText().getText().toString().trim();
-                email = contact_email.getEditText().getText().toString().trim();
-                serialized_data = "";
-
-                try {
-                    ContentResolver cr = getContentResolver();
-                    InputStream is = cr.openInputStream(posterUri);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    IOUtils.copy(is, baos);
-                    byte[] result = baos.toByteArray();
-                    is.close();
-                    baos.close();
-                    serialized_data = Base64.encodeToString(result);
-
-                } catch (FileNotFoundException e) {
-                    Log.i(TAG,"FileNotFound");
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    Log.i(TAG,"IOexception");
-                    e.printStackTrace();
-                }
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("title", title);
-                params.put("category", category);
-                params.put("contact_name", name);
-                params.put("contact_number", number);
-                params.put("contact_email", email);
-                params.put("date_posted", server_start_date);
-                params.put("date_expiry", server_stop_date);
-                params.put("locations", locations_checked);
-                params.put("serialized_image_data", serialized_data);
-                //TODO put the parameters in
-
-                Request req = new Request("POST","posters/", params, new Request.Callback() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(UploadActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                        if (response.contains("Poster already exists with given title")) {
-                            titleInput.setError("Title Already Exists");
-                            Toast.makeText(UploadActivity.this,"Title already exists", Toast.LENGTH_LONG).show();
-                        }
-                        Log.i(TAG,response);
-                    }
-                });
-                req.execute();
-                finish();
-                //clear = true;
-            }
-        });
-
     }
 
     //make sure that permission is granted
@@ -491,5 +366,143 @@ public class UploadActivity extends AppCompatActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void confirm(View view) {
+        if (upload_button.isActivated()) {
+            return;
+        }
+        boolean terminate = true;
+
+        final boolean name_correct = validate(contact_name);
+        boolean number_correct =validate(contact_number);
+        boolean email_correct = validate(contact_email);
+        boolean title_correct = validate(titleInput);
+
+
+        category = spinner_categories.getSelectedItem().toString();
+
+        if(!title_correct) { //If no title is specified
+            Toast.makeText(UploadActivity.this, "Please Specify a Title.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //if not poster is selected
+        if(posterUri == null){
+            Toast.makeText(UploadActivity.this, "Please upload your poster.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (category.equals("Select your Category")) {
+            Toast.makeText(UploadActivity.this, "Please Choose a Category.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (date_start.getText().toString().equals("Start Date:") || server_start_date.equals("")) {
+            Toast.makeText(UploadActivity.this,"Please choose a start date.",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(date_stop.getText().toString().equals("Stop Date:") || server_stop_date.equals("")) {
+            Toast.makeText(UploadActivity.this,"Please choose a stop date.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(!name_correct){
+            Toast.makeText(UploadActivity.this,"Please enter your name",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!number_correct){
+            Toast.makeText(UploadActivity.this,"Please enter your number.",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!email_correct){
+            Toast.makeText(UploadActivity.this,"Please enter your email.",Toast.LENGTH_LONG).show();
+            return;
+        }
+        //If no date is entered.
+
+
+        for (CheckBox c : locations) {
+            if (c.isChecked()) {
+                terminate = false;
+                break;
+            }
+        }
+
+        if(terminate) { // If no checkboxes are clicked
+            Toast.makeText(UploadActivity.this, "Please choose at least one location.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        for (CheckBox c : locations) {
+            if (c.isChecked()) {
+                if(locations_checked.equals("")) {
+                    locations_checked += c.getText();
+                } else {
+                    if(!locations_checked.contains(c.getText())) {
+                        locations_checked += ", " + c.getText();
+                    }
+                }
+            }
+        }
+
+        title = titleInput.getEditText().getText().toString().trim();
+        name = contact_name.getEditText().getText().toString().trim();
+        number = contact_number.getEditText().getText().toString().trim();
+        email = contact_email.getEditText().getText().toString().trim();
+        serialized_data = "";
+
+        try {
+            ContentResolver cr = getContentResolver();
+            InputStream is = cr.openInputStream(posterUri);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            IOUtils.copy(is, baos);
+            byte[] result = baos.toByteArray();
+            is.close();
+            baos.close();
+            serialized_data = Base64.encodeToString(result);
+
+        } catch (FileNotFoundException e) {
+            Log.i(TAG,"FileNotFound");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.i(TAG,"IOexception");
+            e.printStackTrace();
+        }
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("title", title);
+        params.put("category", category);
+        params.put("contact_name", name);
+        params.put("contact_number", number);
+        params.put("contact_email", email);
+        params.put("date_posted", server_start_date);
+        params.put("date_expiry", server_stop_date);
+        params.put("locations", locations_checked);
+        params.put("serialized_image_data", serialized_data);
+
+        if (origin.equals("Admin")) {
+            params.put("status","approved");
+        }
+
+        Request req = new Request("POST","posters/", params, new Request.Callback() {
+
+            @Override
+            public void onResponse(String response) {
+                Gson g  = new Gson();
+                Map<String, String> dataMap = g.fromJson(response, Map.class);
+                String status = String.valueOf(dataMap.get("status"));
+                if (status.equals("failure")) {
+                    titleInput.setError("Title Already Exists");
+                    Toast.makeText(UploadActivity.this,"Title already exists", Toast.LENGTH_LONG).show();
+                } else if (status.equals("success")) {
+                    Toast.makeText(UploadActivity.this,"Upload succesful",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                Log.i(TAG,response);
+            }
+        });
+        req.execute();
+        clear = true;
     }
 }

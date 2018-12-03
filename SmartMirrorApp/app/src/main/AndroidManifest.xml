@@ -28,9 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="Login" />
-        <activity
             android:name=".UploadActivity"
             android:label="Upload" />
         <activity

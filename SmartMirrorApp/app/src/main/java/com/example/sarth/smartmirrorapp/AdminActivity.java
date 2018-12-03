@@ -123,7 +123,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
                 text_search.setText(String.valueOf((int)(d1+d2+d3)));
 
                 refreshLayout.setRefreshing(false);
-                Toast.makeText(AdminActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
             }
         });
         req.execute();
@@ -175,6 +174,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
 
             case R.id.AdminUploadButton:
                 fromAdmin= new Intent(this,UploadActivity.class);
+                fromAdmin.putExtra("Origin","Admin");
                 Log.i(TAG,"Admin to Admin Upload page");
                 break;
         }

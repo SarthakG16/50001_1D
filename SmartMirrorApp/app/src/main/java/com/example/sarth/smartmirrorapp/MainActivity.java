@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         Gson g1  = new Gson();
                         final Map<String, String> login_info1 = g1.fromJson(response, Map.class);
                         if (login_info1.get("status").equals("success")) {
-                            //Toast.makeText(LoginActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
                             Intent toAdmin = new Intent(MainActivity.this, AdminActivity.class);
                             toAdmin.putExtra(USER_KEY,username);
                             startActivity(toAdmin);
@@ -188,64 +187,4 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean(RMB_KEY,login_checkbox.isChecked());
         editor.apply();
     }
-
-    /*    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        Button button_admin = findViewById(R.id.toAdmin);
-        Button button_guest = findViewById(R.id.toGuest);
-
-        button_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginToAdmin = new Intent(MainActivity.this,LoginActivity.class);
-                Log.i(TAG,"Moving to Admin page");
-                startActivity(loginToAdmin);
-            }
-        });
-
-        button_guest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loginToGuest= new Intent(MainActivity.this,LoginActivity.class);
-                Log.i(TAG,"Moving to Guest page");
-                startActivity(loginToGuest);
-            }
-        });
-
-        CookieManager cookieManager = new CookieManager();
-        CookieHandler.setDefault(cookieManager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                  //      .setAction("Action", null).show();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("username", "admin1");
-                params.put("password", "hahaha");
-                params.put("requested_privilege", "administrator");
-                Request req = new Request("POST","auth/login", params, new Request.Callback () {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(MainActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                   }
-                });
-                *//*Request req = new Request("GET","posters", params, new Request.PostersCallback() {
-                    @Override
-                    public void onResponse(List<Poster> posters) {
-                        Toast.makeText(MainActivity.this, "Received posters: " + posters.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });*//*
-                req.execute();
-
-            }
-        });
-    }*/
 }
