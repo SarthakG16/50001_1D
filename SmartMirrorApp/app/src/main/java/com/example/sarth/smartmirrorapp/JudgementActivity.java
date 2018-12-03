@@ -228,6 +228,7 @@ public class JudgementActivity extends AppCompatActivity{
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
                 params.put("status","posted");
+                Log.i("REQ_", String.valueOf(Integer.parseInt(poster.id)));
                 Request req = new Request("POST","posters/", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {

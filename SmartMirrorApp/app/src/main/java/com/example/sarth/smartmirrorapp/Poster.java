@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -31,7 +32,10 @@ public class Poster implements Serializable{
 
 
     public Poster(Map<String, String> params) {
-        this.id = String.valueOf(params.get("id"));
+        String idd = String.valueOf(params.get("id"));
+        double d = Double.valueOf(idd);
+        int x = (int) d;
+        this.id = String.valueOf(x);
         this.title = params.get("title");
         this.category = params.get("category");
         this.name = params.get("contact_name");
