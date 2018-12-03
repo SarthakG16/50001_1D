@@ -29,5 +29,9 @@
     <color name="black_80">#80000000</color>
     <color name="black_50">#50000000</color>
     <color name="blue_light">#c2d5ff</color>
+    <color name="gudetama_orange">#f1b81b</color>
+    <color name="gudetama_yellow">#fbd31b</color>
+    <color name="yellow">#fff133</color>
+    <color name="red">#e93e3a</color>
 
 </resources>
