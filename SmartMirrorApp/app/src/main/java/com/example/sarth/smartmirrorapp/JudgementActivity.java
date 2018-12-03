@@ -3,6 +3,7 @@ package com.example.sarth.smartmirrorapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -56,6 +57,10 @@ public class JudgementActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judgment);
 
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
+        bar.setBackgroundDrawable(gradient);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
 
@@ -79,6 +84,9 @@ public class JudgementActivity extends AppCompatActivity{
                 button_layout.setVisibility(View.GONE);
             }
         } else if (origin.equals("Admin") && !poster.status.equals("pending")) {
+            if(poster.status.equals("approved")) {
+                button_remove.setText("Reject");
+            }
             button_layout.setVisibility(View.INVISIBLE);
             button_remove.setVisibility(View.VISIBLE);
         }
@@ -178,6 +186,18 @@ public class JudgementActivity extends AppCompatActivity{
                         }
                     });
                     req.execute();
+                } else if (origin.equals("Guest")) {
+                    if (poster.status.equals("pending") || poster.status.equals("approved")) {
+                        Request req = new Request("POST", "cancel", params, new Request.Callback() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                                Log.i(TAG, response);
+                                finish();
+                                Toast.makeText(JudgementActivity.this, "Removed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
                 }
             }
         });

@@ -8,8 +8,8 @@
         android:title="@string/logout"
         app:showAsAction="never" />
     <item
-        android:id="@+id/Archive"
+        android:id="@+id/myPosters"
         android:orderInCategory="100"
-        android:title="Archive"
+        android:title="My Posters"
         app:showAsAction="never" />
 </menu>

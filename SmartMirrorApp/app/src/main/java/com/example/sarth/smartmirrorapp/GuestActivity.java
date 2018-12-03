@@ -1,6 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,10 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guest_activity);
 
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
+        bar.setBackgroundDrawable(gradient);
+
         Intent toGuest = getIntent();
         setTitle("Welcome Back " + toGuest.getStringExtra(MainActivity.USER_KEY));
 
@@ -72,8 +77,8 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem archive = menu.findItem(R.id.Archive);
-        archive.setVisible(false);
+        MenuItem myPoster = menu.findItem(R.id.myPosters);
+        myPoster.setVisible(false);
         return true;
     }
 

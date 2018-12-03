@@ -38,36 +38,21 @@
         android:scaleType="centerCrop"
         android:src="@drawable/logo_white_curve" />
 
-    <FrameLayout
-        android:id="@+id/white_box"
-        android:layout_width="350dp"
-        android:layout_height="270"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/white_50"
-        app:layout_constraintBottom_toBottomOf="login_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_image_view"
-        app:layout_constraintVertical_bias="0.125">
-
-
         <android.support.constraint.ConstraintLayout
             android:id="@+id/login_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="32dp"
+            android:layout_width="350dp"
+            android:layout_height="270dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white_50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_image_view"
-            app:layout_constraintVertical_bias="0.0">
+            >
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/login_username"
@@ -165,8 +150,6 @@
                 app:layout_constraintVertical_bias="0.0" />
 
         </android.support.constraint.ConstraintLayout>
-
-    </FrameLayout>
 
 
     <Button

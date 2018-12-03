@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -104,6 +105,10 @@ public class UploadActivity extends AppCompatActivity{
         setContentView(R.layout.activity_upload);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
+        bar.setBackgroundDrawable(gradient);
 
         // Preferences.
 

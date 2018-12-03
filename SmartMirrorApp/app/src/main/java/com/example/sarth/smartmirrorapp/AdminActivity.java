@@ -1,7 +1,9 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -39,6 +41,10 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_activity);
+
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
+        bar.setBackgroundDrawable(gradient);
 
         Intent toAdmin = getIntent();
         setTitle("Welcome Back " + toAdmin.getStringExtra(MainActivity.USER_KEY));
@@ -86,9 +92,9 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
-        if (item.getItemId() == R.id.Archive) {
+        if (item.getItemId() == R.id.myPosters) {
             Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
-            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"Admin");
+            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"admin");
             startActivity(toArchive);
         }
         return super.onOptionsItemSelected(item);
