@@ -58,7 +58,7 @@ public class JudgementActivity extends AppCompatActivity{
         Intent intent = getIntent();
 
         final int position = intent.getIntExtra("Position",0);
-        poster = Poster.requests.get(position);
+        poster = RecyclerViewAdapter.posterList.get(position);
         setTitle(poster.title);
 
         origin = intent.getStringExtra("Origin");
@@ -130,17 +130,16 @@ public class JudgementActivity extends AppCompatActivity{
                 if (poster.data == null) {
                     return;
                 }
-                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(JudgementActivity.this,android.R.style.ThemeOverlay_Material_Dialog);
+                AlertDialog.Builder mBuilder =  new AlertDialog.Builder(JudgementActivity.this,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
                 mBuilder.setTitle(poster.title);
                 View poster_layout = getLayoutInflater().inflate(R.layout.dialog_poster,null);
                 PDFView poster_expanded = poster_layout.findViewById(R.id.poster_expanded);
-                poster_expanded.fromBytes(poster.data).load();;
+                poster_expanded.fromBytes(poster.data).load();
                 mBuilder.setView(poster_layout);
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
             }
         });
-
     }
 
     public void remove(View view) {
@@ -264,5 +263,4 @@ public class JudgementActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

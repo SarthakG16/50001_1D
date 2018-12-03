@@ -38,6 +38,9 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
 
+        Intent toGuest = getIntent();
+        setTitle("Welcome Back " + toGuest.getStringExtra(MainActivity.USER_KEY));
+
         //set up buttons
         button_request = findViewById(R.id.GuestRequestButton);
         button_display = findViewById(R.id.GuestDisplayingButton);

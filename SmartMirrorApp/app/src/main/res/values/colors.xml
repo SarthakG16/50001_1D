@@ -15,16 +15,18 @@
     <color name="colorPrimaryDark">#041952</color>
     <color name="colorPrimaryLight">#3a59ae</color>
     <color name="colorAccent">#DE0052</color>
-    <color name="colorAccentDark">#6A0027</color>
+    <color name="colorAccentDark">#6a0027</color>
     <color name="colorAccentLight">#df3876</color>
     <color name="colorCom">#5FB700</color>
     <color name="colorComDark">#396E00</color>
     <color name="colorComLight">#94E739</color>
     <color name="grey">#9b9b9b</color>
     <color name="offWhite">#f5f5f5</color>
+    <color name="offWhite_80">#b4fcfcfc</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="black_80">#80000000</color>
     <color name="black_50">#50000000</color>
+    <color name="blue_light">#c2d5ff</color>
 
 </resources>

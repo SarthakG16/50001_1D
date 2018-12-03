@@ -15,8 +15,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,15 +30,17 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView search_recycler;
     private static List<Poster> posters = new ArrayList<>();
     private RecyclerViewAdapter recyclerViewAdapter;
-    private Button search_options_button;
     private SwipeRefreshLayout refreshLayout;
 
-    private CharSequence[] options = {"Title", "Category", "Name","Status"};
-    private String choice = "";
-    private int selected = -1;
+    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)"};
+    private String sort_choice = "";
+    private int sort_selected = -1;
+
+    private CharSequence[] search_options = {"Title", "Category", "Name","Status"};
+    private String search_choice = "";
+    private int search_selected = -1;
 
     private ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -44,14 +49,12 @@ public class SearchActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        search_options_button = findViewById(R.id.requests_search_button);
         search_recycler = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
 
         getPosters();
-
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -60,40 +63,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
-        search_options_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (search_options_button.isActivated()) {
-                    return;
-                }
-
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(SearchActivity.this, android.R.style.ThemeOverlay_Material_Dialog_Alert  );
-                mBuilder.setTitle("Search Settings");
-                mBuilder.setIcon(R.drawable.list_icon);
-                mBuilder.setSingleChoiceItems(options, selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected = which;
-                        choice = options[which].toString();
-                    }
-                });
-                mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
     }
 
     @Override
@@ -115,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (recyclerViewAdapter == null) {
                     return false;
                 }
-                switch (choice) {
+                switch (search_choice) {
                     case "Title":
                         recyclerViewAdapter.getTitleFilter().filter(newText);
                         return false;
@@ -140,16 +109,36 @@ public class SearchActivity extends AppCompatActivity {
         return true;
     }
 
-
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
         Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
                 SearchActivity.posters = posters;
-                Poster.requests = posters;
+                Poster.posters = posters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, posters,"Search");
+                switch (sort_choice) {
+                    case "Title(A-Z)":
+                        Collections.sort(posters, Poster.TitleAscending);
+                        break;
+                    case "Title(Z-A)":
+                        Collections.sort(posters, Poster.TitleDescending);
+                        break;
+                    case "Category(A-Z)":
+                        Collections.sort(posters, Poster.CategoryAscending);
+                        break;
+                    case "Category(Z-A)":
+                        Collections.sort(posters, Poster.CategoryDescending);
+                        break;
+                    case "Name(A-Z)":
+                        Collections.sort(posters, Poster.NameAscending);
+                        break;
+                    case "Name(Z-A)":
+                        Collections.sort(posters, Poster.NameDescending);
+                    default:
+                        break;
+                }
+                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, posters, "Search");
                 search_recycler.setAdapter(recyclerViewAdapter);
                 search_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 
@@ -158,8 +147,89 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         req.execute();
-
     }
+
+    public void search_options(MenuItem menuItem) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(SearchActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        mBuilder.setTitle("Search Settings");
+        mBuilder.setIcon(R.drawable.list_icon);
+        mBuilder.setSingleChoiceItems(search_options, search_selected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                search_selected = which;
+            }
+        });
+        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<CharSequence> temp = Arrays.asList(search_options);
+                search_selected = temp.indexOf(search_choice);
+            }
+        });
+        mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
+                search_choice = search_options[search_selected].toString();
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+
+    public void sort(MenuItem item) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(SearchActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        mBuilder.setTitle("Sort Settings");
+        mBuilder.setIcon(R.drawable.sort_icon);
+        mBuilder.setSingleChoiceItems(sort_options, sort_selected, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sort_selected = which;
+            }
+        });
+        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                List<CharSequence> temp = Arrays.asList(sort_options);
+                sort_selected = temp.indexOf(sort_choice);
+
+            }
+        });
+        mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (search_selected == -1){
+                    return;
+                }
+                sort_choice = sort_options[sort_selected].toString();
+                switch (sort_choice) {
+                    case "Title(A-Z)":
+                        recyclerViewAdapter.sort(Poster.TitleAscending);
+                        break;
+                    case "Title(Z-A)":
+                        recyclerViewAdapter.sort(Poster.TitleDescending);
+                        break;
+                    case "Category(A-Z)":
+                        recyclerViewAdapter.sort(Poster.CategoryAscending);
+                        break;
+                    case "Category(Z-A)":
+                        recyclerViewAdapter.sort(Poster.CategoryDescending);
+                        break;
+                    case "Name(A-Z)":
+                        recyclerViewAdapter.sort(Poster.NameAscending);
+                        break;
+                    case "Name(Z-A)":
+                        recyclerViewAdapter.sort(Poster.NameDescending);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

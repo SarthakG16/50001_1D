@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Smart Mirror</string>
     <string name="action_settings">Settings</string>
-    <string name="poster_details">Poster Details:</string>
+    <string name="poster_details">Poster Details</string>
     <string name="title">Title</string>
     <string name="upload_poster">Select Poster</string>
     <string name="category">Category:</string>

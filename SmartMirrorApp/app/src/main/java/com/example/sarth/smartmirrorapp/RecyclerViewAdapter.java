@@ -19,12 +19,13 @@ import com.github.barteksc.pdfviewer.PDFView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable{
     private static final String TAG = "Logcat_RecyclerView";
     private Context mContext;
-    private List<Poster> posterList = new ArrayList<>();
+    public static List<Poster> posterList = new ArrayList<>();
     private List<Poster> searchList = new ArrayList<>();
     private String origin;
 
@@ -51,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public RecyclerViewAdapter(Context mContext, List<Poster> posterList, String origin) {
         this.mContext = mContext;
-        this.posterList = posterList;
+        this.posterList = new ArrayList<>(posterList);
         this.searchList = new ArrayList<>(posterList);
         this.origin = origin;
     }
@@ -68,7 +69,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         final Poster poster = posterList.get(position);
         holder.setIsRecyclable(false);
-        holder.pdfView.fromBytes(poster.data).load();
+        holder.pdfView.fromBytes(poster.data).enableDoubletap(false).pages(0).load();
         holder.titleView.setText(String.format("Title: %s", poster.title));
         holder.categoryView.setText(String.format("Category: %s", poster.category));
         holder.nameView.setText(String.format("By: %s", poster.name));
@@ -130,6 +131,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             List<Poster> filtered_list = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
+                Log.i(TAG, String.valueOf(searchList.size()));
                 filtered_list.addAll(searchList);
             } else {
                 String criteria = constraint.toString().toLowerCase().trim();
@@ -269,6 +271,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             notifyDataSetChanged();
         }
     };
+
+    public void swap(List<Poster> posters) {
+        posterList.clear();
+        posterList.addAll(posters);
+        Collections.sort(searchList,Poster.TitleAscending);
+        notifyDataSetChanged();
+    }
+
+    public void sort(Comparator<Poster> comparator) {
+        Collections.sort(posterList,comparator);
+        Collections.sort(searchList,comparator);
+        notifyDataSetChanged();
+    }
 
 
 

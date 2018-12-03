@@ -40,6 +40,9 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
+        Intent toAdmin = getIntent();
+        setTitle("Welcome Back " + toAdmin.getStringExtra(MainActivity.USER_KEY));
+
         //set up buttons
         button_request = findViewById(R.id.RequestButton);
         button_display = findViewById(R.id.DisplayingButton);
@@ -82,6 +85,11 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
+        }
+        if (item.getItemId() == R.id.Archive) {
+            Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
+            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"Admin");
+            startActivity(toArchive);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -137,7 +145,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG,"Destorying admin page");
+        Log.i(TAG,"Destroying admin page");
         logout();
     }
 
