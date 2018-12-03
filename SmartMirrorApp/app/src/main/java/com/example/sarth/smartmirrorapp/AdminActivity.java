@@ -38,7 +38,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.admin_activity);
 
         Intent toAdmin = getIntent();
         setTitle("Welcome Back " + toAdmin.getStringExtra(MainActivity.USER_KEY));
