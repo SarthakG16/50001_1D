@@ -114,31 +114,37 @@ public class SearchActivity extends AppCompatActivity {
         Request req = new Request("GET","posters", params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                SearchActivity.posters = posters;
-                Poster.posters = posters;
+                List<Poster> filteredPosters = new ArrayList<>();
+                for (Poster p : posters) {
+                    if (!(p.status.equals("expired") || p.status.equals("rejected"))) {
+                        filteredPosters.add(p);
+                    }
+                }
+                SearchActivity.posters = filteredPosters;
+                Poster.posters = filteredPosters;
 
                 switch (sort_choice) {
                     case "Title(A-Z)":
-                        Collections.sort(posters, Poster.TitleAscending);
+                        Collections.sort(filteredPosters, Poster.TitleAscending);
                         break;
                     case "Title(Z-A)":
-                        Collections.sort(posters, Poster.TitleDescending);
+                        Collections.sort(filteredPosters, Poster.TitleDescending);
                         break;
                     case "Category(A-Z)":
-                        Collections.sort(posters, Poster.CategoryAscending);
+                        Collections.sort(filteredPosters, Poster.CategoryAscending);
                         break;
                     case "Category(Z-A)":
-                        Collections.sort(posters, Poster.CategoryDescending);
+                        Collections.sort(filteredPosters, Poster.CategoryDescending);
                         break;
                     case "Name(A-Z)":
-                        Collections.sort(posters, Poster.NameAscending);
+                        Collections.sort(filteredPosters, Poster.NameAscending);
                         break;
                     case "Name(Z-A)":
-                        Collections.sort(posters, Poster.NameDescending);
+                        Collections.sort(filteredPosters, Poster.NameDescending);
                     default:
                         break;
                 }
-                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, posters, "Search");
+                recyclerViewAdapter = new RecyclerViewAdapter(SearchActivity.this, filteredPosters, "Admin");
                 search_recycler.setAdapter(recyclerViewAdapter);
                 search_recycler.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 
@@ -230,6 +236,10 @@ public class SearchActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public static void refresh() {
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -240,5 +250,11 @@ public class SearchActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPosters();
     }
 }

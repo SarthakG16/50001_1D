@@ -178,7 +178,7 @@ public class GuestFilterActivity extends AppCompatActivity {
                 GuestFilterActivity.posters = filteredPosters;
                 Poster.posters = filteredPosters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, filteredPosters,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, filteredPosters,"Guest");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 
@@ -278,5 +278,11 @@ public class GuestFilterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPosters();
     }
 }

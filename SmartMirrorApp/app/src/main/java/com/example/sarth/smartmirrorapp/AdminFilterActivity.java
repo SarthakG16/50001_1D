@@ -152,7 +152,7 @@ public class AdminFilterActivity extends AppCompatActivity {
                         break;
                 }
 
-                recyclerViewAdapter = new RecyclerViewAdapter(AdminFilterActivity.this, posters,"Request");
+                recyclerViewAdapter = new RecyclerViewAdapter(AdminFilterActivity.this, posters,"Admin");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(AdminFilterActivity.this));
 
@@ -252,6 +252,12 @@ public class AdminFilterActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPosters();
     }
 
 }
