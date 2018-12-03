@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
     tools:context=".GuestActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -48,13 +47,13 @@
 
                     <TextView
                         android:id="@+id/GuestRequestTextView"
+                        android:text="@string/request"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:freezesText="true"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
-                        android:text="@string/request"
                         android:textColor="@color/white"
                         android:textSize="30sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -73,11 +72,11 @@
 
                     <TextView
                         android:id="@+id/GuestRequestContentView"
+                        android:text="@string/request_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
-                        android:text="@string/request_content"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -85,13 +84,13 @@
 
                     <TextView
                         android:id="@+id/GuestRequestNumberView"
+                        android:text="@string/number_holder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
-                        android:text="@string/number_holder"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -132,13 +131,13 @@
 
                     <TextView
                         android:id="@+id/GuestDisplayingTextView"
+                        android:text="@string/display_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:freezesText="true"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
-                        android:text="@string/display_title"
                         android:textColor="@color/white"
                         android:textSize="30sp"
                         android:autoSizeMinTextSize="16dp" />
@@ -155,13 +154,13 @@
 
                     <TextView
                         android:id="@+id/GuestDisplayingContentView"
+                        android:text="@string/display_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@string/display_content"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +168,7 @@
 
                     <TextView
                         android:id="@+id/GuestDisplayingNumberView"
+                        android:text="@string/number_holder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -177,7 +177,6 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@string/number_holder"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -218,13 +217,13 @@
 
                     <TextView
                         android:id="@+id/GuestArchiveTextView"
+                        android:text="@string/archive_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:freezesText="true"
                         android:paddingLeft="16dp"
                         android:paddingTop="8dp"
                         android:paddingRight="16dp"
-                        android:text="@string/archive_title"
                         android:textColor="@color/white"
                         android:textSize="30sp"/>
 
@@ -240,13 +239,13 @@
 
                     <TextView
                         android:id="@+id/GuestArchiveContentView"
+                        android:text= "@string/archive_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text= "@string/archive_content"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -254,6 +253,7 @@
 
                     <TextView
                         android:id="@+id/GuestArchiveNumberView"
+                        android:text="@string/number_holder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -262,7 +262,6 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@string/number_holder"
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
