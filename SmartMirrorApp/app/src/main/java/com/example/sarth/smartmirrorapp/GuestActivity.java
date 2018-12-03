@@ -109,7 +109,10 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 String temp_expired = String.valueOf(dataMap.get("expired"));
                 double d4 = Double.valueOf(temp_expired);
 
-                text_request.setText(String.valueOf((int)(d1+d2)));
+                String temp_rejected = String.valueOf(dataMap.get("rejected"));
+                double d5 = Double.valueOf(temp_rejected);
+
+                text_request.setText(String.valueOf((int)(d1+d2+d5)));
                 text_display.setText(String.valueOf((int)d3));
                 text_archive.setText(String.valueOf((int)d4));
 

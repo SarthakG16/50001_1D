@@ -72,8 +72,12 @@ public class JudgementActivity extends AppCompatActivity{
         button_remove = findViewById(R.id.judge_remove_search);
 
         if ( origin.equals("Guest")) {
-            button_layout.setVisibility(View.INVISIBLE);
-            button_remove.setVisibility(View.VISIBLE);
+            if (poster.status.equals("pending") || poster.status.equals("approved") || poster.status.equals("rejected")) {
+                button_layout.setVisibility(View.INVISIBLE);
+                button_remove.setVisibility(View.VISIBLE);
+            } else {
+                button_layout.setVisibility(View.GONE);
+            }
         } else if (origin.equals("Admin") && !poster.status.equals("pending")) {
             button_layout.setVisibility(View.INVISIBLE);
             button_remove.setVisibility(View.VISIBLE);
@@ -158,21 +162,23 @@ public class JudgementActivity extends AppCompatActivity{
             public void onClick(DialogInterface dialog, int which) {
                 HashMap<String,String> params = new HashMap<>();
                 params.put("id",poster.id);
-                if (poster.status.equals("posted")) {
-                    params.put("status","pending"); //TODO change to expired
-                } else {
-                    params.put("status", "rejected"); //TODO change later to rejected
-                }
-                Request req = new Request("POST","posters/", params, new Request.Callback() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
-                        Log.i(TAG,response);
-                        finish();
-                        Toast.makeText(JudgementActivity.this,"Removed",Toast.LENGTH_LONG).show();
+                if(origin.equals("Admin")) {
+                    if (poster.status.equals("posted")) {
+                        params.put("status", "pending"); //TODO change to expired
+                    } else {
+                        params.put("status", "rejected"); //TODO change later to rejected
                     }
-                });
-                req.execute();
+                    Request req = new Request("POST", "posters/", params, new Request.Callback() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(JudgementActivity.this, "Received: " + response, Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, response);
+                            finish();
+                            Toast.makeText(JudgementActivity.this, "Removed", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    req.execute();
+                }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
