@@ -75,19 +75,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.nameView.setText(String.format("By: %s", poster.name));
         if (poster.status.equals("pending")) {
             holder.statusView.setText("Pending");
-            holder.statusView.setTextColor(Color.RED);
+            holder.statusView.setTextColor(Color.BLUE);
         } else if (poster.status.equals("approved")) {
             holder.statusView.setText("Approved");
-            holder.statusView.setTextColor(Color.rgb(95,183,00));
+            holder.statusView.setTextColor(Color.rgb(95,183,00)); //Green
         } else if (poster.status.equals("posted")) {
             holder.statusView.setText("On Display");
-            holder.statusView.setTextColor(Color.BLUE);
+            holder.statusView.setTextColor(Color.rgb(105,13,175)); //Purple
         } else if (poster.status.equals("expired")) {
             holder.statusView.setText("Expired");
             holder.statusView.setTextColor(Color.GRAY);
         } else if (poster.status.equals("rejected")) {
             holder.statusView.setText("Rejected");
-            holder.statusView.setTextColor(Color.GRAY);
+            holder.statusView.setTextColor(Color.RED);
         }
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
