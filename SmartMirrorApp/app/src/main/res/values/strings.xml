@@ -30,8 +30,6 @@
     <string name="search">Search</string>
     <string name="search_title">All posters</string>
     <string name="search_content">Number of posters:</string>
-    <string name="title_activity_admin">Welcome back Admin</string>
-    <string name="title_activity_guest">Welcome back Guest</string>
     <string name="request_content">Your requests:</string>
     <string name="display_title">On Display</string>
     <string name="display_content">Your posters on display:</string>
@@ -46,5 +44,6 @@
     <string name="login">Login</string>
     <string name="by">By:</string>
     <string name="icon_calender">icon_calender</string>
+    <string name="click_to_view">Click to View</string>
 
 </resources>

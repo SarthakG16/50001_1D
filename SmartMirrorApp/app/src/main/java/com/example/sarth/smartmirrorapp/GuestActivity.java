@@ -153,19 +153,19 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.GuestRequestButton:
                 fromGuest = new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"request");
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=pending,approved,rejected");
                 Log.i(TAG,"Guest to Request page");
                 break;
 
             case R.id.GuestDisplayingButton:
                 fromGuest = new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"display");
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=posted");
                 Log.i(TAG,"Guest to Now Displaying page");
                 break;
 
             case R.id.GuestArchiveButton:
                 fromGuest= new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"archive");
+                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=expired");
                 Log.i(TAG,"Guest to Archive page");
                 break;
 

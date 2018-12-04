@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,7 @@ public class UploadActivity extends AppCompatActivity{
     private Date stop = null;
 
     private PDFView pdfView;
+    private TextView clickToView;
     private final static String TAG = "Logcat";
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.example.android.mainsharedprefs";
@@ -133,6 +135,7 @@ public class UploadActivity extends AppCompatActivity{
         pdfView = findViewById(R.id.pdfView);
         poster_preview_button = findViewById(R.id.poster_preview_button);
         spinner_categories = findViewById(R.id.spinner_categories);
+        clickToView = findViewById(R.id.upload_click_to_view);
 
         // Initialize the select poster button.
 
@@ -316,6 +319,7 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
+            clickToView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -440,11 +444,13 @@ public class UploadActivity extends AppCompatActivity{
                     locations_checked += c.getText();
                 } else {
                     if(!locations_checked.contains(c.getText())) {
-                        locations_checked += ", " + c.getText();
+                        locations_checked += "; " + c.getText();
                     }
                 }
             }
         }
+
+        Log.i("RYAN", locations_checked);
 
         title = titleInput.getEditText().getText().toString().trim();
         name = contact_name.getEditText().getText().toString().trim();

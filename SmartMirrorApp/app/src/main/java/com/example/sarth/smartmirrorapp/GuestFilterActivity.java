@@ -60,13 +60,13 @@ public class GuestFilterActivity extends AppCompatActivity {
         filter = toRequest.getStringExtra(FILTER_KEY);
 
         switch (filter) {
-            case "request":
+            case "&status=pending,approved,rejected":
                 setTitle("Your Requests");
                 break;
-            case "display":
+            case "&status=posted":
                 setTitle("On Display");
                 break;
-            case "archive":
+            case "&status=expired":
                 setTitle("Archive");
                 break;
         }
@@ -126,60 +126,38 @@ public class GuestFilterActivity extends AppCompatActivity {
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
 
-        Request req = new Request("GET","posters/mine", params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/filter?mine=1" + filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                List<Poster> filteredPosters = new ArrayList<>();
-                if (filter.equals("request")) {
-                    for (Poster poster: posters) {
-                        if (poster.status.equals("pending") || poster.status.equals("rejected") || poster.status.equals("approved")) {
-                            filteredPosters.add(poster);
-                        }
-                    }
-                } else if (filter.equals("display")){
-                    for (Poster poster: posters) {
-                        if (poster.status.equals("posted")) {
-                            filteredPosters.add(poster);
-                        }
-                    }
-                } else if (filter.equals("archive")) {
-                    for (Poster poster: posters) {
-                        if (poster.status.equals("expired")) {
-                            filteredPosters.add(poster);
-                        }
-                    }
-                } else {
-                    filteredPosters.addAll(posters);
-                }
 
                 switch (sort_choice) {
                     case "Title(A-Z)":
-                        Collections.sort(filteredPosters, Poster.TitleAscending);
+                        Collections.sort(posters, Poster.TitleAscending);
                         break;
                     case "Title(Z-A)":
-                        Collections.sort(filteredPosters, Poster.TitleDescending);
+                        Collections.sort(posters, Poster.TitleDescending);
                         break;
                     case "Category(A-Z)":
-                        Collections.sort(filteredPosters, Poster.CategoryAscending);
+                        Collections.sort(posters, Poster.CategoryAscending);
                         break;
                     case "Category(Z-A)":
-                        Collections.sort(filteredPosters, Poster.CategoryDescending);
+                        Collections.sort(posters, Poster.CategoryDescending);
                         break;
                     case "Name(A-Z)":
-                        Collections.sort(filteredPosters, Poster.NameAscending);
+                        Collections.sort(posters, Poster.NameAscending);
                         break;
                     case "Name(Z-A)":
-                        Collections.sort(filteredPosters, Poster.NameDescending);
+                        Collections.sort(posters, Poster.NameDescending);
                     case "Status":
-                        Collections.sort(filteredPosters, Poster.Status);
+                        Collections.sort(posters, Poster.Status);
                     default:
                         break;
                 }
 
-                GuestFilterActivity.posters = filteredPosters;
-                Poster.posters = filteredPosters;
+                GuestFilterActivity.posters = posters;
+                Poster.posters = posters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, filteredPosters,"Guest");
+                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters,"Guest");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 

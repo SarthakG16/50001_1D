@@ -58,7 +58,6 @@ public class AdminFilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
         filter = toRequest.getStringExtra(FILTER_KEY);
-        Log.i("REQ_",filter);
 
         switch (filter) {
             case "pending":
@@ -67,12 +66,13 @@ public class AdminFilterActivity extends AppCompatActivity {
             case "posted":
                 setTitle("On Display");
                 break;
+            case "pending,approved,posted":
+                setTitle("All Posters");
+                search_options = new CharSequence[]{"Title", "Category", "Name","Status"};
         }
-
 
         requests = findViewById(R.id.request_recycler);
         refreshLayout = findViewById(R.id.refresh_layout);
-
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -80,7 +80,6 @@ public class AdminFilterActivity extends AppCompatActivity {
                 getPosters();
             }
         });
-
     }
 
     @Override
@@ -112,6 +111,9 @@ public class AdminFilterActivity extends AppCompatActivity {
                     case "Name":
                         recyclerViewAdapter.getNameFilter().filter(newText);
                         break;
+                    case "Status":
+                        recyclerViewAdapter.getStatusFilter().filter(newText);
+                        break;
                     default:
                         recyclerViewAdapter.getFilter().filter(newText);
                         break;
@@ -126,7 +128,7 @@ public class AdminFilterActivity extends AppCompatActivity {
     public void getPosters () {
         HashMap<String, String> params = new HashMap<>();
 
-        Request req = new Request("GET","posters/?status="+filter, params, new Request.PostersCallback() {
+        Request req = new Request("GET","posters/filter?status="+filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
                 AdminFilterActivity.posters = posters;
@@ -150,8 +152,10 @@ public class AdminFilterActivity extends AppCompatActivity {
                         break;
                     case "Name(Z-A)":
                         Collections.sort(posters, Poster.NameDescending);
+                        break;
                     case "Status":
                         Collections.sort(posters, Poster.Status);
+                        break;
                     default:
                         break;
                 }

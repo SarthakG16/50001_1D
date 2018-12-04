@@ -34,20 +34,15 @@
             android:name=".AdminFilterActivity" />
         <activity
             android:name=".AdminActivity"
-            android:label="@string/title_activity_admin"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".GuestActivity"
-            android:label="@string/title_activity_guest"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"/>
         <activity
             android:name=".JudgementActivity" />
-        <activity
-            android:name=".SearchActivity"
-            android:label="Search" />
         <activity
             android:name=".GuestFilterActivity" />
 

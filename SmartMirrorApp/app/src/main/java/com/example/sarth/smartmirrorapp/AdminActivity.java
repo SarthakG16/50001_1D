@@ -74,29 +74,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.logout){
-            Intent intent = new Intent(AdminActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }
-        if (item.getItemId() == R.id.myPosters) {
-            Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
-            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"admin");
-            startActivity(toArchive);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void getData() {
 
         HashMap<String, String> params = new HashMap<>();
@@ -152,6 +129,29 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.logout){
+            Intent intent = new Intent(AdminActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        if (item.getItemId() == R.id.myPosters) {
+            Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
+            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"");
+            startActivity(toArchive);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
         Intent fromAdmin = null;
         switch(v.getId()){
@@ -168,7 +168,8 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.SearchButton:
-                fromAdmin= new Intent(this,SearchActivity.class);
+                fromAdmin= new Intent(this,AdminFilterActivity.class);
+                fromAdmin.putExtra(AdminFilterActivity.FILTER_KEY,"pending,approved,posted");
                 Log.i(TAG,"Moving to Search page");
                 break;
 
