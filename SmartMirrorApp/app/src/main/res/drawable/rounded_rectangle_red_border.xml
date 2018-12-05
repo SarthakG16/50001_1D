@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
         <item
-            android:left="2dp"
             android:top="5dp">
                 <shape
                     android:shape="rectangle">
                         <gradient
-                            android:startColor="@android:color/transparent"
-                            android:centerColor="@android:color/transparent"
+                            android:startColor="@color/offWhite_80"
+                            android:centerColor="@color/white"
                             android:endColor="@color/black_50"
                             android:angle="270"/>
                         <corners
@@ -15,12 +14,15 @@
                 </shape>
         </item>
 
-        <item
-            android:bottom="2dp">
+        <item>
                 <shape
                     android:shape="rectangle">
+                        <stroke
+                            android:color="@color/red"
+                            android:width="3dp"/>
+
                         <solid
-                            android:color="@color/colorCom" />
+                            android:color="@color/offWhite_80"/>
                         <corners
                             android:radius = "20dp"/>
                         <padding

@@ -39,10 +39,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guest_activity);
 
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
-
         Intent toGuest = getIntent();
         setTitle("Welcome Back " + toGuest.getStringExtra(MainActivity.USER_KEY));
 

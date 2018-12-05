@@ -51,10 +51,6 @@ public class GuestFilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_requests);
         Log.i(TAG,"Create");
 
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
         filter = toRequest.getStringExtra(FILTER_KEY);

@@ -51,10 +51,6 @@ public class AdminFilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
 
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
         filter = toRequest.getStringExtra(FILTER_KEY);

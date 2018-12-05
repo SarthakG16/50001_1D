@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -112,10 +113,6 @@ public class UploadActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
-
         Intent toUpload = getIntent();
         origin = toUpload.getStringExtra("Origin");
         // Preferences.
@@ -184,6 +181,7 @@ public class UploadActivity extends AppCompatActivity{
             int resID = getResources().getIdentifier(String.format("upload_building_%s", i + 1), "id", getPackageName());
             locations[i] = findViewById(resID);
             locations[i].setChecked(mPreferences.getBoolean(String.format("BOX%s_KEY", i), false));
+            locations[i].setTypeface(ResourcesCompat.getFont(UploadActivity.this,R.font.abel));
         }
 
         // Initialize the upload button.

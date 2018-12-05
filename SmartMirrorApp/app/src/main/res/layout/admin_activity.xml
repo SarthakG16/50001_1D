@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue_light"
     android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -22,17 +23,58 @@
             android:paddingTop="0dp"
             android:paddingBottom="0dp">
 
+            <ImageView
+                android:id="@+id/Request_back"
+                android:layout_width="342dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gudetama_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/Request"
+                app:layout_constraintTop_toTopOf="@+id/Request" />
+
+            <ImageView
+                android:id="@+id/Displaying_back"
+                android:layout_width="342dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gudetama_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/Displaying"
+                app:layout_constraintTop_toTopOf="@+id/Displaying" />
+
+            <ImageView
+                android:id="@+id/Search_back"
+                android:layout_width="342dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gudetama_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/Search"
+                app:layout_constraintTop_toTopOf="@+id/Search" />
+
             <FrameLayout
                 android:id="@+id/Request"
-                android:layout_width="match_parent"
+                android:layout_width="346dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/rounded_rectangle"
-                app:layout_constraintBottom_toTopOf="@+id/Displaying"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -40,7 +82,7 @@
                 <Button
                     android:id="@+id/RequestButton"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="match_parent"
                     android:alpha="0" />
 
                 <android.support.constraint.ConstraintLayout
@@ -48,34 +90,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/Request_under"
+                        android:layout_width="110dp"
+                        android:layout_height="11dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@color/gudetama_orange"
+                        app:layout_constraintStart_toStartOf="@+id/RequestTextView"
+                        app:layout_constraintTop_toTopOf="@+id/RequestTextView" />
+
                     <TextView
                         android:id="@+id/RequestTextView"
-                        android:text="@string/request"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="16dp"
-                        android:textColor="@color/white"
+                        android:text="@string/request"
+                        android:textColor="@color/black"
                         android:textSize="26sp"
-                        app:fontFamily="@font/athiti_semibold"
+                        app:fontFamily="@font/fira_sans_condensed_medium"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/RequestContentView"
-                        android:text="@string/request_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
                         android:paddingLeft="22dp"
                         android:paddingBottom="12dp"
                         android:singleLine="false"
-                        android:textColor="@color/white"
+                        android:text="@string/request_content"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/RequestTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/RequestTextView" />
 
                     <TextView
                         android:id="@+id/RequestNumberView"
@@ -83,29 +138,30 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
                         android:paddingBottom="12dp"
                         android:text="@string/number_holder"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/RequestContentView"
-                        app:layout_constraintTop_toBottomOf="@+id/RequestTextView"/>
+                        app:layout_constraintTop_toTopOf="@+id/RequestTextView" />
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitXY"
+                        android:layout_width="56dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginRight="18dp"
                         android:layout_marginBottom="8dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/arrow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -113,16 +169,15 @@
 
             <FrameLayout
                 android:id="@+id/Displaying"
-                android:layout_width="match_parent"
+                android:layout_width="346dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Request"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/rounded_rectangle"
-                app:layout_constraintBottom_toTopOf="@+id/Search"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Request">
@@ -130,41 +185,54 @@
                 <Button
                     android:id="@+id/DisplayingButton"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
-                    android:alpha="0"/>
+                    android:layout_height="match_parent"
+                    android:alpha="0" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/Displaying_under"
+                        android:layout_width="128dp"
+                        android:layout_height="11dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@color/gudetama_orange"
+                        app:layout_constraintStart_toStartOf="@+id/DisplayingTextView"
+                        app:layout_constraintTop_toTopOf="@+id/DisplayingTextView" />
+
                     <TextView
                         android:id="@+id/DisplayingTextView"
-                        android:text="@string/display_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="16dp"
-                        android:textColor="@color/white"
+                        android:text="@string/display_title"
+                        android:textColor="@color/black"
                         android:textSize="26sp"
-                        app:fontFamily="@font/athiti_semibold"
+                        app:fontFamily="@font/fira_sans_condensed_medium"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/DisplayingContentView"
-                        android:text="@string/display_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
                         android:paddingLeft="22dp"
                         android:paddingBottom="12dp"
                         android:singleLine="false"
-                        android:textColor="@color/white"
+                        android:text="@string/display_content"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/DisplayingTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/DisplayingTextView" />
 
                     <TextView
                         android:id="@+id/DisplayingNumberView"
@@ -172,29 +240,30 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
                         android:paddingBottom="12dp"
                         android:text="@string/number_holder"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/DisplayingContentView"
-                        app:layout_constraintTop_toBottomOf="@+id/DisplayingTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/DisplayingTextView" />
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitXY"
+                        android:layout_width="56dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginRight="18dp"
                         android:layout_marginBottom="8dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/arrow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -202,15 +271,15 @@
 
             <FrameLayout
                 android:id="@+id/Search"
-                android:layout_width="match_parent"
+                android:layout_width="346dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Displaying"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/rounded_rectangle"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Displaying">
@@ -218,24 +287,36 @@
                 <Button
                     android:id="@+id/SearchButton"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="match_parent"
                     android:alpha="0" />
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/Search_under"
+                        android:layout_width="130dp"
+                        android:layout_height="11dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@color/gudetama_orange"
+                        app:layout_constraintStart_toStartOf="@+id/SearchTextView"
+                        app:layout_constraintTop_toTopOf="@+id/SearchTextView" />
+
                     <TextView
                         android:id="@+id/SearchTextView"
-                        android:text="@string/search_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="16dp"
-                        android:textColor="@color/white"
+                        android:text="@string/search_title"
+                        android:textColor="@color/black"
                         android:textSize="26sp"
-                        app:fontFamily="@font/athiti_semibold"
+                        app:fontFamily="@font/fira_sans_condensed_medium"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -244,45 +325,47 @@
                         android:text="@string/search_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
                         android:paddingLeft="22dp"
                         android:paddingBottom="12dp"
                         android:singleLine="false"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/SearchTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/SearchTextView" />
 
                     <TextView
                         android:id="@+id/SearchNumberView"
+                        android:text="@string/number_holder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginTop="40dp"
                         android:paddingBottom="12dp"
-                        android:text="@string/number_holder"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         app:fontFamily="@font/assistant"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/SearchContentView"
-                        app:layout_constraintTop_toBottomOf="@+id/SearchTextView" />
+                        app:layout_constraintTop_toTopOf="@+id/SearchTextView" />
 
                     <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="50dp"
-                        android:scaleType="fitXY"
+                        android:layout_width="56dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="12dp"
                         android:layout_marginRight="18dp"
                         android:layout_marginBottom="8dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/arrow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 

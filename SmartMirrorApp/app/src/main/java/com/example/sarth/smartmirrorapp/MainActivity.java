@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         login_password = findViewById(R.id.login_password);
         login_enter_button = findViewById(R.id.login_enter_button);
         login_checkbox = findViewById(R.id.login_checkbox);
+        login_checkbox.setTypeface(ResourcesCompat.getFont(MainActivity.this,R.font.abel));
 
         login_username.getEditText().setText(mPreferences.getString(USER_KEY,""));
         login_password.getEditText().setText(mPreferences.getString(PWD_KEY,""));

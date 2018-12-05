@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -58,10 +59,6 @@ public class JudgementActivity extends AppCompatActivity{
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_judgment);
-
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
@@ -142,6 +139,8 @@ public class JudgementActivity extends AppCompatActivity{
                 locations[i].setChecked(true);
             }
             locations[i].setClickable(false); // Not allowing the checkbox to be clickable so that Admin may not click by mistake
+            locations[i].setTypeface(ResourcesCompat.getFont(JudgementActivity.this,R.font.abel));
+
         }
 
         poster_preview_button = findViewById(R.id.judge_poster_preview_button);

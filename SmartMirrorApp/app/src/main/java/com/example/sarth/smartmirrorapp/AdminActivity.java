@@ -42,10 +42,6 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_activity);
 
-        android.support.v7.app.ActionBar bar = getSupportActionBar();
-        Drawable gradient = getResources().getDrawable( R.drawable.action_bar_gradient);
-        bar.setBackgroundDrawable(gradient);
-
         Intent toAdmin = getIntent();
         setTitle("Welcome Back " + toAdmin.getStringExtra(MainActivity.USER_KEY));
 
@@ -83,6 +79,9 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(String response) {
                 Gson g  = new Gson();
                 Map<String, String> dataMap = g.fromJson(response, Map.class);
+                if (dataMap.get("pending") == null) {
+                    return;
+                }
                 String temp_pending = String.valueOf(dataMap.get("pending"));
                 double d1 = Double.valueOf(temp_pending);
                 if (d1>1) {
