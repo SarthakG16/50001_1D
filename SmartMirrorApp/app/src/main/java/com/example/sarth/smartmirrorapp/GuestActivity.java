@@ -1,5 +1,7 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
@@ -179,5 +181,24 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         refreshLayout.setRefreshing(true);
         getData();
+    }
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GuestActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        builder.setTitle("Logout");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

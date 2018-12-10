@@ -1,11 +1,15 @@
 package com.example.sarth.smartmirrorapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean username_correct = validate(login_username);
                 boolean password_correct = validate(login_password);
+
+                if (!isNetworkAvailable(MainActivity.this)) {
+                    Toast.makeText(MainActivity.this,"Please Connect to the Internet", Toast.LENGTH_LONG).show();
+                }
                 if (!username_correct) {
                     Toast.makeText(MainActivity.this, "Please enter your username.", Toast.LENGTH_LONG).show();
                     return;
@@ -65,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please enter your password.", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 username = login_username.getEditText().getText().toString().trim();
                 password = login_password.getEditText().getText().toString().trim();
 
@@ -139,5 +146,14 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(PWD_KEY, login_password.getEditText().getText().toString());
         editor.putBoolean(RMB_KEY, login_checkbox.isChecked());
         editor.apply();
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean haveNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return haveNetwork;
     }
 }

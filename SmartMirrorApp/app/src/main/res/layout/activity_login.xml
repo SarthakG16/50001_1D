@@ -23,7 +23,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="glance_logo"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo_white_curve"
+        android:src="@drawable/glance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
