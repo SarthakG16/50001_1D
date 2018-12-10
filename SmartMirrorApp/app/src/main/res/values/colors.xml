@@ -30,7 +30,11 @@
     <color name="black_50">#50000000</color>
     <color name="blue_light">#9ce7e7e7</color>
     <color name="yellow_light">#9cffdb3c</color>
+<!--
     <color name="gudetama_orange">#fbc02d</color>
+-->
+    <color name="gudetama_orange">#ffa726</color>
+
     <color name="gudetama_yellow">#fbd31b</color>
     <color name="yellow">#fdc70c</color>
     <color name="red">#ed683c</color>

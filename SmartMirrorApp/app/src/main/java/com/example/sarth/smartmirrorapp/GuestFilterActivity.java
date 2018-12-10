@@ -55,6 +55,10 @@ public class GuestFilterActivity extends AppCompatActivity {
             case "&status=expired":
                 setTitle("Archive");
                 break;
+            case "My Posters":
+                setTitle("My Posters");
+                filter="";
+                break;
         }
 
         requests = findViewById(R.id.request_recycler);

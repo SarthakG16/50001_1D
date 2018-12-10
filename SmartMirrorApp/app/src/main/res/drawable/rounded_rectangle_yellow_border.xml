@@ -15,7 +15,7 @@
         <shape
             android:shape="rectangle">
             <stroke
-                android:color="@color/gudetama_yellow"
+                android:color="@color/gudetama_orange"
                 android:width="3dp"/>
 
             <solid

@@ -144,7 +144,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         }
         if (item.getItemId() == R.id.myPosters) {
             Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
-            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"");
+            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"My Posters");
             startActivity(toArchive);
         }
         return super.onOptionsItemSelected(item);

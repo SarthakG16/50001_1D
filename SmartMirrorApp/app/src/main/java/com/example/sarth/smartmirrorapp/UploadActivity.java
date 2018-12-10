@@ -317,11 +317,6 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
-            if (pdfView.getPageCount() > 0) {
-                Toast.makeText(UploadActivity.this,
-                        "Please note that only the first page of your PDF file will be displayed",Toast.LENGTH_LONG).show();
-            }
-            Log.i("TESTING", String.valueOf(pdfView.getPageCount()));
             clickToView.setVisibility(View.VISIBLE);
         }
     }
