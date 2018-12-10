@@ -2,7 +2,6 @@ package com.example.sarth.smartmirrorapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -14,11 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,30 +21,25 @@ import java.util.List;
 
 public class GuestFilterActivity extends AppCompatActivity {
 
-    public static final String TAG =  "Logcat";
-
+    public static final String TAG = "Logcat";
+    public static final String FILTER_KEY = "Filter_key";
     //vars
     private RecyclerView requests;
-    private static List<Poster> posters;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SwipeRefreshLayout refreshLayout;
-
     private CharSequence[] search_options = {"Title", "Category", "Name"};
     private String search_choice = "";
     private int search_selected = -1;
-
-    private CharSequence[] sort_options = {"Title(A-Z)","Title(Z-A)", "Category(A-Z)","Category(Z-A)", "Name(A-Z)","Name(Z-A)","Status"};
+    private CharSequence[] sort_options = {"Title(A-Z)", "Title(Z-A)", "Category(A-Z)", "Category(Z-A)", "Name(A-Z)", "Name(Z-A)", "Status"};
     private String sort_choice = "";
     private int sort_selected = -1;
-
-    public static final String FILTER_KEY = "Filter_key";
     private String filter = "pending";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
-        Log.i(TAG,"Create");
+        Log.i(TAG, "Create");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
@@ -95,7 +85,7 @@ public class GuestFilterActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (recyclerViewAdapter ==null){
+                if (recyclerViewAdapter == null) {
                     return false;
                 }
                 switch (search_choice) {
@@ -119,10 +109,10 @@ public class GuestFilterActivity extends AppCompatActivity {
         return true;
     }
 
-    public void getPosters () {
+    public void getPosters() {
         HashMap<String, String> params = new HashMap<>();
 
-        Request req = new Request("GET","posters/filter?mine=1" + filter, params, new Request.PostersCallback() {
+        Request req = new Request("GET", "posters/filter?mine=1" + filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
 
@@ -150,10 +140,9 @@ public class GuestFilterActivity extends AppCompatActivity {
                         break;
                 }
 
-                GuestFilterActivity.posters = posters;
                 Poster.posters = posters;
 
-                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters,"Guest");
+                recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters, "Guest");
                 requests.setAdapter(recyclerViewAdapter);
                 requests.setLayoutManager(new LinearLayoutManager(GuestFilterActivity.this));
 
@@ -164,7 +153,7 @@ public class GuestFilterActivity extends AppCompatActivity {
     }
 
     public void search_options(MenuItem menuItem) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(GuestFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(GuestFilterActivity.this, android.R.style.ThemeOverlay_Material_Dialog_Alert);
         mBuilder.setTitle("Search Settings");
         mBuilder.setIcon(R.drawable.list_icon);
         mBuilder.setSingleChoiceItems(search_options, search_selected, new DialogInterface.OnClickListener() {
@@ -183,7 +172,7 @@ public class GuestFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (search_selected == -1){
+                if (search_selected == -1) {
                     return;
                 }
                 search_choice = search_options[search_selected].toString();
@@ -192,8 +181,9 @@ public class GuestFilterActivity extends AppCompatActivity {
         AlertDialog dialog = mBuilder.create();
         dialog.show();
     }
+
     public void sort(MenuItem menuItem) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(GuestFilterActivity.this,android.R.style.ThemeOverlay_Material_Dialog_Alert);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(GuestFilterActivity.this, android.R.style.ThemeOverlay_Material_Dialog_Alert);
         mBuilder.setTitle("Sort Settings");
         mBuilder.setIcon(R.drawable.sort_icon);
         mBuilder.setSingleChoiceItems(sort_options, sort_selected, new DialogInterface.OnClickListener() {
@@ -213,7 +203,7 @@ public class GuestFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (sort_selected == -1){
+                if (sort_selected == -1) {
                     return;
                 }
                 sort_choice = sort_options[sort_selected].toString();

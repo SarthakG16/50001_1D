@@ -138,7 +138,7 @@ public class UploadActivity extends AppCompatActivity{
 
         upload_poster = findViewById(R.id.upload_poster);
 
-        // Initialize the category spibner.
+        // Initialize the category spinner.
 
         final String[] cat = { "Select your Category", "Food", "Announcement", "Workshop", "Welfare", "Talks/Seminar", "Others" };
 
@@ -317,6 +317,11 @@ public class UploadActivity extends AppCompatActivity{
                 Log.i(TAG,"Uri for poster returned null");
             }
             pdfView.fromUri(posterUri).load();
+            if (pdfView.getPageCount() > 0) {
+                Toast.makeText(UploadActivity.this,
+                        "Please note that only the first page of your PDF file will be displayed",Toast.LENGTH_LONG).show();
+            }
+            Log.i("TESTING", String.valueOf(pdfView.getPageCount()));
             clickToView.setVisibility(View.VISIBLE);
         }
     }
@@ -325,7 +330,7 @@ public class UploadActivity extends AppCompatActivity{
         String emailInput = check.getEditText().getText().toString().trim();
 
         if (emailInput.isEmpty()) {
-            check.setError("Field can't be empty");
+            check.setError("Field is required");
             return false;
         } else {
             check.setError(null);
@@ -448,8 +453,6 @@ public class UploadActivity extends AppCompatActivity{
             }
         }
 
-        Log.i("RYAN", locations_checked);
-
         title = titleInput.getEditText().getText().toString().trim();
         name = contact_name.getEditText().getText().toString().trim();
         number = contact_number.getEditText().getText().toString().trim();
@@ -500,13 +503,14 @@ public class UploadActivity extends AppCompatActivity{
                     titleInput.setError("Title Already Exists");
                     Toast.makeText(UploadActivity.this,"Title already exists", Toast.LENGTH_LONG).show();
                 } else if (status.equals("success")) {
-                    Toast.makeText(UploadActivity.this,"Upload succesful",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UploadActivity.this,"Upload successful",Toast.LENGTH_SHORT).show();
                     finish();
+                    clear = true;
                 }
                 Log.i(TAG,response);
             }
         });
         req.execute();
-        clear = true;
+
     }
 }

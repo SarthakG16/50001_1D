@@ -48,10 +48,10 @@
 
             <TextView
                 android:id="@+id/judge_click_to_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom|center"
+                android:background="@color/offWhite_80"
+                android:layout_gravity="bottom"
                 android:text="@string/click_to_view"
                 android:textAlignment="center"
                 android:textAllCaps="false" />
@@ -64,12 +64,14 @@
             android:layout_below="@+id/judge_poster_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:paddingLeft="2dp"
             android:text="@string/category"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:fontFamily="@font/abel" />
+            app:fontFamily="@font/abel"
+            />
 
 
         <TextView

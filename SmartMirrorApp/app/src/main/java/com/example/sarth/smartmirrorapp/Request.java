@@ -62,14 +62,14 @@ class Request extends AsyncTask<Void, Void, String> {
             urlConnection.setRequestMethod(method);
             urlConnection.setDoInput(true);
             Log.i("REQ_INFO_M", method);
-            if (method == "POST") {
+            if (method.equals("POST")) {
                 urlConnection.setDoOutput(true);
                 urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             }
             urlConnection.setRequestProperty("Accept", "application/json");
 
             try {
-                if (method == "POST") {
+                if (method.equals("POST")) {
                     Gson gson = new Gson();
                     String query = gson.toJson(params);
                     OutputStream os = urlConnection.getOutputStream();
@@ -83,15 +83,15 @@ class Request extends AsyncTask<Void, Void, String> {
 
                 Log.i("REQ_INFO_RES", Integer.toString(urlConnection.getResponseCode()));
 
-                String json_response = "";
+                StringBuilder json_response = new StringBuilder();
                 InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
                 BufferedReader br = new BufferedReader(in);
                 String text;
                 while ((text = br.readLine()) != null) {
-                    json_response += text;
+                    json_response.append(text);
                 }
 
-                return json_response;
+                return json_response.toString();
             }
 
             finally {
@@ -123,12 +123,15 @@ class Request extends AsyncTask<Void, Void, String> {
 
         if (postersCallback != null) {
             Gson g = new Gson();
+            long Start = System.currentTimeMillis();
             List<Map<String, String>> posterDetails = g.fromJson(response, List.class);
             List<Poster> posters = new ArrayList<>();
             for (Map<String, String> posterDetail : posterDetails) {
                 Poster poster = new Poster(posterDetail);
                 posters.add(poster);
             }
+            long end = System.currentTimeMillis();
+            Log.i("TIMING", String.valueOf((end-Start)));
             postersCallback.onResponse(posters);
 
         }

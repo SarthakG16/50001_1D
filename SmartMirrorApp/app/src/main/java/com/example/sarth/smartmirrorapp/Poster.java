@@ -21,7 +21,7 @@ public class Poster implements Serializable{
     public String postDate;
     public String expiryDate;
     public String locations;
-    public String serialized_data;
+    private String serialized_data;
     public String status;
     public String status_filter;
     public String everything;
@@ -31,7 +31,7 @@ public class Poster implements Serializable{
     public static List<Poster> posters = new ArrayList<>();
 
 
-    public Poster(Map<String, String> params) {
+    Poster(Map<String, String> params) {
         String idd = String.valueOf(params.get("id"));
         double d = Double.valueOf(idd);
         int x = (int) d;

@@ -68,7 +68,6 @@ public class JudgementActivity extends AppCompatActivity{
         setTitle(poster.title);
 
         origin = intent.getStringExtra("Origin");
-        Toast.makeText(JudgementActivity.this,origin + poster.status, Toast.LENGTH_SHORT).show();
 
         button_layout = findViewById(R.id.judge_button_layout);
         button_reject = findViewById(R.id.judge_reject);
@@ -176,9 +175,9 @@ public class JudgementActivity extends AppCompatActivity{
                 params.put("id",poster.id);
                 if(origin.equals("Admin")) {
                     if (poster.status.equals("posted")) {
-                        params.put("status", "expired"); //TODO change to expired
+                        params.put("status", "expired");
                     } else {
-                        params.put("status", "rejected"); //TODO change later to rejected
+                        params.put("status", "rejected");
                     }
                     Request req = new Request("POST", "posters/", params, new Request.Callback() {
                         @Override

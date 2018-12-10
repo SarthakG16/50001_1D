@@ -272,13 +272,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     };
 
-    public void swap(List<Poster> posters) {
-        posterList.clear();
-        posterList.addAll(posters);
-        Collections.sort(searchList,Poster.TitleAscending);
-        notifyDataSetChanged();
-    }
-
     public void sort(Comparator<Poster> comparator) {
         Collections.sort(posterList,comparator);
         Collections.sort(searchList,comparator);
