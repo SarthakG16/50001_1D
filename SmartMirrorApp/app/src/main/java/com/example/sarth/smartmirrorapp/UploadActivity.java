@@ -466,7 +466,7 @@ public class UploadActivity extends AppCompatActivity{
 
         } catch (FileNotFoundException e) {
             Log.i(TAG,"FileNotFound");
-            e.printStackTrace();
+            Toast.makeText(UploadActivity.this,"File Not Found",Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.i(TAG,"IOexception");
             e.printStackTrace();

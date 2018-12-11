@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/gudetama_orange">
+
+
+    <ImageView
+        android:id="@+id/login_image_view"
+        android:layout_width="272dp"
+        android:layout_height="138dp"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="glance_logo"
+        android:scaleType="centerCrop"
+        android:src="@drawable/glance"
+         />
+
+</RelativeLayout>

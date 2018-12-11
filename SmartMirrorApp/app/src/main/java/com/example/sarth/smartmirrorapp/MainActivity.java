@@ -22,6 +22,8 @@ import java.net.CookieManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.security.auth.login.LoginException;
+
 public class MainActivity extends AppCompatActivity {
     public static final String USER_KEY = "User_key";
     public static final String PWD_KEY = "Pwd_key";
@@ -84,14 +86,19 @@ public class MainActivity extends AppCompatActivity {
                 Request req_admin = new Request("POST", "auth/login", params, new Request.Callback() {
                     @Override
                     public void onResponse(String response) {
-                        Gson g1 = new Gson();
-                        final Map<String, String> login_info1 = g1.fromJson(response, Map.class);
-                        if (login_info1.get("status").equals("success")) {
-                            Intent toAdmin = new Intent(MainActivity.this, AdminActivity.class);
-                            toAdmin.putExtra(USER_KEY, username);
-                            Toast.makeText(MainActivity.this, "Signed in as Admin", Toast.LENGTH_LONG).show();
-                            startActivity(toAdmin);
-                        } else {
+                        try {
+                            Gson g1 = new Gson();
+                            final Map<String, String> login_info1 = g1.fromJson(response, Map.class);
+                            if (login_info1.get("status").equals("success")) {
+                                Intent toAdmin = new Intent(MainActivity.this, AdminActivity.class);
+                                toAdmin.putExtra(USER_KEY, username);
+                                Toast.makeText(MainActivity.this, "Signed in as Admin", Toast.LENGTH_LONG).show();
+                                startActivity(toAdmin);
+                            } else {
+                                throw new LoginException();
+                            }
+                        }
+                        catch (LoginException e) {
                             params.put("requested_privilege", "user");
                             Request req_user = new Request("POST", "auth/login", params, new Request.Callback() {
                                 @Override
@@ -112,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
                             });
                             req_user.execute();
                         }
-
                     }
                 });
                 req_admin.execute();
@@ -155,5 +161,8 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         boolean haveNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
         return haveNetwork;
+    }
+
+    class LoginException extends Exception {
     }
 }
