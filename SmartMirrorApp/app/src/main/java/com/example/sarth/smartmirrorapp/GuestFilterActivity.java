@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,11 +24,13 @@ import java.util.List;
 public class GuestFilterActivity extends AppCompatActivity {
 
     public static final String TAG = "Logcat";
-    public static final String FILTER_KEY = "Filter_key";
+    public static final String ORIGIN_KEY = "origin_key";
     //vars
     private RecyclerView requests;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SwipeRefreshLayout refreshLayout;
+    private TextView emptyView;
+
     private CharSequence[] search_options = {"Title", "Category", "Name"};
     private String search_choice = "";
     private int search_selected = -1;
@@ -38,24 +42,28 @@ public class GuestFilterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requests);
-        Log.i(TAG, "Create");
+        setContentView(R.layout.activity_filter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
-        filter = toRequest.getStringExtra(FILTER_KEY);
+        String origin = toRequest.getStringExtra(ORIGIN_KEY);
 
-        switch (filter) {
-            case "&status=pending,approved,rejected":
+        emptyView = findViewById(R.id.empty_recyclerview);
+
+        switch (origin) {
+            case "RequestButton":
                 setTitle("Your Requests");
+                filter = "&status=pending,approved,rejected";
                 break;
-            case "&status=posted":
+            case "DisplayButton":
                 setTitle("On Display");
+                filter = "&status=posted";
                 break;
-            case "&status=expired":
+            case "ArchiveButton":
                 setTitle("Archive");
+                filter = "&status=expired";
                 break;
-            case "My Posters":
+            case "MyPosters":
                 setTitle("My Posters");
                 filter="";
                 break;
@@ -119,7 +127,9 @@ public class GuestFilterActivity extends AppCompatActivity {
         Request req = new Request("GET", "posters/filter?mine=1" + filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-
+                if (posters.size() == 0) {
+                    emptyView.setVisibility(View.VISIBLE); //Show no available posters
+                }
                 switch (sort_choice) {
                     case "Title(A-Z)":
                         Collections.sort(posters, Poster.TitleAscending);
@@ -143,8 +153,6 @@ public class GuestFilterActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-
-                Poster.posters = posters;
 
                 recyclerViewAdapter = new RecyclerViewAdapter(GuestFilterActivity.this, posters, "Guest");
                 requests.setAdapter(recyclerViewAdapter);
@@ -176,7 +184,7 @@ public class GuestFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (search_selected == -1) {
+                if (search_selected == -1) { // When no option is selected
                     return;
                 }
                 search_choice = search_options[search_selected].toString();
@@ -207,7 +215,7 @@ public class GuestFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (sort_selected == -1) {
+                if (sort_selected == -1) { //When no option is selected
                     return;
                 }
                 sort_choice = sort_options[sort_selected].toString();
@@ -247,7 +255,7 @@ public class GuestFilterActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
+                finish(); //go back to Guest page.
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -256,7 +264,8 @@ public class GuestFilterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshLayout.setRefreshing(true);
-        getPosters();
+        Log.i(TAG,"refreshing posters");
+        refreshLayout.setRefreshing(true);      // If the user returns from previewing/modifying a poster, it automatically
+        getPosters();                           // refreshes to show the updated information.
     }
 }

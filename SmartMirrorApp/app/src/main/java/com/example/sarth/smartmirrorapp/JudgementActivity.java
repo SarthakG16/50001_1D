@@ -52,7 +52,11 @@ public class JudgementActivity extends AppCompatActivity{
     private Button button_remove;
 
     private String origin;
+    private int position;
     private Poster poster;
+
+    public static final String POSITION_KEY = "position_key";
+    public static final String ORIGIN_KEY = "Origin_key";
 
 
     @Override
@@ -63,17 +67,17 @@ public class JudgementActivity extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
 
-        final int position = intent.getIntExtra("Position",0);
+        position = intent.getIntExtra(POSITION_KEY,0);
         poster = RecyclerViewAdapter.posterList.get(position);
-        setTitle(poster.title);
 
-        origin = intent.getStringExtra("Origin");
+        setTitle(poster.title);
 
         button_layout = findViewById(R.id.judge_button_layout);
         button_reject = findViewById(R.id.judge_reject);
         button_approve = findViewById(R.id.judge_approve);
         button_remove = findViewById(R.id.judge_remove_search);
 
+        origin = intent.getStringExtra(ORIGIN_KEY);
         if (origin.equals("Guest")) {
             if(poster.status.equals("posted")) {
                 button_layout.setVisibility(View.GONE);
@@ -177,7 +181,7 @@ public class JudgementActivity extends AppCompatActivity{
                     if (poster.status.equals("posted")) {
                         params.put("status", "expired");
                     } else {
-                        params.put("status", "rejected");
+                        params.put("status", "rejected"); //If the poster hasn't been put on display yet, it will get rejected.
                     }
                     Request req = new Request("POST", "posters/", params, new Request.Callback() {
                         @Override

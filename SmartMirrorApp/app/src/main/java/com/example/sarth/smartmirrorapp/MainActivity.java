@@ -159,10 +159,10 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean haveNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        return haveNetwork;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     class LoginException extends Exception {
+
     }
 }

@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +28,8 @@ public class AdminFilterActivity extends AppCompatActivity {
     private RecyclerView requests;
     private RecyclerViewAdapter recyclerViewAdapter;
     private SwipeRefreshLayout refreshLayout;
+    private TextView emptyView;
+
     private CharSequence[] search_options = {"Title", "Category", "Name"};
     private String search_choice = "";
     private int search_selected = -1;
@@ -36,10 +41,13 @@ public class AdminFilterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requests);
+        setContentView(R.layout.activity_filter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent toRequest = getIntent();
+
+        emptyView = findViewById(R.id.empty_recyclerview);
+
         filter = toRequest.getStringExtra(FILTER_KEY);
 
         switch (filter) {
@@ -114,7 +122,9 @@ public class AdminFilterActivity extends AppCompatActivity {
         Request req = new Request("GET", "posters/filter?status=" + filter, params, new Request.PostersCallback() {
             @Override
             public void onResponse(List<Poster> posters) {
-                Poster.posters = posters;
+                if (posters.size() == 0) {
+                    emptyView.setVisibility(View.VISIBLE);  //Show no available posters
+                }
 
                 switch (sort_choice) {
                     case "Title(A-Z)":
@@ -172,7 +182,7 @@ public class AdminFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (search_selected == -1) {
+                if (search_selected == -1) { //When no option is selected
                     return;
                 }
                 search_choice = search_options[search_selected].toString();
@@ -203,7 +213,7 @@ public class AdminFilterActivity extends AppCompatActivity {
         mBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (sort_selected == -1) {
+                if (sort_selected == -1) { //When no option is selected
                     return;
                 }
                 sort_choice = sort_options[sort_selected].toString();
@@ -243,7 +253,7 @@ public class AdminFilterActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
+                finish(); //Go back to Admin Page
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -252,8 +262,9 @@ public class AdminFilterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshLayout.setRefreshing(true);
-        getPosters();
+        Log.i(TAG,"refreshing posters");
+        refreshLayout.setRefreshing(true);      // If the user returns from previewing/modifying a poster, it automatically
+        getPosters();                           // refreshes to show the updated information.
     }
 
 }

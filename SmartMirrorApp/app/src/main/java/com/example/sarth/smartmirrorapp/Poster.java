@@ -27,10 +27,6 @@ public class Poster implements Serializable{
     public String everything;
     public byte[] data;
 
-    //public static HashMap<String,Poster> archive = new HashMap<>();
-    public static List<Poster> posters = new ArrayList<>();
-
-
     Poster(Map<String, String> params) {
         String idd = String.valueOf(params.get("id"));
         double d = Double.valueOf(idd);

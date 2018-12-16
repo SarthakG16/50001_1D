@@ -93,8 +93,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 Intent judgementTime = new Intent(mContext, JudgementActivity.class);
-                judgementTime.putExtra("Position", position);
-                judgementTime.putExtra("Origin",origin);
+                judgementTime.putExtra(JudgementActivity.POSITION_KEY, position);
+                judgementTime.putExtra(JudgementActivity.ORIGIN_KEY,origin);
                 mContext.startActivity(judgementTime);
             }
         });

@@ -3,7 +3,6 @@ package com.example.sarth.smartmirrorapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -151,19 +150,19 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.GuestRequestButton:
                 fromGuest = new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=pending,approved,rejected");
+                fromGuest.putExtra(GuestFilterActivity.ORIGIN_KEY,"RequestButton");
                 Log.i(TAG,"Guest to Request page");
                 break;
 
             case R.id.GuestDisplayingButton:
                 fromGuest = new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=posted");
+                fromGuest.putExtra(GuestFilterActivity.ORIGIN_KEY,"DisplayButton");
                 Log.i(TAG,"Guest to Now Displaying page");
                 break;
 
             case R.id.GuestArchiveButton:
                 fromGuest= new Intent(this, GuestFilterActivity.class);
-                fromGuest.putExtra(GuestFilterActivity.FILTER_KEY,"&status=expired");
+                fromGuest.putExtra(GuestFilterActivity.ORIGIN_KEY,"ArchiveButton");
                 Log.i(TAG,"Guest to Archive page");
                 break;
 
@@ -179,8 +178,10 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        refreshLayout.setRefreshing(true);
-        getData();
+        Log.i(TAG,"refreshing number of posters");
+        refreshLayout.setRefreshing(true);  // If the user returns from previewing/modifying a poster, it automatically
+        getData();                          // refreshes to show the updated information.
+
     }
 
     public void onBackPressed() {
@@ -189,7 +190,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                finish(); //The logout from server is implemented on the OnDestroy() method of this activity
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

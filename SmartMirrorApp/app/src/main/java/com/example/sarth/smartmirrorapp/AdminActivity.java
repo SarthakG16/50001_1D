@@ -145,9 +145,9 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
         if (item.getItemId() == R.id.myPosters) {
-            Intent toArchive = new Intent(AdminActivity.this, GuestFilterActivity.class);
-            toArchive.putExtra(AdminFilterActivity.FILTER_KEY,"My Posters");
-            startActivity(toArchive);
+            Intent myPosters = new Intent(AdminActivity.this, GuestFilterActivity.class);
+            myPosters.putExtra(GuestFilterActivity.ORIGIN_KEY,"MyPosters");
+            startActivity(myPosters);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -171,7 +171,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
             case R.id.SearchButton:
                 fromAdmin= new Intent(this,AdminFilterActivity.class);
                 fromAdmin.putExtra(AdminFilterActivity.FILTER_KEY,"pending,approved,posted");
-                Log.i(TAG,"Moving to Search page");
+                Log.i(TAG,"Admin to All Posters page");
                 break;
 
             case R.id.AdminUploadButton:
@@ -186,8 +186,9 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        refreshLayout.setRefreshing(true);
-        getData();
+        Log.i(TAG,"refreshing number of posters");
+        refreshLayout.setRefreshing(true);      // If the user returns from previewing/modifying a poster, it automatically
+        getData();                              // refreshes to show the updated information.
     }
 
     @Override
@@ -197,7 +198,7 @@ public class AdminActivity extends AppCompatActivity implements View.OnClickList
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                finish(); //The logout code is on the OnDestroy method of this activity
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
