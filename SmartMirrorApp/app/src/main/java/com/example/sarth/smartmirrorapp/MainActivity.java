@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (login_info2.get("status").equals("success")) {
                                         Intent toGuest = new Intent(MainActivity.this, GuestActivity.class);
                                         toGuest.putExtra(USER_KEY, username);
-                                        Toast.makeText(MainActivity.this, "Signed in as Gust", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(MainActivity.this, "Signed in as Guest", Toast.LENGTH_LONG).show();
                                         startActivity(toGuest);
                                     } else {
                                         Toast.makeText(MainActivity.this, login_info2.get("error_message"), Toast.LENGTH_SHORT).show();
