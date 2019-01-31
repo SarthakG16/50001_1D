@@ -1,7 +1,7 @@
 ## 50.001 - 1D Application Project
 #Smart Mirror
 
-![images/logo](https://github.com/SarthakG16/50001_1D/blob/master/SmartMirrorApp/images/logo.JPG =500x500)
+![images/logo](https://github.com/SarthakG16/50001_1D/blob/master/SmartMirrorApp/images/logo.JPG | width=500)
 
 "CI03 Group 6*
 Andre Hadianto Lesmana | Antonio Miguel Canlas Quizon | Ryan Yu Jun An | Sarthak Ganoorkar | Tan Zhao Tong | Yee Celine
