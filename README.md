@@ -1,7 +1,7 @@
 ## 50.001 - 1D Application Project
 #Smart Mirror
 
-![images/logo](https://github.com/SarthakG16/50001_1D/blob/master/SmartMirrorApp/images/logo.JPG "Smart Mirror")
+![images/logo](https://github.com/SarthakG16/50001_1D/blob/master/SmartMirrorApp/images/logo.JPG =500x "Smart Mirror")
 
 "CI03 Group 6*
 Andre Hadianto Lesmana | Antonio Miguel Canlas Quizon | Ryan Yu Jun An | Sarthak Ganoorkar | Tan Zhao Tong | Yee Celine
@@ -66,5 +66,4 @@ Through this project, we have applied good and effective software programming pr
 polymorphism, inheritance, and Android programming. Overall, our project was able to integrate numerous processes into one Android application. 
 From the automation of ‘posting’ to one-step approval for administrators, this project is a step forward to SUTD as a smart campus and becoming 
 the Smart Nation that Singapore aspires to achieve. We believe that this project will revolutionise advertising in schools, workplaces, and 
-community spaces.
----
+community spaces.<br/>
